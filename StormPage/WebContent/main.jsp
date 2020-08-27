@@ -91,13 +91,9 @@
 <script type="text/javascript">
 	
 $(function(){
-	$('#main_log').bind("click", function(){
-	
-	});
-	
-	$('#main_logo_img').bind("click", function(){
-	});
-	
+    $('#wrap').bind('click', function(){
+        alert('body??');
+    });
 });
 
 </script>
