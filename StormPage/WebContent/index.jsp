@@ -25,6 +25,7 @@
         <li class="nav-item"> <a href="../view/fence/getFenceReport.jsp">울타리보고서</a></li>
         <li class="nav-item"> <a href="../view/post/addPost.jsp">게시글올리기</a></li>
         <li class="nav-item"> <a href="../view/admin/getUserAdmin.jsp">관리자가유저정보보기</a></li>
+        <li class="nav-item"> <a href="../view/admin/getFenceList.jsp">울타리편성표</a></li>
         
     </ul>
 </body>
