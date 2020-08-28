@@ -7,10 +7,6 @@
     <meta charset="UTF-8">
     <title>MainPage</title>
     
-    <!--JqueryMobile CDN-->
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <!-- <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
 </head>
 
 <!-- FontAwesome 아이콘-->
@@ -37,12 +33,25 @@
     /* 구글 웹폰트 사용 CDN*/
     @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean');
     
+    /*제일 상단 메뉴바*/
+    header {height: 260px; box-shadow: 0px 2px 0px 0px #bdbdbd; position: absolute;}
+    .header_top {top:0px; left: 0px; right: 0px; position: fixed; display: flex; justify-content: space-between; width: 100%; height: 130px; background: #ffffff;}
+    header .main_logo {margin-left: 10px; margin-top: 10px; float: left; width: 30%; height: 75%;}
+    header .logo_img {width: 100%; height: 100%;}
+    header .fa-search {float: ; margin-top: 20px; margin-right: 10px; border-radius: 180px; width: 80px; height: 60%; background: #9c27b0; font-size: 40px; background: #f5f5f5; color: #616161; text-align: center; line-height: 75px;}
+    header .fa-cog{float: ; margin-top: 20px; margin-right: 0px; border-radius: 180px; width: 80px; height: 60%; font-size: 40px; color: #616161; text-align: center; line-height: 75px;}
+    header .admin_menu {padding-top: 5%; font-size: 30px; font-weight: bold;}
+    
+    /*두번째 상단 메뉴바*/
+    .header_under {top: 130px; left: 0px; position: fixed; display: flex; height: 130px; width: 100%; z-index: auto; background: #ffffff;}
+    .headersub_icon {float: left; margin: 0% 0% 0% 0%; width: 30%; height: 100%;}
+    .pic {width: 100%; height: 100%;}
+    
     /* 게시글 관련 css */
+    .contents {padding-top: 280px; height: inherit; background: #f5f5f5;}
     
-    .contents {padding-top: 260px; height: inherit; background: #f5f5f5;}
-    
-    .addpost_header {float: left; width: 100%; height: 50px; color: #ffffff; padding-top:20px; font-size:30px; background: #F5A9BC;}
-    .post_content {float: left; width: 100%; height: auto; background: #ffffff;}
+    .addpost_header {float: left; width: 99%; height: 50px; color: #ffffff; padding-top:20px; font-size:30px; background: #F5A9BC;}
+    .post_content {float: left; width: 99%; height: auto; background: #ffffff;}
     .img_content {float: left; height: 700px; width: 100%; background: #ffffff;}
     .img_list_div {float: left; height: 400px; width: 100%; overflow-x: scroll;}
     .upload_button {float: left; margin-left: 20%; width: 80%; font-size: 50px; height: auto;}
@@ -50,15 +59,52 @@
 
     
 </style>
+
     <body>
     
 
       <div id="wrap" data-role="page">
         
         <!-- toolbar include -->
-        <div data-role="header" style="z-index: 1;">
-            <jsp:include page="../toolbar/toolBar.jsp"/>
-        </div>
+        <header class="header" data-role="header">
+           <div class="header_top">
+                <div id="main_log" class="main_logo">
+	                <a href="/main.jsp">
+	                	<img class="logo_img" src="/resources/stormLogo.png">
+	                </a>
+                </div>
+                <div>
+	                <i class="fas fa-search"></i>
+	                <a href="/view/admin/getUserList.jsp"><i class="fas fa-cog"></i></a>
+                </div>
+            </div>
+
+            <div class="header_under">
+                <div class="headersub_icon">
+                	<a href="/view/user/getUser.jsp">
+                    	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                    <img id="notice_post" class="pic" src="/resources/mainIconNotifyBlack.png">
+                </div>
+                <div class="headersub_icon">
+                	<a href="/view/post/addPost.jsp">
+                    	<img id="share_post" class="pic" src="/resources/mainIconShareBlack.png">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                	<a href="/view/post/addPost.jsp">
+                    	<img id="imgage_post" class="pic" src="/resources/mainIconImgBlack.png">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                	<a href="/view/fence/getFenceReportList.jsp">
+                    	<img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
+                    </a>
+                </div>
+            </div>
+        </header> 
 
         <div class="contents" data-role="content">
        
@@ -69,7 +115,7 @@
                    
 
             <div class="post_content">
-                <textarea name="textarea-1" id="textarea-1" style="width: 100%; font-size: 30px; border: 2px solid #F5A9BC;"></textarea>
+                <textarea name="textarea-1" id="textarea-1" style="width: 99%; font-size: 30px; border: 2px solid #F5A9BC;"></textarea>
             </div>
             
             <div class="addpost_header" style="margin-top: 40px; float: left;">
@@ -85,7 +131,7 @@
                 <div class="upload_button">
                     <button class="upload_img" type="button" style="color: #ffffff; width: 80%; font-size: 25px; height: 60px; background: linear-gradient( to top, #f48fb1, #F5A9BC);">사진올리기</button>
                 </div>
-                	<button type="submit" style="border-radius: 45px; float: left; width: 120px; height: 70px; margin-top: 30px; margin-left: 40%; background: url(/resources/add_post_icon_ok.png); background-repeat: no-repeat; background-size: contain; 0px;"></button>
+                	<button type="submit" style="border-radius: 45px; float: left; width: 120px; height: 70px; margin-top: 30px; margin-left: 30%; background: url(/resources/add_post_icon_ok.png); background-repeat: no-repeat; background-size: contain; 0px;"></button>
                 	<button type="submit" style="border-radius: 45px; float: left; width: 120px; height: 70px; margin-top: 30px; margin-left: 35px; background: url(/resources/add_post_icon_cancle.png); background-repeat: no-repeat; background-size: contain; 0px;"></button>
                 
               </div>

@@ -20,6 +20,9 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+<!-- 제이쿼리 js 이게 있어야 자바스크립트 $읽힘  -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <!-- FontAwesome 아이콘-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
  <!-- googlefont -->
@@ -35,8 +38,10 @@
 <script type="text/javascript">
 
 	$(function(){
-		$('#main_log').bind("click", function(){
-		
+		$('.headersub_icon').bind("click", function(){
+			$('#notice_post').attr('src','/resources/mainIconNotifyPink.png');
+			
+			location.href = "/view/post/addPost.jsp";
 		});
 		
 		$('#main_logo_img').bind("click", function(){
@@ -89,13 +94,19 @@
                     <img id="notice_post" class="pic" src="/resources/mainIconNotifyBlack.png">
                 </div>
                 <div class="headersub_icon">
-                    <img id="share_post" class="pic" src="/resources/mainIconShareBlack.png">
+                	<a href="/view/post/addPost.jsp">
+                    	<img id="share_post" class="pic" src="/resources/mainIconShareBlack.png">
+                    </a>
                 </div>
                 <div class="headersub_icon">
-                    <img id="imgage_post" class="pic" src="/resources/mainIconImgBlack.png">
+                	<a href="/view/post/addPost.jsp">
+                    	<img id="imgage_post" class="pic" src="/resources/mainIconImgBlack.png">
+                    </a>
                 </div>
                 <div class="headersub_icon">
-                    <img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
+                	<a href="/view/fence/getFenceReportList.jsp">
+                    	<img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
+                    </a>
                 </div>
             </div>
         </header> 

@@ -8,9 +8,9 @@
 <head>
     <meta charset="UTF-8">
     <title>MainPage</title>
-    
-
 </head>
+
+
 
 <!-- FontAwesome 아이콘-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
@@ -24,15 +24,38 @@
     font-style: normal;
     }    
 </style>
+
+<!-- 제이쿼리 js 이게 있어야 자바스크립트 $가 읽힘  -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  
 <style>
     /* 구글 웹폰트 사용 CDN*/
     @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean');
     
-    /* 게시글 관련 css */
+    /*제일 상단 메뉴바*/
+    header {height: 260px; box-shadow: 0px 2px 0px 0px #bdbdbd; position: absolute;}
+    .header_top {top:0px; left: 0px; right: 0px; position: fixed; display: flex; justify-content: space-between; width: 100%; height: 130px; background: #ffffff;}
+    header .main_logo {margin-left: 10px; margin-top: 10px; float: left; width: 30%; height: 75%;}
+    header .logo_img {width: 100%; height: 100%;}
+    header .fa-search {float: ; margin-top: 20px; margin-right: 10px; border-radius: 180px; width: 80px; height: 60%; background: #9c27b0; font-size: 40px; background: #f5f5f5; color: #616161; text-align: center; line-height: 75px;}
+    header .fa-cog{float: ; margin-top: 20px; margin-right: 0px; border-radius: 180px; width: 80px; height: 60%; font-size: 40px; color: #616161; text-align: center; line-height: 75px;}
+    header .admin_menu {padding-top: 5%; font-size: 30px; font-weight: bold;}
     
-    .contents {padding-top: 260px; background: #f5f5f5;}
-    .post_body { overflow: hidden; margin-top: 40px; width: 100%; height: auto; background: #ffffff;}
+    /*두번째 상단 메뉴바*/
+    .header_under {top: 130px; left: 0px; position: fixed; display: flex; height: 130px; width: 100%; z-index: auto; background: #ffffff;}
+    .headersub_icon {float: left; margin: 0% 0% 0% 0%; width: 30%; height: 100%;}
+    .pic {width: 100%; height: 100%;}
+    
+    /* 게시글 관련 css */
+    .contents {padding-top: 290px; background: #f5f5f5;}
+    
+    /* 게시글 추가 탭 CSS  */
+    .add_post_body {overflow: hidden; padding : 10px 0px 0px 20px; width: 100%; height: 80px; background: #ffffff;}
+    .add_post_img {float: left;}
+    .add_post_button {float: left; margin-left: 10px; margin-top: 2px; border-radius: 30px; border: none; width: 90%; height: 60px; font-size: 20px; color: #757575;}
+    
+    /* 게시글 CSS */
+    .post_body { overflow: hidden; margin-top: 40px; padding:20px; width: 100%; height: auto; background: #ffffff;}
     .post_body .image {margin: 10px; float: left; width: 10%; height: 100px;}
     .post_body .image_pic {border-radius: 180px; width:100%; height:100%;}
     .post_body .title_group {float: left; width: 80%; height: 60px;}
@@ -42,7 +65,7 @@
     .post_body .post_time {width: 100%; height: 20px; padding: 30px 10px 10px 10px; font-family: 'Nanum Gothic', sans-serif;}
     .post_body .post_menu {float: left; width: 7%; height: 60px; color: gray;}
     .post_body .post_menu .fa-caret-down {margin:15px; font-size: 70px;}
-    .post_body .post_content {float: left; width: 100%; height: auto; font-size: 40px;}
+    .post_body .post_content {float: left; width: 97%; height: auto; font-size: 40px;}
     .post_body .post_content .content {margin: 10px; height : 100%; font-family: 'Noto Serif KR', serif;}
     .post_body .poto {float: left; width: 100%; height: auto;}
     .post_body .poto .post_img {width: 100%; height: 800px;}
@@ -66,10 +89,10 @@
     /* Modal Content/Box */
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
+        margin: 50% 15% 15% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
-        width: 50%; /* Could be more or less, depending on screen size */                          
+        /* width: 100px; */ /* Could be more or less, depending on screen size */                          
     }
     /* The Close Button */
     .close {
@@ -78,37 +101,117 @@
         font-size: 28px;
         font-weight: bold;
     }
-    .close:hover,
+   p:hover,
+   p:focus {
+   	color: black;
+   	cursor: pointer;
+   }
+    /* .close:hover,
     .close:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
-    }    
+    }     */
 
     
 </style>
 
 <script type="text/javascript">
-	
+
 $(function(){
-    $('#wrap').bind('click', function(){
-        alert('body??');
-    });
+	
+	//Get the modal
+	var modal = document.getElementById('myModal');
+	
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+	
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];                                          
+	
+	// When the user clicks on the button, open the modal 
+	btn.onclick = function() {
+	    modal.style.display = "block";
+	}
+	
+	$('.add_post_button').bind('click', function(){
+		location.href= '/view/post/addPost.jsp';
+	})
+	
+	$('#notice_post').bind('click', function(){
+		location.href= '/main.jsp';
+	})
+	
+/* 	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	    modal.style.display = "none";
+	} */
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
 });
+
 
 </script>
 
     <body>
     
-    
-      <div id="wrap" data-role="page">
+      <div id="wrap">
       
-      <!-- toolbar include -->
-		<header style="z-index: 1;">
-    		<jsp:include page="./view/toolbar/toolBar.jsp"/>
-    	</header>
+		<header class="header" data-role="header">
+           <div class="header_top">
+                <div id="main_log" class="main_logo">
+	                <a href="/main.jsp">
+	                	<img class="logo_img" src="/resources/stormLogo.png">
+	                </a>
+                </div>
+                <div>
+	                <i class="fas fa-search"></i>
+	                <a href="/view/admin/getUserList.jsp"><i class="fas fa-cog"></i></a>
+                </div>
+            </div>
+
+            <div class="header_under">
+                <div class="headersub_icon">
+                	<a href="/view/user/getUser.jsp">
+                    	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                    <img id="notice_post" class="pic" src="/resources/mainIconNotifyPink.png">
+                </div>
+                
+                <div class="headersub_icon">
+                	<a href="/view/post/addPost.jsp">
+                    	<img id="share_post" class="pic" src="/resources/mainIconShareBlack.png">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                	<a href="/view/post/addPost.jsp">
+                    	<img id="imgage_post" class="pic" src="/resources/mainIconImgBlack.png">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                	<a href="/view/fence/getFenceReportList.jsp">
+                    	<img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
+                    </a>
+                </div>
+            </div>
+        </header>
     	
             <div class="contents" data-role="content">
+	            <div class="add_post_body">
+	           		<div class="add_post_img">
+	           			<img class="" style="width:60px; height:60px; border-radius: 50%" src="./resources/stormLogo.png">
+	           		</div>
+	           		<div class="add_post_button">
+	           			<input type="button" class="add_post_button" value="이승환님, 공동체에 나누고 싶은말이 있으신가요?">
+	           		</div>
+	            </div>
                <div class="post_body">
                     <div class="image">
                         <img class="image_pic" width="50px" src="./resources/stormLogo.png">
@@ -123,15 +226,17 @@ $(function(){
                     </div>
                     <div class="post_menu">
                     	<!-- Trigger/Open The Modal -->
-		                <button id="myBtn">Open Modal</button>
+		                <!-- <button id="myBtn">Open Modal</button> -->
+		                <i id="myBtn" class="fas fa-ellipsis-v" style="margin-top:30px; font-size:45px;"></i>
 		
 		                <!-- The Modal -->
 		                <div id="myModal" class="modal">
 		
 		                  <!-- Modal content -->
-		                  <div class="modal-content">
-		                    <span class="close">&times;</span>                                                               
-		                    <p>Some text in the Modal..</p>
+		                  <div class="modal-content" style="width:70%;">
+		                    <!-- <span class="close">&times;</span>  -->                                                              
+		                    <p style="font-size: 40px; text-align: center;">게시글수정</p>
+		                    <p style="font-size: 40px; text-align: center;">게시글삭제</p>
 		                  </div>
 
                 		</div>
@@ -157,6 +262,10 @@ $(function(){
                     </div>
                 </div>
             </div>
+            <a style="display:scroll;position:fixed;bottom:10px;right:10px;" href="#" title=”맨 위로">
+				<i class="fas fa-angle-double-up" style="font-size: 50px;"></i>
+			</a> 
+
         </div>
     </body>
 </html>
