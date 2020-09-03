@@ -29,11 +29,11 @@
 </style>
 
 <style>
-    .content {margin-top: 300px;}
-    th {font-size: 20px; background: #F5A9BC;}
-    td {font-size: 20px;}
-    .table{top:50px;}
-    .form-group {margin: 30px; width: 100%; height: 30px;}
+    .content {margin: 10px 10px 30px; margin-top: 300px;}
+    th {font-size: 30px;}
+    td {font-size: 28px;}
+    .form-group { width: 100%; height: 30px;}
+    a{font-size:33px;}
 </style>
 
 <body>
@@ -46,17 +46,17 @@
     
 		<ul class="nav nav-pills nav-fill">
   			<li class="nav-item">
-    			<a class="nav-link" href="/view/admin/getUserList.jsp">청년목록</a>
+    			<a class="nav-link" href="/view/admin/getUserList.jsp" style="color:#F5A9BC;">청년목록</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link active" href="/view/admin/getFenceList.jsp">울타리편성</a>
+    			<a class="nav-link active" href="/view/admin/getFenceList.jsp" style="background: #F5A9BC;">울타리편성</a>
     		</li>
 		</ul>
         
         <form class="form-inline" name="detailForm">
            
-            <div class="form-group">
-                <select class="form-control form-control-lg">
+            <div class="form-group" style="margin-bottom: 30px;">
+                <select class="form-control form-control-lg" style="width:140px; height:60px; font-size:27px;">
                     <c:if test="${empty search.searchCondition }">
                     <option class="from-option" value="0" selected="selected" >전체</option>
                     <option class="from-option" value="1" >백예진울타리</option>
@@ -73,7 +73,7 @@
                 </select>
             </div>
             
-            <table class="table" style="margin-top: 30px;">
+            <table class="table" style="margin-top: 20px;">
             <thead>
             <tr>
                 <th scope="col">이름</th>
@@ -89,7 +89,7 @@
               <td>930124</td>
               <td>형제</td>
               <td>이승환울타리</td>
-              <td><button type="button" class="btn btn-success">편성</button></td>
+              <td><button type="button" class="btn btn-success btn-lg">편성</button></td>
             </tr>
              
              <tr>
@@ -97,7 +97,7 @@
               <td>890000</td>
               <td>자매</td>
               <td>백예진울타리</td>
-              <td><button type="button" class="btn btn-success">편성</button></td>
+              <td><button type="button" class="btn btn-success btn-lg">편성</button></td>
             </tr>
              
              <tr>
@@ -105,7 +105,7 @@
               <td>333333</td>
               <td>자매</td>
               <td>양승미울타리</td>
-              <td><button type="button" class="btn btn-warning">취소</button></td>
+              <td><button type="button" class="btn btn-warning btn-lg">취소</button></td>
             </tr>
             
             </tbody>

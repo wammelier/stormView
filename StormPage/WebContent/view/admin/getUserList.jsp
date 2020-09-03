@@ -33,7 +33,11 @@
     .header{background: #f44336; height: 240px;}
     .form-group {margin: 10px 20px 30px;}
     .userList_box {margin-left: 10px; padding-top:300px; width: 100%; height: 60px;}
-    th {font-size: 17px;}
+    th {font-size: 30px;}
+    td {font-size: 27px;}
+    .nav-item {height:80px;}
+    a {font-size: 33px;}
+    
 </style>
 
 <body>
@@ -46,16 +50,17 @@
     
 	    <ul class="nav nav-pills nav-fill">
 		  <li class="nav-item">
-		    <a class="nav-link active" href="/view/admin/getUserList.jsp">청년목록</a>
+		    <a class="nav-link active" href="/view/admin/getUserList.jsp" style="background: #F5A9BC;">청년목록</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="/view/admin/getFenceList.jsp">울타리편성</a>
+		    <a class="nav-link" href="/view/admin/getFenceList.jsp" style="color:#F5A9BC;">울타리편성</a>
 		</ul>
 	    
        <form class="form-inline" name="detailForm">
 <!--            <input type="hidden" id="boardName" name="boardName" value="${param.boardName}"/>-->
             <div class="form-group">
-                <select class="form-control" name="searchCondition">
+                <select class="form-control" name="searchCondition" style="height:60px; width:130px; font-size:26px;">
+                
                     <c:if test="${empty search.searchCondition }">
 	                    <option class="from-option" value="0" selected="selected" >아이디</option>
 	                    <option class="from-option" value="1" >닉네임</option>
@@ -72,25 +77,21 @@
             </div>
             
             <div class="form-group ">
-                <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"/>
+                <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" style="height:60px; width:300px; font-size:26px;"/>
             </div>
 			
-			<div class="custom-control custom-switch" style="margin-left: 35%;">
+			<div class="custom-control custom-switch" style="margin-left: 6%;">
 			  <input type="checkbox" class="custom-control-input" id="customSwitch1">
 			  <label class="custom-control-label" for="customSwitch1">재명된 회원보기</label>
 			</div>
+			<button type="button" class="btn btn-primary btn-lg" style="margin-left:20px; background: #F5A9BC;">가입시킬 청년추가</button>
                
                 
-        <table class="table" style="margin-top: 10px;">
+        <table class="table" style="margin-top: 20px;">
             <thead>
             <tr>
-                <th scope="col">번호</th>
                 <th scope="col">이름</th>
-                <th scope="col">닉네임</th>
-                <th scope="col">생년월일</th>
-                <th scope="col">휴대폰번호</th>
-                <th scope="col">성별</th>
-                <th scope="col">세례여부</th>
+                <th scope="col">아이디</th>
                 <th scope="col">어플가입</th>
                 <th scope="col">리더임명</th>
                 <th scope="col">재명여부</th>
@@ -98,40 +99,25 @@
             </thead>
             <tbody>
             <tr>
-              <th scope="row">1</th>
               <td>이승환</td>
-              <td>wammelier</td>
-              <td>930124</td>
-              <td>01043304417</td>
-              <td>형제</td>
-              <td>입교</td>
+              <td>sw4417</td>
               <td>가입됨</td>
-              <td><button type="button" class="btn btn-primary">임명</button></td>
-              <td><button type="button" class="btn btn-danger">재명</button>
+              <td><button type="button" class="btn btn-primary btn-lg">임명</button></td>
+              <td><button type="button" class="btn btn-danger btn-lg">재명</button>
             </tr>
             <tr>
-              <th scope="row">2</th>
               <td>정창성</td>
-              <td>소문난깝돌이</td>
-              <td>950327</td>
-              <td>01020409835</td>
-              <td>형제</td>
-              <td>유아세례</td>
+              <td>jjk</td>
               <td>가입됨</td>
-              <td><button type="button" class="btn btn-warning">임명취소</button>
-              <td><button type="button" class="btn btn-danger">재명</button>
+              <td><button type="button" class="btn btn-warning btn-lg">임명취소</button>
+              <td><button type="button" class="btn btn-danger btn-lg">재명</button>
             </tr>
             <tr>
-              <th scope="row">3</th>
               <td>양승미</td>
-              <td>야생마</td>
-              <td>000000</td>
-              <td>01012345678</td>
-              <td>자매</td>
-              <td>세례</td>
+              <td>racehorce</td>
               <td>가입됨</td>
-              <td><button type="button" class="btn btn-primary">임명</button></td>
-              <td><button type="button" class="btn btn-danger">재명</button>
+              <td><button type="button" class="btn btn-primary btn-lg">임명</button></td>
+              <td><button type="button" class="btn btn-danger btn-lg">재명</button>
             </tr>
             </tbody>
         </table>

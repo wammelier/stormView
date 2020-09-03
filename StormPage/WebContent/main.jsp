@@ -33,26 +33,26 @@
     @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo&display=swap&subset=korean');
     
     /*제일 상단 메뉴바*/
-    header {height: 260px; box-shadow: 0px 2px 0px 0px #bdbdbd; position: absolute;}
-    .header_top {top:0px; left: 0px; right: 0px; position: fixed; display: flex; justify-content: space-between; width: 100%; height: 130px; background: #ffffff;}
+    header {height: 320px; box-shadow: 0px 2px 0px 0px #bdbdbd; position: absolute;}
+    .header_top {top:0px; left: 0px; right: 0px; position: fixed; display: flex; justify-content: space-between; width: 100%; height: 160px; background: #ffffff;}
     header .main_logo {margin-left: 10px; margin-top: 10px; float: left; width: 30%; height: 75%;}
     header .logo_img {width: 100%; height: 100%;}
-    header .fa-search {float: ; margin-top: 20px; margin-right: 10px; border-radius: 180px; width: 80px; height: 60%; background: #9c27b0; font-size: 40px; background: #f5f5f5; color: #616161; text-align: center; line-height: 75px;}
+    header .fa-search {float: ; margin-top: 20px; margin-right: 10px; border-radius: 180px; width: 100px; height: 60%; background: #9c27b0; font-size: 60px; background: #f5f5f5; color: #616161; text-align: center; line-height: 90px;}
     header .fa-cog{float: ; margin-top: 20px; margin-right: 0px; border-radius: 180px; width: 80px; height: 60%; font-size: 40px; color: #616161; text-align: center; line-height: 75px;}
     header .admin_menu {padding-top: 5%; font-size: 30px; font-weight: bold;}
     
     /*두번째 상단 메뉴바*/
-    .header_under {top: 130px; left: 0px; position: fixed; display: flex; height: 130px; width: 100%; z-index: auto; background: #ffffff;}
-    .headersub_icon {float: left; margin: 0% 0% 0% 0%; width: 30%; height: 100%;}
+    .header_under {top: 160px; left: 0px; position: fixed; display: flex; height: 140px; width: 100%; z-index: auto; background: #ffffff;}
+    .headersub_icon {float: left; margin: 0% 0% 0% 0%; width: 500px; height: 100%;}
     .pic {width: 100%; height: 100%;}
     
     /* 게시글 관련 css */
     .contents {padding-top: 290px; background: #f5f5f5;}
     
     /* 게시글 추가 탭 CSS  */
-    .add_post_body {overflow: hidden; padding : 10px 0px 0px 20px; width: 100%; height: 80px; background: #ffffff;}
-    .add_post_img {float: left;}
-    .add_post_button {float: left; margin-left: 10px; margin-top: 2px; border-radius: 30px; border: none; width: 90%; height: 60px; font-size: 20px; color: #757575;}
+    .add_post_body {overflow: hidden; padding : 10px 0px 0px 20px; width: 100%; height: 120px;  background: #ffffff;}
+    .add_post_img {float: left; padding-top: 10px;}
+    .add_post_button {float: left; margin-left: 20px; padding-left: 20px; margin-top: 2px; border-radius: 60px; border: none; width: 80%; height: 90px; font-size: 30px; margin-top: 10px; background: #f5f5f5; color: #757575;}
     
     /* 게시글 CSS */
     .post_body { overflow: hidden; margin-top: 40px; padding:20px; width: 100%; height: auto; background: #ffffff;}
@@ -153,8 +153,8 @@ $(function(){
 	        modal.style.display = "none";
 	    }
 	}
+	
 });
-
 
 </script>
 
@@ -206,10 +206,10 @@ $(function(){
             <div class="contents" data-role="content">
 	            <div class="add_post_body">
 	           		<div class="add_post_img">
-	           			<img class="" style="width:60px; height:60px; border-radius: 50%" src="./resources/stormLogo.png">
+	           			<img class="" style="width:90px; height:90px; border-radius: 100%;"  src="./resources/stormLogo.png">
 	           		</div>
 	           		<div class="add_post_button">
-	           			<input type="button" class="add_post_button" value="이승환님, 공동체에 나누고 싶은말이 있으신가요?">
+	           			<p>이승환님, 공동체에 나누고 싶은말이 있으신가요?</p>
 	           		</div>
 	            </div>
                <div class="post_body">

@@ -17,6 +17,9 @@
     <!-- FontAwesome 아이콘-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	
+	<!-- 제이쿼리 js 이게 있어야 자바스크립트 $가 읽힘  -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	
 </head>
 
 <style>
@@ -38,12 +41,24 @@
     /* 테이블 관련 CSS  */
     th {font-size: 25px;}
     td {font-size: 25px;}
-    /* .form-control {font-size: 13px; height: 25px;}
-    .select_room {margin: 20px; width: 200px; height: 40px;} */
-    table {margin-top: 260px;}
+    .form-control {font-size: 30px; height: 100%;}
+    .select_room {margin: 20px; margin-top: 300px; width: 200px; height: 50px;}
+    table {margin-top: 20px;}
     
     
 </style>
+
+<script type="text/javascript">
+
+	$(function(){
+		$('a').on("click", function(){
+			var a = $('input').val();
+			alert(a);
+			
+		})
+		
+	})
+</script>
 
 <body>
 
@@ -92,21 +107,19 @@
         <div class="content" data-role="content">
           <div class="select_room">
            <select class="form-control" name="searchCondition">
-                    <c:if test="${empty search.searchCondition }">
-                    <option class="from-option" value="0" selected="selected" >1월</option>
-                    <option class="from-option" value="1" >2월</option>
-                    <option class="from-option" value="2" >3월</option>
-                    <option class="from-option" value="3" >4월</option>
-                    </c:if>
+              <option class="from-option" value="0" selected="selected" >1월</option>
+              <option class="from-option" value="1" >2월</option>
+              <option class="from-option" value="2" >3월</option>
+              <option class="from-option" value="3" >4월</option>
 <!--
-                    <c:if test="${!empty search.searchCondition }">
-                    <option class="from-option" value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>아이디</option>
-                    <option class="from-option" value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>닉네임</option>
-                    <option class="from-option" value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>이름</option>
-                    </c:if>
+              <c:if test="${!empty search.searchCondition }">
+              <option class="from-option" value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>아이디</option>
+              <option class="from-option" value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>닉네임</option>
+              <option class="from-option" value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>이름</option>
+              </c:if>
 -->
-                </select>
-            </div>
+           </select>
+          </div>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -123,11 +136,11 @@
                 <tr>
                   <th scope="row">1</th>
                   <td>이승환</td>
-                  <td><a href="">보기</a></td>
-                  <td><a href="">보기</a></td>
-                  <td><a href="">보기</a></td>
-                  <td><a href="">보기</a></td>
-                  <td><a href="">보기</a></td>
+                  <td><input type="hidden" value="1"><a href="">보</a></td>
+                  <td><input type="hidden" value="2"><a href="">보기</a></td>
+                  <td><input type="hidden" value="3"><a href="">보기</a></td>
+                  <td><input type="hidden" value="4"><a href="">보기</a></td>
+                  <td><input type="hidden" value="5"><a href="">보기</a></td>
                 </tr>
                 <tr>
                   <th scope="row">2</th>

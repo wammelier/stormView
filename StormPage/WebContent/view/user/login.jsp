@@ -21,8 +21,8 @@
 	
 	
 <style>
-    #wrap {background: url("/resources/loginimg.png");}
-    .login_div {width: 100%; height: 2000px; padding:0px 0px 0px 10%;}
+    #wrap {background: url("/resources/loginimg.png"); overflow: none;}
+    .login_div {width: 100%; height: 1500px; padding:0px 0px 0px 10%;}
     .img_background {width: 100%; padding-top: 700px; background-size: 900px; }
     #logo {margin-bottom: 30px; width: 90%;}
     #logo .logo_img {width: 100%;}
@@ -32,7 +32,7 @@
     input::placeholder {font-size: 30px;}
     .login_button_div {margin: 10% 10% 0px; width: 80%;}
     .login_button { height: 100px; background: url("/resources/loginicon.png"); background-size: 100% 100%; background-repeat: no-repeat;}
-    .user_info {margin: 10% 0px 0px 15%; float: left; width: 90%; height: 300px; font-size: 25px; color: #ffffff}
+    .user_info {margin: 10% 0px 0px 15%; float: left; width: 90%; height: 100px; font-size: 25px; color: #ffffff}
     .user_info .signup_text {float: left; margin-left: 10%; width: 30%;}
     .user_info .search_text {float: left;}
     
