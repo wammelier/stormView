@@ -22,7 +22,7 @@
     
 </head>
 <style>
-    .content {padding: 50px 50px 50px; margin-top: 220px;} 
+    .content {padding: 50px 50px 50px; margin-top: 260px;} 
     #input {height: 80px; font-size:30px;}
     b {font-size: 34px;}
 </style>

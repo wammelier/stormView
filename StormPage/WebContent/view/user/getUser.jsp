@@ -32,6 +32,12 @@
     </header>
     
     <div class="content">
+    	<label><b>프로필이미지</b></label>
+        <div class="input-group input-group-lg">
+		  	<img style="width: 200px; height: 200px; border-radius: 80%;" src="/resources/stormLogo.png">
+		</div>
+		<button class="ui-btn ui-corner-all" style="height: 80px; width: 300px; font-weight: bold; font-size: 30px; background:#F5A9BC; border: thin; border-radius: 6px;">이미지변경</button>
+        <br/><br/>
         <label><b>이름</b></label>
         <div class="input-group input-group-lg">
 		  	<input type="text" class="form-control" id="input" value="이승환" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
@@ -59,6 +65,11 @@
 		<label><b>이메일(변경가능)</b></label>
         <div class="input-group input-group-lg">
 		  	<input type="text" class="form-control" id="input" value="sw4417@naver.com" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		</div>
+        <br/>
+        <label><b>주소(변경가능)</b></label>
+        <div class="input-group input-group-lg">
+		  	<input type="text" class="form-control" id="input" value="경기도 군포시 당동 765-21" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div>
         <br/>
         <label><b>성별</b></label>
