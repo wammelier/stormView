@@ -1,6 +1,7 @@
 package com.storm.service.user.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +57,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUserAdmin(String userId) throws Exception {
+	public User getUserAdmin(String userName) throws Exception {
 		//debugging
 		System.out.println("UserDaoImpl getUserAdmin");
-		return sqlSession.selectOne("UserMapper.getUserAdmin", userId);
+		return sqlSession.selectOne("UserMapper.getUserAdmin", userName);
 	}
 
 	@Override
@@ -98,17 +99,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void updateBaptismName(User user) throws Exception {
-		// debugging
-		System.out.println("UserDaoImpl updateBaptismName");
-		sqlSession.update("UserMapper.updateBaptismName", user);
-	}
-
-	@Override
-	public void updatePositionLeader(String userId) throws Exception {
+	public void updatePositionLeader(String userName) throws Exception {
 		// debugging
 		System.out.println("UserDaoImpl updatePositionLeader");
-		sqlSession.update("UserMapper.updatePositionLeader", userId);
+		sqlSession.update("UserMapper.updatePositionLeader", userName);
 	}
 
 	@Override
@@ -122,7 +116,45 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(String userId) throws Exception {
 		// debugging
 		System.out.println("UserDaoImpl deleteUser");
-		sqlSession.update("updateLeaderName.deleteUser", userId);
+		sqlSession.update("UserMapper.deleteUser", userId);
+	}
+
+	@Override
+	public List<User> getAddUserAdminList(Search search) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl getUserAdminList");
+		return sqlSession.selectList("UserMapper.getAddUserAdminList", search);
+	}
+
+	@Override
+	public void updateUserAdmin(User user) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl updateUserAdmin");
+		sqlSession.update("UserMapper.updateUserAdmin", user);
+	}
+
+	@Override
+	public User getCombackUser(String userId) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl getCombackUser");
+		
+		return sqlSession.selectOne("UserMapper.combackUser", userId);
+	}
+
+	@Override
+	public User getUserConfirm(User user) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl getUserconfirm");
+		
+		return sqlSession.selectOne("UserMapper.userConfirm", user);
+	}
+	
+	@Override
+	public User getLoginUser(String userId) throws Exception {
+		//debugging
+		System.out.println("UserDaoImpl getLoginUser");
+		
+		return sqlSession.selectOne("UserMapper.loginUser", userId);
 	}
 	
 }// end of class

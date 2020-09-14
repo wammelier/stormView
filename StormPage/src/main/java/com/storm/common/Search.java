@@ -64,7 +64,7 @@ public class Search {
 	}
 	//==> Select Query �� ROWNUM ���� ��
 	public int getStartRowNum() {
-		return (getCurrentPage()-1)*getPageSize()+1;
+		return (getCurrentPage()-1)*getPageSize();
 	}
 
 	public String getBoardName() {

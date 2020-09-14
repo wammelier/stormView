@@ -16,10 +16,12 @@ public class User {
 	private String address;
 	private String leaderName; // 울타리리더이름
 	private String baptismName; // 세례종류('0' = 없음, '1' = 세례, '2'=입교, '3' = 유아세례
-	private String signRegDate;
+	private String userPosition; // 청년직책 ('0' = 일 '1' = 리더)
+	private Timestamp signRegDate; // 홈페이지 가입일시
+	private Timestamp registoreRegDate; // 관리자가 유저 등록일시
+	private String signupFlag; // 어플 가입여부 플래그 ('0' = 가입안됨, '1' = 가입됨)
 	private String userRole; // 사이트내 직책 '0' = 일반회원, '1' = 관리자
-	private String userPostion; // 청년부내 직책 '0' = 일반청년, '1' = 리더
-	private Timestamp userDeleted; // 재명여부 '0' = 일반회원, '1' = 재명회
+	private String userDeleted; // 재명여부 '0' = 일반회원, '1' = 재명회
 
 	public User() {
 
@@ -121,12 +123,36 @@ public class User {
 		this.baptismName = baptismName;
 	}
 
-	public String getSignRegDate() {
+	public String getUserPosition() {
+		return userPosition;
+	}
+
+	public void setUserPosition(String userPosition) {
+		this.userPosition = userPosition;
+	}
+
+	public Timestamp getSignRegDate() {
 		return signRegDate;
 	}
 
-	public void setSignRegDate(String signRegDate) {
+	public void setSignRegDate(Timestamp signRegDate) {
 		this.signRegDate = signRegDate;
+	}
+
+	public Timestamp getRegistoreRegDate() {
+		return registoreRegDate;
+	}
+
+	public void setRegistoreRegDate(Timestamp registoreRegDate) {
+		this.registoreRegDate = registoreRegDate;
+	}
+
+	public String getSignupFlag() {
+		return signupFlag;
+	}
+
+	public void setSignupFlag(String signupFlag) {
+		this.signupFlag = signupFlag;
 	}
 
 	public String getUserRole() {
@@ -137,19 +163,11 @@ public class User {
 		this.userRole = userRole;
 	}
 
-	public String getUserPostion() {
-		return userPostion;
-	}
-
-	public void setUserPostion(String userPostion) {
-		this.userPostion = userPostion;
-	}
-
-	public Timestamp getUserDeleted() {
+	public String getUserDeleted() {
 		return userDeleted;
 	}
 
-	public void setUserDeleted(Timestamp userDeleted) {
+	public void setUserDeleted(String userDeleted) {
 		this.userDeleted = userDeleted;
 	}
 
@@ -158,8 +176,9 @@ public class User {
 		return "User [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", nickName=" + nickName
 				+ ", email=" + email + ", gender=" + gender + ", phone=" + phone + ", birth=" + birth + ", userImg="
 				+ userImg + ", address=" + address + ", leaderName=" + leaderName + ", baptismName=" + baptismName
-				+ ", signRegDate=" + signRegDate + ", userRole=" + userRole + ", userPostion=" + userPostion
-				+ ", userDeleted=" + userDeleted + "]";
+				+ ", userPosition=" + userPosition + ", signRegDate=" + signRegDate + ", registoreRegDate="
+				+ registoreRegDate + ", signupFlag=" + signupFlag + ", userRole=" + userRole + ", userDeleted="
+				+ userDeleted + "]";
 	}
 	
 

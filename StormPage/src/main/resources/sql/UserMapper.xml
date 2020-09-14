@@ -10,54 +10,77 @@
 <mapper namespace="UserMapper">
 
 	<resultMap id="userSelectMap" 	type="user">
-		<result property="userId"		column="user_id"		jdbcType="VARCHAR"/>
-		<result property="userPwd"		column="user_pwd"		jdbcType="VARCHAR"/>
-		<result property="userName"		column="user_name"		jdbcType="VARCHAR"/>
-		<result property="nickName"		column="nickname"		jdbcType="VARCHAR"/>
-		<result property="email"		column="email"			jdbcType="VARCHAR"/>
-		<result property="gender"		column="gender"			jdbcType="CHAR"/>
-		<result property="phone"		column="phone"			jdbcType="VARCHAR"/>
-		<result property="birth"		column="birth"			jdbcType="VARCHAR"/>
-		<result property="userImg"		column="user_Img"		jdbcType="VARCHAR"/>
-		<result property="address"		column="address"		jdbcType="VARCHAR"/>
-		<result property="leaderName"	column="leader_name"	jdbcType="VARCHAR"/>
-		<result property="baptismName"	column="baptism_name"	jdbcType="VARCHAR"/>
-		<result property="signRegDate"	column="sign_regdate"	jdbcType="TIMESTAMP"/>
-		<result property="userRole"		column="user_role"		jdbcType="CHAR"/>
-		<result property="userPosition"	column="user_position"	jdbcType="CHAR"/>
-		<result property="userDeleted"	column="user_deleted"	jdbcType="CHAR"/>
+		<result property="userId"			column="user_id"			jdbcType="VARCHAR"/>
+		<result property="userPwd"			column="user_pwd"			jdbcType="VARCHAR"/>
+		<result property="userName"			column="user_name"			jdbcType="VARCHAR"/>
+		<result property="nickName"			column="nick_name"			jdbcType="VARCHAR"/>
+		<result property="email"			column="email"				jdbcType="VARCHAR"/>
+		<result property="gender"			column="gender"				jdbcType="CHAR"/>
+		<result property="phone"			column="phone"				jdbcType="VARCHAR"/>
+		<result property="birth"			column="birth"				jdbcType="VARCHAR"/>
+		<result property="userImg"			column="user_Img"			jdbcType="VARCHAR"/>
+		<result property="address"			column="address"			jdbcType="VARCHAR"/>
+		<result property="leaderName"		column="leader_name"		jdbcType="VARCHAR"/>
+		<result property="baptismName"		column="baptism_name"		jdbcType="VARCHAR"/>
+		<result property="userPosition"		column="user_position"		jdbcType="CHAR"/>
+		<result property="signupFlag"		column="signup_flag"		jdbcType="CHAR"/>
+		<result property="signRegDate"		column="sign_regdate"		jdbcType="TIMESTAMP"/>
+		<result property="registoreRegDate"	column="registore_regdate"	jdbcType="TIMESTAMP"/>
+		<result property="userRole"			column="user_role"			jdbcType="CHAR"/>
+		<result property="userDeleted"		column="user_deleted"		jdbcType="CHAR"/>
 	</resultMap>
+	
+	<!-- ###############관리자########################## -->
+	
+	<!-- 관리자가 가입시킬 유저이름 휴대폰번호를 추가하는 쿼리 -->
+	<insert  id="addUserAdmin" parameterType="user">
+		INSERT INTO approval_users (user_name, phone) values (#{userName}, #{phone})
+	</insert>
+	
+	<!-- 관리자가 추가한 가입승인청년들 조회하는 쿼리 -->
+	<select  id="getAddUserAdminList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT  au.user_name, au.phone, au.registore_regdate, au.signup_flag
+	  	FROM approval_users au
+		ORDER BY au.user_name asc
+		LIMIT #{startRowNum}, #{pageSize}
+	</select>
+	
+	<!-- 관리자가 작성한 유저상세정보 조회  -->
+	<select id="getUserAdmin" parameterType="String" resultMap="userSelectMap">
+		SELECT au.user_name, au.phone, au.address, au.gender, au.birth, au.baptism_name,
+		au.leader_name, user_position
+		FROM approval_users au
+		WHERE au.user_name = #{value}
+	</select>
+	
 
-
-<!-- 관리자가 유저목록 리스트를 볼수있는 쿼리 -->
+	
+	<!-- 관리자가 유저목록 리스트를 볼수있는 쿼리 -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT u.*, au.phone 
 	  	FROM users u
-	  	u.user_deleted = '0'
+	  	JOIN approval_users as au
+		ON u.user_name = au.user_name
 	  	<if test="searchCondition != null">
 	  		<where>
 	  			u.user_deleted = '0'
-	  		</where>
-			<if test="searchCondition == 0 and searchKeyword !='' ">
-	 			user_id LIKE '%${searchKeyword}%'
-			</if>
-			<if test="searchCondition == 1 and searchKeyword !='' ">
-	 			user_name LIKE '%${searchKeyword}%'
-			</if>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+		 			user_id LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
+		 			user_name LIKE '%${searchKeyword}%'
+				</if>
+			</where>
 		</if>
 		<if test="searchCondition == null">
 			<where>
 				u.user_deleted = '0'
 			</where>
 		</if>
-		JOIN approval_users as au
-		ON u.user_name = au.user_name
-		ORDER BY u.user_name ASC
-		LIMIT #{currentPage}-1)*#{pageSize}+1, #{pageSize}
+		ORDER BY u.user_name asc
+		LIMIT #{startRowNum}, #{pageSize}
 	</select>
-
-
-
+	
 	<!-- 유저들의 총 인원수를 나타내는 쿼리 search 도메인에 바인딩 하기위해 -->
 	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
 		SELECT COUNT(*)
@@ -74,25 +97,12 @@
 		</if>					
 	</select>
 	
-	<!-- 유저가 자신의 정보를 상세하게 볼수있는 쿼리 -->
-	<select id="getUser" parameterType="string" resultType="userSelectMap">
-		SELECT u.user_id, u.user_name, u.nick_name, u.email, au.phone,
-		u.gender, u.birth, u.user_img, u.address, u.baptism_name, au.phone, 
-		u.user_position, u2.user_name as leader_name
+	<!-- 관리자가 재명된 회원들의 목록을 조회하는 쿼리  -->
+	<select id="getDeletedUserList" parameterType="search" resultMap="userSelectMap">
+		SELECT u.user_id, u.user_name, au.phone, u.gender, u.birth
 		FROM users u
-		JOIN approval_users au
+		JOIN approval_users as au
 		ON u.user_name = au.user_name
-		JOIN users u2
-		ON u.leader_id = u2.user_id
-		WHERE u.user_id = #{value}
-	</select>
-	
-	<!-- 관리자가 재명된 회원들의 목록을 조회하는 쿼리 -->
-	<select id="getDeletedUserList" parameterType="search" resultType="userSelectMap">
-		SELECT u.user_id, u.user_name, u.email, au.phone,
-		u.gender, u.birth, u.user_img, u.address, u.baptism_name, au.phone, 
-		u2.user_name as leader_name
-		FROM users u
 		<if test="searchCondition != null">
 	  		<where>
 	  			u.user_deleted = '1'
@@ -109,35 +119,67 @@
 				u.user_deleted = '1'
 			</where>
 		</if>
-		JOIN approval_users as au
-		ON u.user_name = au.user_name
 		ORDER BY u.user_name ASC
-		LIMIT #{currentPage}-1)*#{pageSize}+1, #{pageSize}
+		LIMIT #{startRowNum}, #{pageSize}
 	</select>
 	
-	<!-- 관리자가 회원의 상세정보를 보는 쿼리 -->
-	<select id="getUserAdmin" parameterType="String" resultType="userSelectMap">
-		SELECT u.user_id, u.user_name, u.email, au.phone,
-		u.gender, u.birth, u.user_img, u.address, u.baptism_name, au.phone, 
-		u.user_position, u2.user_name as leader_name
+	<!-- 관리자가 리더임명하는 쿼리 -->
+	<update id="updatePositionLeader" parameterType="String">
+		UPDATE approval_users
+			<set>
+				user_position = '1'
+			</set>
+		WHERE user_name = #{value}
+	</update>
+	
+	<!-- 관리자가 작성한 유저정보 수정 -->
+	<update id="updateUserAdmin" parameterType="user">
+		UPDATE approval_users
+		<set>
+			address = #{address},
+			birth = #{birth},
+			baptism_name = #{baptismName}
+		</set>
+		WHERE user_name = #{userName}
+	</update>
+
+	<!-- 관리자가 유저를 재명하는 쿼리	 -->
+	<update id="deleteUser" parameterType="String">
+		UPDATE users
+			<set>
+				user_deleted = '1'
+			</set>
+		WHERE user_id = #{value}
+	</update>
+	
+	<!-- 편성된 울타리 리더 변경하는 쿼리 -->
+	<update id="updateLeaderName" parameterType="user">
+		UPDATE approval_users
+		<set>
+			leader_name = #{leaderName}
+		</set>
+		WHERE user_name = #{userName}
+	</update>
+	
+	<!-- ###############유저########################## -->
+	
+	<!-- 유저가 자신의 정보를 상세하게 볼수있는 쿼리 -->
+	<select id="getUser" parameterType="string" resultMap="userSelectMap">
+		SELECT u.user_id, u.user_name, u.nick_name, u.user_pwd, u.email, 
+		au.phone, u.gender, u.birth, u.user_img, u.address
 		FROM users u
 		JOIN approval_users au
-		ON u.user_name = au.user_name
-		JOIN users u2
-		ON u.leader_id = u2.user_id
-		WHERE u.user_id = #{value}
+		on u.user_name = au.user_name
+		where u.user_id = #{value}
 	</select>
 	
-	<!-- 관리자가 가입시킬 유저이름 휴대폰번호를 추가하는 쿼리 -->
-	<insert  id="addUserAdmin" parameterType="userSelectMap">
-		INSERT INTO approval_users (user_name, phone) values (#{userName}, #{phone})
-	</insert>
-	
+
 	<!-- 회원이 회원가입할때 쿼리 -->
-	<insert  id="addUser" parameterType="userSelectMap">
-		INSERT INTO users (user_id, user_pwd, user_name, nick_name, email, gender, birth, user_img, 
-		address, leader_name, baptism_name, sign_regdate,) values (#{userId}, #{userPwd}, #{userName}, #{nickName},
-		#{email:VARCHAR}, #{gender}, #{birth}, #{userImg:VARCHAR}, #{address}, #{leaderName}, #{baptismName}, systimestamp)
+	<insert  id="addUser" parameterType="user">
+		INSERT INTO users (user_id, user_pwd, user_name, nick_name, 
+		email, gender, birth, address, sign_regdate)
+		VALUES (#{userId}, #{userPwd}, #{userName}, #{nickName},
+		#{email:VARCHAR}, #{gender}, #{birth}, #{address}, now())
 	</insert>
 	
 	<!-- 회원이 자신의 정보를 수정하는 쿼리 -->
@@ -151,7 +193,7 @@
 				address = #{address}
 			</set>
 		WHERE user_id = #{userId}
-	</update>	
+	</update>
 	
 	<!-- 회원이 자신의 비밀번호를 바꾸는 쿼리 -->
 	<update id="updatePwd" parameterType="user">
@@ -164,47 +206,37 @@
 	
 	<!-- 회원이 자신의 휴대폰번호를 바꾸는 쿼리 -->
 	<update id="updatePhone" parameterType="user">
-		UPDATE users
+		UPDATE approval_users
 			<set>
 				phone = #{phone}
 			</set>
-		WHERE user_id = #{userId}
+		WHERE user_name = #{userName}
 	</update>
 	
-	<!-- 관리자가 세례여부를 수정하는 쿼리 -->
-	<update id="updateBaptismName" parameterType="user">
+	<!-- 관리자가 재명을취소할경우 쿼리 -->
+	<update id="combackUser" parameterType="String" >
 		UPDATE users
-			<set>
-				baptism_name = #{baptismName}
-			</set>
-		WHERE user_id = #{userId}
-	</update>
-	
-	<!-- 관리자가 리더임명하는 쿼리 -->
-	<update id="updatePositionLeader" parameterType="String">
-		UPDATE users
-			<set>
-				user_position = '1'
-			</set>
+		<set>
+			user_deleted = '0'
+		</set>
 		WHERE user_id = #{value}
 	</update>
 	
-	<!-- 관리자가 리더임명하는 쿼리 -->
-	<update id="updateLeaderName" parameterType="user">
-		UPDATE users
-			<set>
-				leader_id = #{leaderId}
-			</set>
-		WHERE user_id = #{userId}
-	</update>
+	<!-- 회원이 자신의 아이디나 비밀번호를 조회할수 있는 쿼리 -->
+	<select id="userConfirm" parameterType="user" resultMap="userSelectMap">
+		select u.user_id, u.user_pwd
+		from users u
+		join approval_users au
+		on u.user_name = au.user_name
+		where u.user_id = #{userId} and au.phone = #{phone}
+	</select>
 	
-	<!-- 관리자가 유저를 재명하는 쿼리 -->	
-	<update id="deleteUser" parameterType="String">
-		UPDATE users
-			<set>
-				user_deleted = '1'
-			</set>
-		WHERE user_id = #{value}
-	</update>
- 
+	<!-- 유저가 로그인을 시도할경우 해당하는 아이디가 존재하는지 여부 체크하는 쿼리 -->
+	<select id="loginUser" parameterType="String" resultMap="userSelectMap">
+		SELECT u.user_id, u.user_pwd
+		FROM users u
+		WHERE u.user_id = #{value}
+	</select>
+	
+
 </mapper>

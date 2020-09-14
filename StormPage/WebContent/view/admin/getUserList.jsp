@@ -49,11 +49,15 @@
     <div class="userList_box">
     
 	    <ul class="nav nav-pills nav-fill">
-		  <li class="nav-item">
-		    <a class="nav-link active" href="/view/admin/getUserList.jsp" style="background: #F5A9BC;">청년목록</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="/view/admin/getFenceList.jsp" style="color:#F5A9BC;">울타리편성</a>
+		  	<li class="nav-item">
+		    	<a class="nav-link active" href="/view/admin/getUserList.jsp" style="background: #F5A9BC;">청년목록</a>
+		  	</li>
+		  	<li class="nav-item">
+		    	<a class="nav-link" href="/view/admin/getFenceList.jsp" style="color:#F5A9BC;">울타리편성</a>
+		  	</li>
+		  	<li class="nav-item">
+    			<a class="nav-link" href="/view/admin/getAdminAddUser.jsp" style="color:#F5A9BC;">가입시킬 청년목록</a>
+    		</li>
 		</ul>
 	    
        <form class="form-inline" name="detailForm">
@@ -84,7 +88,6 @@
 			  <input type="checkbox" class="custom-control-input" id="customSwitch1">
 			  <label class="custom-control-label" for="customSwitch1">재명된 회원보기</label>
 			</div>
-			<button type="button" class="btn btn-primary btn-lg" style="margin-left:20px; background: #F5A9BC;">가입시킬 청년추가</button>
                
                 
         <table class="table" style="margin-top: 20px;">
@@ -92,8 +95,7 @@
             <tr>
                 <th scope="col">이름</th>
                 <th scope="col">아이디</th>
-                <th scope="col">어플가입</th>
-                <th scope="col">리더임명</th>
+                <th scope="col">직책</th>
                 <th scope="col">재명여부</th>
             </tr>
             </thead>
@@ -101,22 +103,19 @@
             <tr>
               <td>이승환</td>
               <td>sw4417</td>
-              <td>가입됨</td>
-              <td><button type="button" class="btn btn-primary btn-lg">임명</button></td>
+              <td>리더</td>
               <td><button type="button" class="btn btn-danger btn-lg">재명</button>
             </tr>
             <tr>
               <td>정창성</td>
               <td>jjk</td>
-              <td>가입됨</td>
-              <td><button type="button" class="btn btn-warning btn-lg">임명취소</button>
+              <td>리더</td>
               <td><button type="button" class="btn btn-danger btn-lg">재명</button>
             </tr>
             <tr>
               <td>양승미</td>
               <td>racehorce</td>
-              <td>가입됨</td>
-              <td><button type="button" class="btn btn-primary btn-lg">임명</button></td>
+              <td>리더</td>
               <td><button type="button" class="btn btn-danger btn-lg">재명</button>
             </tr>
             </tbody>

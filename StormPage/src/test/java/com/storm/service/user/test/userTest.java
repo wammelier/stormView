@@ -10,18 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.storm.common.Search;
+import com.storm.service.domain.User;
 import com.storm.service.user.UserService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
-//@ContextConfiguration(locations = { "classpath:config/context-*.xml" })
-@ContextConfiguration(locations = { "classpath:config/context-common.xml", 
-									"classpath:config/context-aspect.xml",
-									"classpath:config/context-mybatis.xml", 
-									"classpath:config/context-transaction.xml" })
+@ContextConfiguration(locations = { "classpath:config/context-*.xml" })
+//@ContextConfiguration(locations = { "classpath:config/context-common.xml", 
+//									"classpath:config/context-aspect.xml",
+//									"classpath:config/context-mybatis.xml", 
+//									"classpath:config/context-transaction.xml" })
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@Transactional
 public class userTest {
 
 	@Autowired
@@ -32,10 +37,10 @@ public class userTest {
 	@Test
 	public void testGetUserList() throws Exception {
 
-		System.out.println("getUserList Test start!");
+		System.out.println("getUserList Test start! 시작!!");
 		
 		Search search = new Search();
-		search.setCurrentPage(1);
+		search.setCurrentPage(3);
 		search.setPageSize(3);
 		
 		Map<String,Object> map = service.getUserList(search);
@@ -44,83 +49,290 @@ public class userTest {
 		Assert.assertEquals(3, list.size());
 		
 		Integer totalCount = (Integer)map.get("totalCount");
-		System.out.println(totalCount);
-		
-//		search.setCurrentPage(1);
-//		search.setPageSize(3);
-//		search.setSearchCondition("0");
-//		search.setSearchKeyword("");
-//		map = service.getUserList(search);
-//		
-//		list = (List<Object>)map.get("list");
-//		Assert.assertEquals(3, list.size());
+		System.out.println("totalCount ==> "+totalCount);
 		
 	}
 	
-////	@Test
-//	public void testUpdatePostReport() throws Exception{
-//		
-//		System.out.println("testUpdatePostReport TEST START");
-//		Post post = new Post();
-//		
-////		service.updatePostReport("90000");
-//		post = comService.getPost("90000", "admin", "A");
-//		
-//		System.out.println("post.getBlocked ==>"+post.getBlocked());
-//		Assert.assertEquals("T", post.getBlocked());
-//	}
-//	
-////	@Test
-//	public void testUpdateCommReport() throws Exception{
-//		
-//		System.out.println("testUpdateCommReport TEST START");
-//		Comment comment = new Comment();
-//		
-//		service.updateCommReport("90000");
-//		comment = comService.getComment("90000");
-////		comService.upda
-//		
-//		System.out.println("comment.getBlockd ==>"+comment.getBlocked());
-//		Assert.assertEquals("T", comment.getBlocked());
-//	}
-//	
-////	@Test
-//	public void testGetQnaComment() throws Exception{
-//		
-//		System.out.println("testGetQnaComment TEST START");
-//		
-//		Comment comment = new Comment();
-//		
-////		comment = service.getQnaComment("90000");
-//		
-//		System.out.println("comment �����  ==>"+comment);
-////		Assert.assertEquals("T", comment.getBlocked());
-//	}
-//	
-////	@Test
-//	public void testaddQnaComment() throws Exception{
-//		
-//		System.out.println("testGetQnaComment TEST START");
-//		
-//		Timestamp time = new Timestamp();
-//		
-//		
-//		Post post = new Post();
-//		Comment comment = new Comment();
-////		post.setPostId("90001");
-//		comment.setPostId("90000");
-////		comment.setCmtId("90001");
-//		comment.setNickName("test");
-//		comment.setCmtWriterId("user01");
-////		comment.setCmtDate("202001121400");
-//		comment.setCmtContent("�ȳ��ϼ��� ��������������������");
-//		
-//		service.addQnaComment(comment);
-////		comment = service.getQnaComment("90001");
-//		
-//		System.out.println("comment �����  ==>"+comment);
-////		Assert.assertEquals("T", comment.getBlocked());
-//	}
+	@Test
+	public void testGetUser() throws Exception {
+		
+		System.out.println("getUser TEST START!!! ");
+		
+		User user = service.getUser("sw4417");
+		
+		Assert.assertEquals(user.getUserId(), "sw4417");
+		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getNickName(), "wammelier");
+		Assert.assertEquals(user.getPhone(), "01043304417");
+		Assert.assertEquals(user.getGender(), "1");
+		Assert.assertEquals(user.getBirth(), "19930124");
+		Assert.assertEquals(user.getAddress(), "경기도 군포시 당");
+		
+	}
 	
+	@Test
+	public void testGetDeletedUserList() throws Exception{
+		
+		System.out.println("getDeletedUserList");
+		
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(3);
+		
+		Map<String,Object> map = service.getDeletedUserList(search);
+		
+		List<Object> list = (List<Object>)map.get("list");
+		Assert.assertEquals(0, list.size());
+		
+		Integer totalCount = (Integer)map.get("totalCount");
+		System.out.println("totalCount == > " + totalCount);
+		
+	}
+	
+	@Test
+	public void testGetUserAdmin() throws Exception{
+		
+		System.out.println("getUserAdmin");
+		
+		User user = service.getUserAdmin("이승환");
+		
+		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getPhone(), "01043304417");
+		Assert.assertEquals(user.getLeaderName(), "이승환");
+	}
+	
+	@Test
+	public void testAddUserAdmin() throws Exception{
+		
+		System.out.println("Test AddUserAdmin");
+		
+		User user = new User();
+		user.setUserName("양승미");
+		user.setPhone("5739207492");
+		
+		service.addUserAdmin(user);
+		
+		user = service.getUserAdmin("양승미");
+		
+		Assert.assertEquals(user.getUserName(), "양승미");
+		Assert.assertEquals(user.getPhone(), "5739207492");
+
+	}
+	
+	@Test
+	public void getAdduserAdminList() throws Exception{
+		
+		System.out.println("TEST getAddUserAdminList");
+		
+		Search search = new Search();
+		search.setCurrentPage(3);
+		search.setPageSize(3);
+		
+		Map<String,Object> map = service.getAddUserAdminList(search);
+		
+		List<Object> list = (List<Object>)map.get("list");
+		Assert.assertEquals(3, list.size());
+		
+		Integer totalCount = (Integer)map.get("totalCount");
+		System.out.println("totalCount ==> "+totalCount);
+		
+	}
+	
+	@Test
+	public void updatePositionLeader() throws Exception{
+		
+		System.out.println("TEST updatePositionLeader");
+		
+		service.updatePositionLeader("이승환");
+		
+		User user = service.getUserAdmin("이승환");
+		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getUserPosition(), "1");
+	
+	}
+	
+	@Test
+	public void updateUserAdmin() throws Exception{
+		
+		System.out.println("TEST updateUserAdmin");
+
+		User user = service.getUserAdmin("이승환");
+		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getPhone(), "01043304417");
+		Assert.assertEquals(user.getAddress(), null);
+		Assert.assertEquals(user.getBirth(), null);
+		Assert.assertEquals(user.getBaptismName(), "0");
+		
+		user.setAddress("경기도 군포시 당동");
+		user.setBirth("19930124");
+		user.setBaptismName("1");
+		
+		service.updateUserAdmin(user);
+		user = service.getUserAdmin("이승환");
+		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getPhone(), "01043304417");
+		Assert.assertEquals(user.getAddress(), "경기도 군포시 당동");
+		Assert.assertEquals(user.getBirth(), "19930124");
+		Assert.assertEquals(user.getBaptismName(), "1");
+		
+	}
+	
+	// deletedUser + getDeletedUserList 같이테스트
+	@Test
+	public void getDeletedUserList() throws Exception{
+		
+		System.out.println("TEST getdeletedUserList");
+		
+		service.deleteUser("sw4417");
+		
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(3);
+		
+		Map<String,Object> map = service.getDeletedUserList(search);
+		
+		List<Object> list = (List<Object>)map.get("list");
+		Assert.assertEquals(1, list.size());
+		
+		Integer totalCount = (Integer)map.get("totalCount");
+		System.out.println("totalCount ==> "+totalCount);
+		
+	}
+	
+	@Test
+	public void updateLeaderName() throws Exception{
+		
+		System.out.println("TEST updateLeaderName");
+		
+		User user = service.getUserAdmin("이승환");
+		user.setLeaderName("아무개");
+		
+		service.updateLeaderName(user);
+		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getLeaderName(), "아무개");
+		
+	}
+	
+	@Test
+	public void addUser() throws Exception{
+		
+		System.out.println("TEST AddUser");
+		
+		User user = new User();
+		user.setUserId("abcd123");
+		user.setUserPwd("12345678");
+		user.setUserName("나폴레옹");
+		user.setNickName("레옹");
+		user.setEmail("abc@naver.com");
+		user.setGender("1");
+		user.setBirth("19930101");
+		user.setAddress("영국 어쩌구 저쩌");
+		
+		service.addUser(user);
+		user = service.getUser("abcd123");
+		
+		Assert.assertEquals(user.getUserId(), "abcd123");
+		Assert.assertEquals(user.getUserPwd(), "12345678");
+		Assert.assertEquals(user.getUserName(), "나폴레옹");
+		Assert.assertEquals(user.getNickName(), "레옹");
+		Assert.assertEquals(user.getEmail(), "abc@naver.com");
+		Assert.assertEquals(user.getGender(), "1");
+		Assert.assertEquals(user.getBirth(), "19930101");
+		Assert.assertEquals(user.getAddress(), "영국 어쩌구 저쩌");
+		Assert.assertEquals(user.getPhone(), "01009876543");
+		Assert.assertEquals(user.getUserImg(), null);
+	}
+	
+	@Test
+	public void updateUser() throws Exception{
+		
+		System.out.println("TEST updateUser");
+		
+		User user = service.getUser("sw4417");
+		user.setNickName("wammelier");
+		user.setEmail("sw4417@daum.net");
+		user.setAddress("미국 동부 로스엔젤레스");
+		user.setBirth("19920101");
+		user.setUserImg("c://user/user.img");
+		
+		service.updateUser(user);
+		
+		user = service.getUser("sw4417");
+		Assert.assertEquals(user.getUserId(), "sw4417");
+		Assert.assertEquals(user.getNickName(), "wammelier");
+		Assert.assertEquals(user.getEmail(), "sw4417@daum.net");
+		Assert.assertEquals(user.getAddress(), "미국 동부 로스엔젤레스");
+		Assert.assertEquals(user.getUserImg(), "c://user/user.img");
+	}
+	
+	@Test
+	public void updatePwd() throws Exception{
+		
+		System.out.println("TEST updatePwd");
+		
+		User user = service.getUser("sw4417");
+		user.setUserPwd("43304417");
+		
+		service.updatePwd(user);
+		
+		user = service.getUser("sw4417");
+		Assert.assertEquals(user.getUserId(), "sw4417");
+		Assert.assertEquals(user.getUserPwd(), "43304417");
+		
+	}
+	
+	@Test
+	public void updatePhone() throws Exception{
+		
+		System.out.println("TEST updatePhone");
+		
+		User user = service.getUser("sw4417");
+		user.setPhone("01050493317");
+		
+		service.updatePhone(user);
+		
+		user = service.getUser("sw4417");
+		Assert.assertEquals(user.getUserId(), "sw4417");
+		Assert.assertEquals(user.getPhone(), "01050493317");
+		
+	}
+	
+	@Test
+	public void userConfirm() throws Exception {
+		
+		System.out.println("TEST userConfirm");
+		
+		User user = service.getUser("sw4417");
+		
+		user = service.getUserConfirm(user);
+		
+		Assert.assertEquals(user.getUserId(), "sw4417");
+		Assert.assertEquals(user.getUserPwd(), "504944");
+		
+	}
+	
+	@Test
+	public void loginUser() throws Exception {
+		
+		System.out.println("TEST loginUser");
+		
+		User user = service.getLoginUser("sw4417");
+
+		Assert.assertEquals(user.getUserId(), "sw4417");
+		Assert.assertEquals(user.getUserPwd(), "504944");
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -81,11 +81,6 @@
         <div class="input-group input-group-lg">
 		  	<input type="text" class="form-control" id="input" value="1993-01-24" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div>
-        <br/>
-        <label><b>세례여부</b></label>
-        <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="입교" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
-		</div>
 		<br/>
         <button class="" type="submit" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 5% 5%;  background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">수정</button>
         <button class="" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 5% 5%; background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">취소</button>

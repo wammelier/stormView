@@ -26,7 +26,7 @@
     #wrap{background: url("/resources/signUpImg.jpeg");}
     
     /* 제일 상단에 로고 css */
-    #wrap {padding-top: 20%; height:2200px;}
+    #wrap {padding-top: 20%; height:2300px;}
     .main_logo {margin-left: 10%; margin-top: 5%; width: 80%; height: 120px;}
     .logo_img {width: 100%; height: 100%;}
     
@@ -82,6 +82,10 @@
 					    <option value="0" selected>자매</option>
 					    <option value="1">형제</option>
 					</select>
+				</div>
+				<br/><br/>
+				<div class="input-group input-group-lg">
+				  	<input type="text" class="form-control" id="input" placeholder="주소" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 				</div>
 				<br/><br/>
                 <div class="input-group input-group-lg">

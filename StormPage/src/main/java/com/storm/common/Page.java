@@ -3,8 +3,8 @@ package com.storm.common;
 public class Page {
 	
 	///Field
-	private int currentPage;		// ����������
-	private int totalCount;			// �� �Խù� ��
+	private int currentPage;		// 현재페이
+	private int totalCount;			// 총페이
 	private int pageUnit;			// �ϴ� ������ ��ȣ ȭ�鿡 �������� ��
 	private int pageSize;			// �� �������� �������� �Խù���
 	private int maxPage;			// �ִ� ������ ��ȣ(��ü ������)

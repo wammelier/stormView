@@ -32,7 +32,7 @@
     .content {margin: 10px 10px 30px; margin-top: 300px;}
     th {font-size: 30px;}
     td {font-size: 28px;}
-    .form-group { width: 100%; height: 30px;}
+    .form-group { width: 100%; height: 30px; margin-top: 30px;}
     a{font-size:33px;}
 </style>
 
@@ -50,6 +50,9 @@
   			</li>
   			<li class="nav-item">
     			<a class="nav-link active" href="/view/admin/getFenceList.jsp" style="background: #F5A9BC;">울타리편성</a>
+    		</li>
+    		<li class="nav-item">
+    			<a class="nav-link" href="/view/admin/getAdminAddUser.jsp" style="color:#F5A9BC;">가입시킬 청년목록</a>
     		</li>
 		</ul>
         

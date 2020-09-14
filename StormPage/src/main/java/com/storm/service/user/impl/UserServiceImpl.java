@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 		//debugging
 		System.out.println("userServiceImpl getUserList");
 		
-		List<User> list = userDao.getUserList(search);
+		List<User> list = userDao.getDeletedUserList(search);
 		int totalCount = userDao.getTotalCount(search);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -67,10 +67,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserAdmin(String userId) throws Exception {
+	public User getUserAdmin(String userName) throws Exception {
 		//debugging
 		System.out.println("UserServiceImpl getUserAdmin");
-		return userDao.getUserAdmin(userId);
+		return userDao.getUserAdmin(userName);
 	}
 
 	@Override
@@ -109,17 +109,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateBaptismName(User user) throws Exception {
-		//debugging
-		System.out.println("UserServiceImpl updateBaptismName");
-		userDao.updateBaptismName(user);
-	}
-
-	@Override
-	public void updatePositionLeader(String userId) throws Exception {
+	public void updatePositionLeader(String userName) throws Exception {
 		//debugging
 		System.out.println("UserServiceImpl updatePositionLeader");
-		userDao.updatePositionLeader(userId);
+		userDao.updatePositionLeader(userName);
 	}
 
 	@Override
@@ -134,6 +127,56 @@ public class UserServiceImpl implements UserService {
 		//debugging
 		System.out.println("UserServiceImpl deleteUser");
 		userDao.deleteUser(userId);
+	}
+
+	@Override
+	public Map<String, Object> getAddUserAdminList(Search search) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl getAddUserAdminList");
+		
+		List<User> list = userDao.getAddUserAdminList(search);
+		int totalCount = userDao.getTotalCount(search);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
+	}
+
+	@Override
+	public void updateUserAdmin(User user) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl updateUserAdmin");
+		userDao.updateUserAdmin(user);
+	}
+
+	@Override
+	public User getCombackUser(String userId) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl combackUser");
+		
+		return userDao.getCombackUser(userId);
+		
+		
+		
+	}
+
+	@Override
+	public User getUserConfirm(User user) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl getUseronfirm");
+		
+		return userDao.getUserConfirm(user);
+	}
+	
+	@Override
+	public User getLoginUser(String userId) throws Exception {
+		
+		//debugging
+		System.out.println("UserServiceImpl getLoginUser");
+		
+		return userDao.getLoginUser(userId);
 	}
 	
 }// end of class

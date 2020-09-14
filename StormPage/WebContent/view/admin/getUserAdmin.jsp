@@ -42,29 +42,24 @@
 		  	<input type="text" class="form-control" id="input" value="010-4330-4417" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
 		</div>
         <br/>
-        <label><b>아이디</b></label>
-        <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="sw4417" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
-		</div>
-        <br/>
         <label><b>주소</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="경기도 군포시 당동" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
-		</div>
-        <br/><br/>
-		<label><b>이메일</b></label>
-        <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="sw4417@naver.com" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+		  	<input type="text" class="form-control" id="input" value="경기도 군포시 당동" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div>
         <br/>
         <label><b>성별</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="형제" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+		  	<input type="text" class="form-control" id="input" value="형제" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div> 
         <br/>
         <label><b>생일</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="1993-01-24" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+		  	<input type="text" class="form-control" id="input" value="1993-01-24" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		</div>
+        <br/>
+        <label><b>울타리</b></label>
+        <div class="input-group input-group-lg">
+		  	<input type="text" class="form-control" id="input" value="이승환울타리" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
 		</div>
         <br/>
         <label><b>세례여부</b></label>
