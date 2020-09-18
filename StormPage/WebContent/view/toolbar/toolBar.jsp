@@ -48,7 +48,12 @@
 		});
 		
 	});
-	
+	function buttonChange(){
+		$.ajax({
+			
+		})
+		
+	}
 </script>
  
 <style>
@@ -80,16 +85,11 @@
                 </div>
                 <div>
 	                <i class="fas fa-search"></i>
-	                <a href="/view/admin/getUserList.jsp"><i class="fas fa-cog"></i></a>
+	                <a href="/user/getUserList"><i class="fas fa-cog"></i></a>
                 </div>
             </div>
 
             <div class="header_under">
-                <div class="headersub_icon">
-                	<a href="/view/user/getUser.jsp">
-                    	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
-                    </a>
-                </div>
                 <div class="headersub_icon">
                     <img id="notice_post" class="pic" src="/resources/mainIconNotifyBlack.png">
                 </div>
@@ -106,6 +106,11 @@
                 <div class="headersub_icon">
                 	<a href="/view/fence/getFenceReportList.jsp">
                     	<img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
+                    </a>
+                </div>
+                <div class="headersub_icon">
+                	<a href="/user/getUserList">
+                    	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
                     </a>
                 </div>
             </div>

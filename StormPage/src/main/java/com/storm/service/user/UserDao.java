@@ -43,5 +43,9 @@ public interface UserDao {
 	public User getUserConfirm(User user) throws Exception;
 	
 	public User getLoginUser(String userId) throws Exception;
+	
+	public List<User> getLeaderNameList() throws Exception;
+	
+	public void deleteLeaderPostion(String userName) throws Exception;
 
 }

@@ -57,7 +57,7 @@
 	
 	<!-- 관리자가 유저목록 리스트를 볼수있는 쿼리 -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT u.*, au.phone 
+	  	SELECT u.*, au.phone, au.user_position, au.leader_name
 	  	FROM users u
 	  	JOIN approval_users as au
 		ON u.user_name = au.user_name
@@ -65,10 +65,16 @@
 	  		<where>
 	  			u.user_deleted = '0'
 				<if test="searchCondition == 0 and searchKeyword !='' ">
-		 			user_id LIKE '%${searchKeyword}%'
+		 			AND u.user_id LIKE '%${searchKeyword}%'
 				</if>
 				<if test="searchCondition == 1 and searchKeyword !='' ">
-		 			user_name LIKE '%${searchKeyword}%'
+		 			AND u.nick_name LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword !='' ">
+					AND u.user_name LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 3 and searchKeyword !='' ">
+					AND au.leader_name LIKE '%${searchKeyword}%'
 				</if>
 			</where>
 		</if>
@@ -88,10 +94,10 @@
 		<if test="searchCondition != null">
 			<where>
 				<if test="searchCondition == 0 and searchKeyword !='' ">
-		 			user_id LIKE '%${searchKeyword}%'
+		 			AND user_id LIKE '%${searchKeyword}%'
 				</if>
 				<if test="searchCondition == 1 and searchKeyword !='' ">
-		 			user_name LIKE '%${searchKeyword}%'
+		 			AND user_name LIKE '%${searchKeyword}%'
 				</if>
 			</where>
 		</if>					
@@ -237,6 +243,23 @@
 		FROM users u
 		WHERE u.user_id = #{value}
 	</select>
+	
+	<!-- 리더이름 목록 출력하는 쿼리 -->
+	<select id="getLeaderNameList" resultMap="userSelectMap">
+		SELECT leader_name
+		FROM approval_users
+		WHERE user_position = '1'
+	</select>
+	
+	<!-- 리더임명취소 -->
+	<update id="deleteLeaderPosition" parameterType="String">
+		UPDATE approval_users
+		<set>
+			user_position = '0'
+		</set>
+		WHERE user_name = #{value}
+	</update>
+	
 	
 
 </mapper>

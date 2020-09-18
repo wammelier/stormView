@@ -45,7 +45,7 @@ public class LoginSessionListener implements HttpSessionListener, HttpSessionAtt
 				if (entry.getKey().equals(userId)) { 
 					entry.getValue().cancel(); // TimerTask 종료
 					checkMap.remove(userId); 
-					System.out.println(userId + "님의 알림이 종료되었습니다."); 
+					System.out.println(userId + "님의 알림이 종료되었습니다.");
 				} 
 			}
 		}

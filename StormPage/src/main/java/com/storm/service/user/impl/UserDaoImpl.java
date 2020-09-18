@@ -156,5 +156,21 @@ public class UserDaoImpl implements UserDao {
 		
 		return sqlSession.selectOne("UserMapper.loginUser", userId);
 	}
+
+	@Override
+	public List<User> getLeaderNameList() throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl getLeaderNameList");
+		
+		return sqlSession.selectList("UserMapper.getLeaderNameList");
+	}
+
+	@Override
+	public void deleteLeaderPostion(String userName) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl deleteLeaderPosition");
+		
+		sqlSession.update("UserMapper.deleteLeaderPosition", userName);
+	}
 	
 }// end of class

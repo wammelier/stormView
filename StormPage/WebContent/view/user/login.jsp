@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,6 @@
 	
 	<!-- 제이쿼리 js 이게 있어야 자바스크립트 $가 읽힘  -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script> -->
 
     <!--JqueryMobile CDN-->
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
@@ -30,7 +29,8 @@
             loginAjax(userId, pwd);
         });
 	});
-	function loginAjax(userId, pwd) {
+	function loginAjax(userId, userPwd) {
+		console.log('loginAjax??');
 		$.ajax({
 			url: "/user/json/login",
 			method: "post",
@@ -41,13 +41,13 @@
 			},
 			data: JSON.stringify({
 				userId: userId.val(),
-				pwd: pwd.val()
+				userPwd: userPwd.val()
 			}),
 			success : function(JSONData){
 				console.log(JSONData);
 				if(JSONData.result == 'ok') {
 					setTimeout(function(){
-						location.herf("/main.jsp");
+						$(self.location).attr("href","/main.jsp");
 					}, 700);
 					
 				}else if (JSONData.result == 'NoSearchId'){
@@ -90,7 +90,7 @@
                 </div>
                 <div class="login_box">
                     <div class="login_input">
-                        <input type="id" id="user_id" name="id" placeholder="아이디(이메일형식)"/>
+                        <input type="text" id="user_id" name="id" placeholder="아이디(이메일형식)"/>
                     </div>
                     <div class="login_input">
                         <input type="password" id="user_pwd" name="password" placeholder="비밀번호(6~12자리)"/>

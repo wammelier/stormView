@@ -41,4 +41,8 @@ public interface UserService {
 	
 	public User getLoginUser(String userId) throws Exception;
 	
+	public Map<String, Object> getLeaderNameList() throws Exception;
+	
+	public void deleteLeaderPostion(String userName) throws Exception;
+	
 }

@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -19,13 +22,26 @@
 	
 	<!-- 제이쿼리 js 이게 있어야 자바스크립트 $가 읽힘  -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	
+	<!-- 제이쿼리 js 이게 있어야 자바스크립트 $가 읽힘  -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     
 </head>
+
+<script type="text/javascript">
+	$(function(){
+		$('.logout_button').on("click",function(){
+			$(self.location).attr('href','/user/logout');
+		});
+	})
+	
+</script>
 <style>
     .content {padding: 50px 50px 50px; margin-top: 290px;} 
     #input {height: 80px; font-size:30px;}
     b {font-size: 34px;}
 </style>
+
 <body>
  	<header style="z-index: 5;">
     	<jsp:include page="../toolbar/toolBar.jsp"/>
@@ -40,50 +56,59 @@
         <br/><br/>
         <label><b>이름</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="이승환" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+		  	<input type="text" class="form-control" id="input" value="${ user.userName }" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
 		</div>
         <br/>
         <label><b>휴대폰번호</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="010-4330-4417" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+		  	<input type="text" class="form-control" id="input" value="${ user.phone }" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
 		</div>
         <br/>
         <button class="ui-btn ui-corner-all" style="height: 80px; width: 300px; font-weight: bold; font-size: 30px; background:#F5A9BC; border: thin; border-radius: 6px;">휴대폰번호변경</button>
         <br/><br/>
         <label><b>아이디</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="sw4417" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+		  	<input type="text" class="form-control" id="input" value="${ user.userId }" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
 		</div>
         <br/>
         <label><b>닉네임(변경가능)</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="wammelier" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		  	<input type="text" class="form-control" id="input" value="${ user.nickName }" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div>
 		<br/>
         <button class="ui-btn ui-corner-all" style="height: 80px; width: 300px; font-weight: bold; font-size: 30px; background:#F5A9BC; border: thin; border-radius: 6px;">비밀번호변경</button>
         <br/><br/>
 		<label><b>이메일(변경가능)</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="sw4417@naver.com" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		  	<input type="text" class="form-control" id="input" value="${ user.email }" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div>
         <br/>
         <label><b>주소(변경가능)</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="경기도 군포시 당동 765-21" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		  	<input type="text" class="form-control" id="input" value="${ user.address }" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 		</div>
         <br/>
         <label><b>성별</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="형제" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+        	<c:if test="${ user.gender == '0' }">
+		  		<input type="text" class="form-control" id="input" value="자매" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+			</c:if>
+			<c:if test="${ user.gender == '1' }">
+		  		<input type="text" class="form-control" id="input" value="형제" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" readonly>
+			</c:if>
 		</div> 
         <br/>
-        <label><b>생일(변경가능 ' - ' 를 생략하고 입력해주세요.)</b></label>
+        <label><b>생일(예시: 990223)</b></label>
         <div class="input-group input-group-lg">
-		  	<input type="text" class="form-control" id="input" value="1993-01-24" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		  	<input type="text" class="form-control" id="input" value="${ user.birth }" 
+		  	aria-label="Sizing example input" maxlength="6" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+		  	aria-describedby="inputGroup-sizing-lg">
 		</div>
 		<br/>
-        <button class="" type="submit" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 5% 5%;  background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">수정</button>
-        <button class="" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 5% 5%; background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">취소</button>
+		<button class="logout_button" style="float: left; width: 100%; height: 60px; font-size: 30px; margin: 5% 0% 0%; border: thin; background: linear-gradient( to top, #d50000, #e53935 ); color: #ffffff;">로그아웃</button>
+		<br/>
+        <button class="" type="submit" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 0% 0%; border: thin; background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">수정</button>
+        <button class="" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 5% 5%; border: thin; background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">취소</button>
     </div>
 </body>
 

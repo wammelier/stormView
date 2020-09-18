@@ -178,5 +178,26 @@ public class UserServiceImpl implements UserService {
 		
 		return userDao.getLoginUser(userId);
 	}
+
+	@Override
+	public Map<String, Object> getLeaderNameList() throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl getLeaderName");
+		
+		List<User> list = userDao.getLeaderNameList();
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("leaderList", list);
+		
+		return map;
+	}
+
+	@Override
+	public void deleteLeaderPostion(String userName) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl deleteLeaderPosition");
+		
+		userDao.deleteLeaderPostion(userName);
+	}
 	
 }// end of class

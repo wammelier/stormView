@@ -21,6 +21,7 @@
 		<typeAlias alias="community" 	type="com.storm.service.domain.Community" />
 	</typeAliases>
 	
+	<!--  마이바티스가 파라미터를 PreparedStatement에 세팅하거나, resultSet으로 부터 값을 추적할 때마다 타입핸들러는 맞은 자바 타입의 값을 추적하기 위해 쓰임-->
 	<typeHandlers>
         <typeHandler handler="com.storm.common.handler.ClobHandler" javaType="String" jdbcType="CLOB"/>
     </typeHandlers>

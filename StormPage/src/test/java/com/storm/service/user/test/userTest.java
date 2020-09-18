@@ -40,7 +40,7 @@ public class userTest {
 		System.out.println("getUserList Test start! 시작!!");
 		
 		Search search = new Search();
-		search.setCurrentPage(3);
+		search.setCurrentPage(1);
 		search.setPageSize(3);
 		
 		Map<String,Object> map = service.getUserList(search);
@@ -320,6 +320,33 @@ public class userTest {
 
 		Assert.assertEquals(user.getUserId(), "sw4417");
 		Assert.assertEquals(user.getUserPwd(), "504944");
+	}
+	
+	@Test
+	public void getLeaderNameList() throws Exception {
+		
+		System.out.println("TEST getLeaderNameList");
+		
+		Map<String,Object> map = service.getLeaderNameList();
+		
+		List<User> list = (List<User>)map.get("leaderList");
+		
+		Assert.assertEquals(1, list.size());
+		
+	}
+	
+	@Test
+	public void deleteLeaderPosition() throws Exception {
+		
+		System.out.println("TEST deleteLeaderPosition");
+		
+		User user = service.getUserAdmin("이승환");
+		System.out.println("user ==>"+user);
+		
+		service.deleteLeaderPostion(user.getUserName());
+		user = service.getUserAdmin(user.getUserName());
+		
+		Assert.assertEquals("0", user.getUserPosition());
 	}
 
 }
