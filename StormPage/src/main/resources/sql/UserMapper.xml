@@ -39,7 +39,7 @@
 	
 	<!-- 관리자가 추가한 가입승인청년들 조회하는 쿼리 -->
 	<select  id="getAddUserAdminList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT  au.user_name, au.phone, au.registore_regdate, au.signup_flag
+	  	SELECT  au.user_name, au.phone, au.registore_regdate, au.signup_flag, au.user_position
 	  	FROM approval_users au
 		ORDER BY au.user_name asc
 		LIMIT #{startRowNum}, #{pageSize}
@@ -134,6 +134,7 @@
 		UPDATE approval_users
 			<set>
 				user_position = '1'
+				leader_name = #{value}
 			</set>
 		WHERE user_name = #{value}
 	</update>
@@ -144,6 +145,7 @@
 		<set>
 			address = #{address},
 			birth = #{birth},
+			gender = #{gender},
 			baptism_name = #{baptismName}
 		</set>
 		WHERE user_name = #{userName}
@@ -172,7 +174,7 @@
 	<!-- 유저가 자신의 정보를 상세하게 볼수있는 쿼리 -->
 	<select id="getUser" parameterType="string" resultMap="userSelectMap">
 		SELECT u.user_id, u.user_name, u.nick_name, u.user_pwd, u.email, 
-		au.phone, u.gender, u.birth, u.user_img, u.address
+		au.phone, u.gender, u.birth, u.user_img, u.address, u.user_role, au.user_position
 		FROM users u
 		JOIN approval_users au
 		on u.user_name = au.user_name
@@ -194,8 +196,7 @@
 			<set>
 				nick_name = #{nickName},
 				email = #{email},
-				birth = #{gender},
-				user_img = #{userImg},
+				birth = #{birth},
 				address = #{address}
 			</set>
 		WHERE user_id = #{userId}
@@ -239,8 +240,10 @@
 	
 	<!-- 유저가 로그인을 시도할경우 해당하는 아이디가 존재하는지 여부 체크하는 쿼리 -->
 	<select id="loginUser" parameterType="String" resultMap="userSelectMap">
-		SELECT u.user_id, u.user_pwd
+		SELECT u.user_id, u.user_pwd, u.user_role, u.nick_name, u.user_name, au.user_position
 		FROM users u
+		JOIN approval_users au
+		on u.user_name = au.user_name
 		WHERE u.user_id = #{value}
 	</select>
 	
@@ -259,6 +262,22 @@
 		</set>
 		WHERE user_name = #{value}
 	</update>
+	
+	<!-- 회원가입시 signup_flag 가입처리하는 쿼리 -->
+	<update id="updateSignUpFlag" parameterType="String">
+		UPDATE approval_users
+		<set>
+			signup_flag = '1'
+		</set>
+		WHERE user_name = #{value}
+	</update>
+	
+	<!-- 관리자가 가입승인처리할 유저이름 핸드폰을 잘못 기입한경우 삭제하는 쿼리 -->
+	<delete id="deletedNamePhone" parameterType="String">
+		DELETE 
+		FROM approval_users
+		WHERE user_name = #{value}
+	</delete>
 	
 	
 

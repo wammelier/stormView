@@ -24,11 +24,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
  <!-- googlefont -->
  
-<script type="text/javascript">
-	
-	
-</script>
-
 <style>
     @font-face {
     font-family: 'NIXGONB-Vb';
@@ -42,8 +37,9 @@
 <script type="text/javascript">
 
 	$(function() {
+		/* 검색창에 커서를 올릴경우 */
 		$('.form-control').keyup(function() {
-		
+			/* backend단에 search도메인에 바인딩될 데이터값을 세팅함 */
 			var searchCondition = $('.form-control option:selected').val();
 			var searchKeyword = $('#searchKeyword').val();
 			
@@ -86,15 +82,16 @@
 								splitDate += regdate.getDate();
 							} */
 							
-							/* 초기값 널스트링 지정 */
+							/* tag를 append하기 위한 필드생성 */
 							var appendName = '';
 							/* 리더와 일반청년을 append 하기위한 조건문..원래 html에서 c:if를 사용하기때문에 script에선 if문으로 구현 */
+							/* 1=리더, 0=일반청년 */
 							if( JSONData.list[i].userPosition == '1') {
 								appendName = "일반청년";
 							}else{
 								appendName = "리더";
 							} 	
-							/* tag를 append하기 위한 필드생성 */
+							/* tag를 append하기 위한 필드 인스턴스 */
 							var appendHtml = 	"<tr>"+
 													"<td>"+JSONData.list[i].userName+"</td>"+
 													"<td>"+JSONData.list[i].userId+"</td>"+
@@ -102,6 +99,7 @@
 													"<td>"+appendName+"</td>"+
 													"<td><button type='button' class='btn btn-danger btn-lg'>재명</button></td>"+
 												"</tr>";
+							/* tbody tag안에 어펜드 */
 							$('tbody').append(appendHtml);
 			              						
 						}/* end of for  */
@@ -116,6 +114,14 @@
 			}); /* end of ajax */
 		}); /* end of event */
 	}); /* end of function */
+	
+	/* 관리자가 회원의 상세정보를 보기 원할 경우 */
+	$(function() {
+		$('td:nth-child(1)').on('click', function() {
+			var userId = $(this).find($('input[name="userId"]')).val();
+			self.location = "/user/getAdminUser?userId="+userId;
+		});
+	});/* end of function */
 </script>
 
 <style>
@@ -145,7 +151,7 @@
 		    	<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC;">울타리편성</a>
 		  	</li>
 		  	<li class="nav-item">
-    			<a class="nav-link" href="/view/admin/getAdminAddUser.jsp" style="color:#F5A9BC;">가입시킬 청년목록</a>
+    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC;">가입시킬 청년목록</a>
     		</li>
 		</ul>
 	    
@@ -155,7 +161,7 @@
                 <select class="form-control" name="searchCondition" style="height:60px; width:130px; font-size:26px;">
                 
                     <c:if test="${empty search.searchCondition }">
-	                    <option class="from-option" value="0" selected="selected" ></option>
+	                    <option class="from-option" value="0" selected="selected" >아이디</option>
 	                    <option class="from-option" value="1" >닉네임</option>
 	                    <option class="from-option" value="2" >이름</option>
                     </c:if>
@@ -193,7 +199,8 @@
 	            <c:set var="i" value="0"/>
 				<c:forEach var="user" items="${ list }">
 		            <tr>
-		              <td>${ user.userName }</td>
+		              <td>${ user.userName }
+		              <input type="hidden" name="userId" value="${ user.userId }"/></td>
 		              <td>${ user.userId }</td>
 		              <td>${ user.nickName }</td>
 		              <c:if test="${ user.userPosition == '0' }">

@@ -163,7 +163,8 @@ $(function(){
       <div id="wrap">
       
 		<header class="header" data-role="header">
-           <div class="header_top">
+			<jsp:include page="/view/toolbar/toolBar.jsp"/>
+           <!-- <div class="header_top">
                 <div id="main_log" class="main_logo">
 	                <a href="/main.jsp">
 	                	<img class="logo_img" src="/resources/stormLogo.png">
@@ -201,25 +202,25 @@ $(function(){
                     	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
                     </a>
                 </div>
-            </div>
+            </div> -->
         </header>
     	
             <div class="contents" data-role="content">
 	            <div class="add_post_body">
 	           		<div class="add_post_img">
-	           			<img class="" style="width:90px; height:90px; border-radius: 100%;"  src="./resources/stormLogo.png">
+	           			<img class="" style="width:90px; height:90px; border-radius: 100%;"  src="/resources/stormLogo.png">
 	           		</div>
 	           		<div class="add_post_button">
-	           			<p>이승환님, 공동체에 나누고 싶은말이 있으신가요?</p>
+	           			<p style="margin-top: 20px;">${ user.userName }님, 공동체에 나누고 싶은말이 있으신가요?</p>
 	           		</div>
 	            </div>
                <div class="post_body">
                     <div class="image">
-                        <img class="image_pic" width="50px" src="./resources/stormLogo.png">
+                        <img class="image_pic" width="50px" src="/resources/stormLogo.png">
                     </div>
                     <div class="title_group">
                         <div class="post_user">
-                            <span class="user_name">Storm</span>
+                            <span class="user_name">${ user.nickName }</span>
                         </div>
                         <div class="post_time">
                             <span class="time">어제 오전 9:00</span>
@@ -248,17 +249,17 @@ $(function(){
                         </div>
                     </div>
                     <div class="poto">
-                        <img class="post_img" src="./resources/stormLogo.png">
+                        <img class="post_img" src="/resources/stormLogo.png">
                     </div>
                     <div class="sub_menu">
                         <div class="sub_icon">
-                           <img src="./resources/mainIconHeartBlack.png" style="width:100%; height: 100%;">
+                           <img src="/resources/mainIconHeartBlack.png" style="width:100%; height: 100%;">
                         </div>
                         <div class="sub_icon">
-                            <img src="./resources/mainIconPraiseBlack.png" style="width: 100%; height: 100%;">
+                            <img src="/resources/mainIconPraiseBlack.png" style="width: 100%; height: 100%;">
                         </div>
                         <div class="sub_icon">
-                           <img src="./resources/mainIconcomunityBlack.png" style="width: 100%; height: 100%;">
+                           <img src="/resources/mainIconcomunityBlack.png" style="width: 100%; height: 100%;">
                         </div>
                     </div>
                 </div>

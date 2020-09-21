@@ -1,5 +1,6 @@
 package com.storm.web.user;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,9 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.storm.common.Page;
@@ -109,6 +112,46 @@ public class UserRestController {
 		search.setPageSize(pageSize);
 		
 		Map<String, Object> map = userService.getUserList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(), 
+				((Integer)map.get("totalCount")).intValue(), pageSize, pageUnit);
+		System.out.println("resultPage==>"+resultPage);
+		
+		map.put("resultPage", resultPage);
+		map.put("search", search);
+		System.out.println("map ==>"+map);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/deleteNamePhone/{userName}", method = RequestMethod.GET)
+	public Map<String, Object> deleteNamePhone(@PathVariable String userName) throws Exception {
+		
+		System.out.println("UserRestController deleteNamePhone");
+		System.out.println("userName ==> "+userName);
+		
+		userService.deleteNamePhone(userName);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", "deleteOk");
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/getAddUserAdminList", method = RequestMethod.POST)
+	public Map<String, Object> getAddUserAdminList(@RequestBody Search search) throws Exception {
+		
+		//debugging
+		System.out.println("UserRestContoller getAddUserAdminList");
+		
+		User user = new User();
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = userService.getAddUserAdminList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), 
 				((Integer)map.get("totalCount")).intValue(), pageSize, pageUnit);

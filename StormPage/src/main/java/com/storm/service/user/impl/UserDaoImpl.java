@@ -172,5 +172,23 @@ public class UserDaoImpl implements UserDao {
 		
 		sqlSession.update("UserMapper.deleteLeaderPosition", userName);
 	}
+
+	@Override
+	public void updateSignUpFlag(String userName) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl updateSignUpFlag");
+		
+		sqlSession.update("UserMapper.updateSignUpFlag", userName);
+		
+	}
+
+	@Override
+	public void deleteNamePhone(String userName) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl deleteNamePhone");
+		
+		sqlSession.delete("UserMapper.deletedNamePhone", userName);
+		
+	}
 	
 }// end of class

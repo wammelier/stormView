@@ -37,17 +37,7 @@
 
 <script type="text/javascript">
 
-	$(function(){
-		$('.headersub_icon').bind("click", function(){
-			$('#notice_post').attr('src','/resources/mainIconNotifyPink.png');
-			
-			location.href = "/view/post/addPost.jsp";
-		});
-		
-		$('#main_logo_img').bind("click", function(){
-		});
-		
-	});
+
 	function buttonChange(){
 		$.ajax({
 			
@@ -79,13 +69,15 @@
         <header class="header" data-role="header">
            <div class="header_top">
                 <div id="main_log" class="main_logo">
-	                <a href="/main.jsp">
+	                <a href="/user/mainPage">
 	                	<img class="logo_img" src="/resources/stormLogo.png">
 	                </a>
                 </div>
                 <div>
 	                <i class="fas fa-search"></i>
-	                <a href="/user/getUserList"><i class="fas fa-cog"></i></a>
+	                <c:if test="${user.userRole == '1' }">
+	                	<a href="/user/getUserList"><i class="fas fa-cog"></i></a>
+	                </c:if>
                 </div>
             </div>
 
@@ -103,13 +95,15 @@
                     	<img id="imgage_post" class="pic" src="/resources/mainIconImgBlack.png">
                     </a>
                 </div>
+                <c:if test="${user.userPosition == '1' }">
+	                <div class="headersub_icon">
+	                	<a href="/view/fence/getFenceReportList.jsp">
+	                    	<img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
+	                    </a>
+	                </div>
+                </c:if>
                 <div class="headersub_icon">
-                	<a href="/view/fence/getFenceReportList.jsp">
-                    	<img id="fence_post" class="pic" src="/resources/mainIconFenceBlack.png">
-                    </a>
-                </div>
-                <div class="headersub_icon">
-                	<a href="/user/getUserList">
+                	<a href="/user/getUser">
                     	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
                     </a>
                 </div>

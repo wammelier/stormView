@@ -154,7 +154,7 @@
     			<a class="nav-link active" href="/user/getFenceList" style="background: #F5A9BC;">울타리편성</a>
     		</li>
     		<li class="nav-item">
-    			<a class="nav-link" href="/view/admin/getAdminAddUser.jsp" style="color:#F5A9BC;">가입시킬 청년목록</a>
+    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC;">가입시킬 청년목록</a>
     		</li>
 		</ul>
         

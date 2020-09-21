@@ -45,4 +45,8 @@ public interface UserService {
 	
 	public void deleteLeaderPostion(String userName) throws Exception;
 	
+	public void updateSignUpFlag(String userName) throws Exception;
+	
+	public void deleteNamePhone(String userName) throws Exception;
+	
 }

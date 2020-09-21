@@ -253,7 +253,6 @@ public class userTest {
 		user.setEmail("sw4417@daum.net");
 		user.setAddress("미국 동부 로스엔젤레스");
 		user.setBirth("19920101");
-		user.setUserImg("c://user/user.img");
 		
 		service.updateUser(user);
 		
@@ -262,7 +261,7 @@ public class userTest {
 		Assert.assertEquals(user.getNickName(), "wammelier");
 		Assert.assertEquals(user.getEmail(), "sw4417@daum.net");
 		Assert.assertEquals(user.getAddress(), "미국 동부 로스엔젤레스");
-		Assert.assertEquals(user.getUserImg(), "c://user/user.img");
+		Assert.assertEquals(user.getBirth(), "19920101");
 	}
 	
 	@Test
@@ -348,6 +347,43 @@ public class userTest {
 		
 		Assert.assertEquals("0", user.getUserPosition());
 	}
+	
+	@Test
+	public void UpdateSignUpFalg() throws Exception {
+		
+		System.out.println("TEST updateSignUpFlag");
+		
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(3);
+		
+		Map<String,Object> map = service.getAddUserAdminList(search);
+		
+		List<Object> list = (List<Object>)map.get("list");
+		Assert.assertEquals(3, list.size());
+		
+		User user = (User)list.get(0);
+		System.out.println("list.get==? "+user);
+		
+		service.updateSignUpFlag(user.getUserName());
+		map = service.getAddUserAdminList(search);
+		list = (List<Object>)map.get("list");
+		
+		user = (User)list.get(0);
+		
+		Assert.assertEquals("1", user.getSignupFlag());
+	}
+	@Test
+	public void deleteNamePhone() throws Exception {
+		
+		System.out.println("TEST deleteNamePhone");
+		
+		service.deleteNamePhone("김폴레옹");
+		User user = service.getUserAdmin("김폴레옹");
+		
+		Assert.assertEquals(null, user.getUserName());
+	}
+	
 
 }
 

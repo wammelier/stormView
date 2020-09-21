@@ -47,7 +47,7 @@
 				console.log(JSONData);
 				if(JSONData.result == 'ok') {
 					setTimeout(function(){
-						$(self.location).attr("href","/main.jsp");
+						$(self.location).attr("href","/user/mainPage");
 					}, 700);
 					
 				}else if (JSONData.result == 'NoSearchId'){

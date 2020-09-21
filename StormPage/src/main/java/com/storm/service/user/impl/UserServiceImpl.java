@@ -199,5 +199,23 @@ public class UserServiceImpl implements UserService {
 		
 		userDao.deleteLeaderPostion(userName);
 	}
+
+	@Override
+	public void updateSignUpFlag(String userName) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl updateSignUpFlag");
+		
+		userDao.updateSignUpFlag(userName);
+		
+	}
+
+	@Override
+	public void deleteNamePhone(String userName) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl deleteNamePhone");
+		
+		userDao.deleteNamePhone(userName);
+		
+	}
 	
 }// end of class
