@@ -17,6 +17,8 @@ public interface UserDao {
 	public User getUser(String userId) throws Exception;
 
 	public List<User> getDeletedUserList(Search search) throws Exception;
+	
+	public List<User> getFenceList(Search search) throws Exception;
 
 	public User getUserAdmin(String userName) throws Exception;
 
@@ -38,7 +40,7 @@ public interface UserDao {
 
 	public void deleteUser(String userId) throws Exception;
 	
-	public User getCombackUser(String userId) throws Exception;
+	public void comeBackUser(String comebackId) throws Exception;
 	
 	public User getUserConfirm(User user) throws Exception;
 	
@@ -51,5 +53,7 @@ public interface UserDao {
 	public void updateSignUpFlag(String userName) throws Exception;
 	
 	public void deleteNamePhone(String userName) throws Exception;
+	
+	public void deleteAllLeaderName(String leaderName) throws Exception;
 
 }

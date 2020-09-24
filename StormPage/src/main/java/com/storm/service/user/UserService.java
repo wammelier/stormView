@@ -35,11 +35,13 @@ public interface UserService {
 	
 	public void deleteUser(String userId) throws Exception;
 	
-	public User getCombackUser(String userId) throws Exception;
+	public void comeBackUser(String comebackId) throws Exception;
 	
 	public User getUserConfirm(User user) throws Exception;
 	
 	public User getLoginUser(String userId) throws Exception;
+	
+	public Map<String, Object> getFenceList(Search search) throws Exception;
 	
 	public Map<String, Object> getLeaderNameList() throws Exception;
 	
@@ -48,5 +50,7 @@ public interface UserService {
 	public void updateSignUpFlag(String userName) throws Exception;
 	
 	public void deleteNamePhone(String userName) throws Exception;
+	
+	public void deleteAllLeaderName(String leaderName) throws Exception;
 	
 }

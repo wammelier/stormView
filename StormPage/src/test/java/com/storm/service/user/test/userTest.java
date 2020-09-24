@@ -143,11 +143,12 @@ public class userTest {
 		
 		System.out.println("TEST updatePositionLeader");
 		
-		service.updatePositionLeader("이승환");
+		service.updatePositionLeader("박혁거");
 		
-		User user = service.getUserAdmin("이승환");
-		Assert.assertEquals(user.getUserName(), "이승환");
+		User user = service.getUserAdmin("박혁거");
+		Assert.assertEquals(user.getUserName(), "박혁거");
 		Assert.assertEquals(user.getUserPosition(), "1");
+		Assert.assertEquals(user.getLeaderName(), "박혁거");
 	
 	}
 	
@@ -382,6 +383,41 @@ public class userTest {
 		User user = service.getUserAdmin("김폴레옹");
 		
 		Assert.assertEquals(null, user.getUserName());
+	}
+	
+	@Test
+	public void getFenceList() throws Exception {
+		
+		System.out.println("TEST getFenceList");
+		
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(3);
+		search.setSearchKeyword(null);
+		search.setSearchCondition("3");
+		
+		Map<String,Object> map = service.getFenceList(search);
+		
+		List<Object> list = (List<Object>)map.get("list");
+		Assert.assertEquals(2, list.size());
+		
+		User user = (User)list.get(0);
+		System.out.println("list.get==? "+user);
+		
+		Assert.assertEquals("아아", user.getUserName());
+	}
+	
+	@Test
+	public void comebackUser() throws Exception {
+		
+		System.out.println("TEST comebackUser");
+		
+		service.comeBackUser("sw4417");
+		User user = service.getUser("sw4417");
+		
+		Assert.assertEquals("sw4417", user.getUserId());
+		Assert.assertEquals("0", user.getUserDeleted());
+		
 	}
 	
 

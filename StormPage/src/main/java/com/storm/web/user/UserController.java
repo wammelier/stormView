@@ -151,7 +151,7 @@ public class UserController {
 		}
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = userService.getUserList(search);
+		Map<String, Object> map = userService.getFenceList(search);
 		Map<String, Object> leaderNameMap = userService.getLeaderNameList();
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
@@ -231,7 +231,7 @@ public class UserController {
 		
 		userService.updateUserAdmin(user);
 		
-		return "forward:/user/getAddUserAdminList";
+		return "redirect:/user/getAddUserAdminList";
 	}
 	
 	@RequestMapping(value="updateUser", method=RequestMethod.POST)

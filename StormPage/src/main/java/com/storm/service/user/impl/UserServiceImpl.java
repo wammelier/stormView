@@ -152,11 +152,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getCombackUser(String userId) throws Exception {
+	public void comeBackUser(String comebackId) throws Exception {
 		// debugging
 		System.out.println("UserServiceImpl combackUser");
-		
-		return userDao.getCombackUser(userId);
+		System.out.println("userId ==>" +comebackId);
+		userDao.comeBackUser(comebackId);
 		
 		
 		
@@ -215,6 +215,30 @@ public class UserServiceImpl implements UserService {
 		System.out.println("UserServiceImpl deleteNamePhone");
 		
 		userDao.deleteNamePhone(userName);
+		
+	}
+
+	@Override
+	public Map<String, Object> getFenceList(Search search) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl getFenceList");
+		
+		List<User> list = userDao.getFenceList(search);
+		int totalCount = userDao.getTotalCount(search);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
+	}
+
+	@Override
+	public void deleteAllLeaderName(String leaderName) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl deleteAllLeaderName");
+		
+		userDao.deleteAllLeaderName(leaderName);
 		
 	}
 	

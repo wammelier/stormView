@@ -72,40 +72,14 @@
 
 /* 관리자가 작성한 회원의 상세정보를 수정하거나 열람하기를 원할 경우 */
 $(function() {
-	$('td:nth-child(1)').on('click', function() {
-		var userName = $('input[name="userName"]').val();
-		alert(userName);
+	$(document).on('click', 'td:nth-child(1)', function() {
+		var userName = $(this).find($('input[name="userName"]')).val();
 		self.location = "/user/getUserAdmin?userName="+userName;
-		
 	});
+});
 	
-	$('#addButton').on('click', function() {
-		swal({
-			  title: "정말 삭제하시겠습니까?",
-			  icon: "warning",
-			  buttons: true,
-			  dangerMode: true,
-			})
-			.then((willDelete) => {
-			  if (willDelete) {
-			    swal("삭제되었습니다!", {
-			      icon: "success",
-			    });
-			  } else {
-			    swal("삭제가 취소되었습니다.!");
-			  }
-			});
-	})
-	
-	$('#deleteButton').click(function() { 
-		
-		/* 회원의 이름을(이름이 pk입니다.) 통해 해당하는 테이블 목록을 삭제하기위해 */
-		var userName = $('input[name="userName"]').val();
-				  
-		/* sql에서 해당하는 keyword와 condition값을 설정해야 list가 불러와지게 설계.. */
-		/* 현재 사용중인 jsp에선 keyword와 condition값을 필요로하지 않기 때문에 널스트링을 설정 */
-		var searchKeyword = "";
-		var searchCondition = "";
+	/* 관리자가 추가한 유저를 삭제하는 경우 */
+	function deleteUserAdmin(userName) {
 		swal({
 			  title: "정말 삭제하시겠습니까?",
 			  icon: "warning",
@@ -121,70 +95,22 @@ $(function() {
 					dataType: "json",
 					headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
 					success: function(JSONData) {
-					/* restController에서 delete되는 순간 map에 key= message value = deleteOk 를 담아서 view에 전달.. */
-					if(JSONData.message == "deleteOk"){
-						$.ajax ({
-							url: "/user/json/getAddUserAdminList",
-							method: "POST",
-							dataType: "json",
-							headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
-							data: JSON.stringify ({
-								searchKeyword: searchKeyword,
-								searchCondition : searchCondition
-							}),
-							success: function(JSONData, status) {
-								if( JSONData == null || JSONData == "" ) {
-									console.log("No Search ReturnData");
-								}else{
-									console.log("Yes Search ReturnData!! ==>"+JSONData);
-									
-									$('tbody').children().remove();
-									
-									for(var i = 0; i<JSONData.list.length; i++) {
-										
-										/* 유저의 가입여부에 따른 버튼종류(0=가입안됨, 1=가입됨), 삭제버튼 종류(0=삭제,1=삭제불가) */
-										if( JSONData.list[i].signupFlag == 0) {
-											var signupFlag = '가입안됨';
-											var deleteButton = 
-												'<button type="button" class="btn btn-danger btn-lg" onclick="deleteUserAdmin()">삭제</button>';
-										}else if ( JSONData.list[i].signupFlag == 1 ) {
-											var signupFlag = '가입됨';
-											var deleteButton = '삭제불가';
-										}/* end of else if */
-										
-										/* 리더를 임명하는 버튼 종류 (0=임명, 1=임명취소) */
-										if( JSONData.list[i].userPosition == 0) {
-											var leaderButton = '<button type="button" class="btn btn-success btn-lg">리더임명</button>';
-										}else if( JSONData.list[i].userPosition == 1) {
-											var leaderButton = '<button type="button" class="btn btn-warning btn-lg">임명취소</button>';
-										}/* end of else if */
-										/* 삭제후 테이블을 비동기방식으로 어펜드 하기위한 필드.. */
-										var appendTag = '<tr>'+
-															'<td>'+JSONData.list[i].userName+'</td>'+
-															'<td>'+JSONData.list[i].phone+'</td>'+
-															'<td>'+signupFlag+'</td>'+
-															'<td>'+leaderButton+'</td>'+
-															'<td>'+deleteButton+'</td>';
-										/* 태그 어펜드 .. */
-										$('tbody').append(appendTag);
-									}/* end of for */
-								}/* end of else */
-							},/* end fo success */
-							error: function(request, status, error) {
-								console.log('code = ' + request.status + 'message = ' + request.responseText + 'error = ' +error);
-							}/* end of error */
-						});/* end of innerAjax */
-					}else {
-						console.log("값이 없습니다..")
-					}
-				},/* end of success */
-				error: function(request, status, error) {
-					console.log('code = ' +request.status + ' message =' + request.responseText + 'error =' +error);
-				}/* end of error */
-			});/* end of outterAjax */
+						/* restController에서 delete되는 순간 map에 key= message value = deleteOk 를 담아서 view에 전달.. */
+						if(JSONData.message == "deleteOk"){
+							getUserAdminList();
+						}else {
+							console.log("값이 없습니다..")
+						}/* end of else */
+					},/* end of success */
+					error: function(request, status, error) {
+						console.log('code = ' +request.status + ' message =' + request.responseText + 'error =' +error);
+					}/* end of error */
+				});/* end of outterAjax */
+				
 			swal("삭제되었습니다!", {
 		      icon: "success",
 		    });/* end of swal */
+		    
 			/* 스위트알럿 취소버튼을 누를경우 */
 		  } else {
 		    swal("삭제가 취소되었습니다.!");
@@ -193,8 +119,158 @@ $(function() {
 	/* ======================================== */ 
 	/* ============ 스위트 알럿 끝!!============== */
 	/* ======================================== */
-	});/* end of deleteUserAdmin() */
-});/* end of function */
+	};/* end of deleteUserAdmin */
+
+
+
+/* 리더를 임명할때.. */
+function addLeader(userName) {
+	$.ajax({
+		url:"/user/json/updatePositionLeader/"+userName,
+		method: "GET",
+		dataType: "json",
+		headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
+		success: function(JSONData) {
+			/* restController 로 부터 오는 data값.. */
+			if(JSONData.message == "updateOk"){
+				getUserAdminList()
+			}/* end of if */
+		},/* end of success */
+		error: function(request, status, error) {
+			console.log('code = '+request.status + 'message ='+ request.responseText + 'error =' + error);	
+		},/* end of error */
+	});/* end of ajax */
+};/* end of function addLeader() */
+
+
+
+/* 리더임명을 취소할때.. */
+function deleteLeader(userName) {
+	$.ajax({
+		url:"/user/json/deleteLeaderPostion/"+userName,
+		method: "GET",
+		dataType: "json",
+		headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
+		success: function(JSONData) {
+			/* restController 로 부터 오는 data값.. */
+			if(JSONData.message == "deleteOk"){
+				$('#'+userName+':nth').remove();
+				$('#'+userName+':nth').html('<td><button type="button" id="'+userName+'" class="btn btn-warning btn-lg" onclick="deleteLeader(\''+userName+'\')">임명취소</button></td>')
+				getUserAdminList();
+			}/* end of if */
+		},/* end of success */
+		error: function(request, status, error) {
+			console.log('code = '+request.status + 'message ='+ request.responseText + 'error =' + error);	
+		},/* end of error */
+	});/* end of ajax */
+};/* end of function DeleteLeader() */
+
+
+
+/* 각종 이벤트마다 테이블의 데이터를 리로드하기 위해 list Data 들을 ajax처리함. */
+function getUserAdminList() {
+	
+	var searchKeyword = '';
+	var searchCondition = '';
+	
+	$.ajax ({
+		url: "/user/json/getAddUserAdminList",
+		method: "POST",
+		dataType: "json",
+		headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
+		data: JSON.stringify ({
+			searchKeyword: searchKeyword,
+			searchCondition : searchCondition
+		}),
+		success: function(JSONData, status) {
+			if( JSONData == null || JSONData == "" ) {
+				console.log("No Search ReturnData");
+			}else{
+				console.log("Yes Search ReturnData!! ==>"+JSONData);
+				
+				$('tbody').children().remove();
+				
+				for(var i = 0; i<JSONData.list.length; i++) {
+					
+					/* 삭제버튼 종류(0=삭제,1=삭제불가) */
+					if( JSONData.list[i].signupFlag == 0 && JSONData.list[i].userPosition == 0) {
+						var deleteButton = 
+							'<button type="button" class="btn btn-danger btn-lg" onclick="deleteUserAdmin(\''+JSONData.list[i].userName+'\')">삭제</button>';
+					}else if ( JSONData.list[i].signupFlag == 1 || JSONData.list[i].userPosition == 1) {
+						var deleteButton = '삭제불가';
+					}
+					/* 유저의 가입여부에 따른 버튼종류(0=가입안됨, 1=가입됨) */
+					if( JSONData.list[i].signupFlag == 0 ) {
+						var signupFlag = '가입안됨';
+					}else if ( JSONData.list[i].signupFlag == 1 ) {
+						var signupFlag = '가입됨';
+					}
+					/* 리더를 임명하는 버튼 종류 (0=임명, 1=임명취소) */
+					if( JSONData.list[i].userPosition == 0) {
+						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-success btn-lg" onclick="addLeader(\''+JSONData.list[i].userName+'\')">리더임명</button></td>';
+					}else if( JSONData.list[i].userPosition == 1) {
+						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-warning btn-lg" onclick="deleteLeader(\''+JSONData.list[i].userName+'\')">임명취소</button></td>';
+						
+					}/* end of else if */
+					/* 삭제후 테이블을 비동기방식으로 어펜드 하기위한 필드.. */
+					var appendTag = '<tr>'+
+										'<td>'+JSONData.list[i].userName+
+										'<input type="hidden" name="userName" value=\"'+JSONData.list[i].userName+'\"/>'+
+										'</td>'+
+										'<td>'+JSONData.list[i].phone+'</td>'+
+										'<td>'+signupFlag+'</td>'+
+										'<td>'+leaderButton+'</td>'+
+										'<td>'+deleteButton+'</td>';
+					/* 태그 어펜드 .. */
+					$('tbody').append(appendTag);
+				}/* end of for */
+			}/* end of else */
+		},/* end fo success */
+		error: function(request, status, error) {
+			console.log('code = ' + request.status + 'message = ' + request.responseText + 'error = ' +error);
+		}/* end of error */
+	});/* end of Ajax */
+};/* end of getUseAdminList */
+
+
+
+/* 가입시킬 청년추가 버튼 누를때 보이고 숨기는 기능. */
+function addUserButton() {
+	if($('#addUserAdmin').css('display') == 'none') { 
+		document.getElementById('addUserAdmin').style.display="block";
+	}else {
+		document.getElementById('addUserAdmin').style.display="none";
+	}/* end of else */
+};/* end of addUserButton() */
+
+
+
+/* 가입시킬 유저 추가 버튼을 누르는 기능. */
+function successButton() {
+		var addName = $('#addName').val();
+		var addPhone = $('#addPhone').val();
+		 
+		$.ajax ({
+			url: "/user/json/addUserAdmin",
+			method: "POST",
+			dataType: "json",
+			headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
+			data: JSON.stringify ({
+				userName : addName,
+				phone : addPhone
+			}),
+			success: function(JSONData, status) {
+				if(JSONData.message == 'addFailName'){
+					swal("해당 이름이 이미 존재합니다.", "이미 추가하셨습니다.");	
+				}else if(JSONData.message == 'addOk') {
+					getUserAdminList();
+					swal("알림!", "등록되었습니다.");
+					$('#addName').val('');
+					$('#addPhone').val('');
+				}/* end of else if */
+			}/* end of success */
+	});/* end of ajax */
+};/* end of function */
 
 
 </script>
@@ -218,9 +294,15 @@ $(function() {
     			<a class="nav-link active" href="/user/getAddUserAdminList" style="background: #F5A9BC;">가입시킬 청년목록</a>
     		</li>
 		</ul>
-       	<button type="button" id ="addButton" class="btn btn-primary btn-lg" style="margin-left:10px; margin-top: 10px; font-size: 35px; background: #F5A9BC;">가입시킬 청년추가</button>
+		<div>
+       		<button type="button" id ="addButton" class="btn btn-primary btn-lg" style="margin-left:10px; margin-top: 10px; font-size: 35px; background: #F5A9BC;" onclick="addUserButton();">가입시킬 청년추가</button>
+       	</div>
+       <div id="addUserAdmin" style="margin: 10px 10px 10px; width: 700px; height: 60px; display: none;" >
+       		<input id="addName" type="text" placeholder="이름" maxlength="4" style="font-size:30px; width:20%; height:100%;">
+       		<input id="addPhone" type="text" placeholder="휴대폰번호" maxlength="12" style="margin-left: 30px; font-size:30px; width:45%; height:100%;">
+       		<button type='button' id='successButton' class='btn btn-primary btn-lg' style="margin-bottom: 15px;" onclick="successButton()">등록</button>
+       </div>
      </div>
-        <form method="get">    
          <table class="table">
             <thead>
 	            <tr>
@@ -228,17 +310,15 @@ $(function() {
 	                <th scope="col">휴대폰번호</th>
 	                <th scope="col">가입여부</th>
 	                <th scope="col">리더임명</th>
-	                <th scope="col">삭제여부
-	                
-	                </th>
+	                <th scope="col">삭제여부</th>
 	            </tr>
             </thead>
             <tbody>
-             <c:set var="i" value="0"/>
+             	<c:set var="i" value="0"/>
 				<c:forEach var="user" items="${ list }">
-		            <tr>
+					<tr>		
 		              <td>${ user.userName }
-		              <input type="hidden" id="userName" name="userName" value="${ user.userName }"/></td>
+		              <input type="hidden" name="userName" value="${ user.userName }"/></td>
 		              <td>${ user.phone }</td>
 		              <c:if test="${ user.signupFlag == '0' }">
 		              	<td>가입안됨</td>
@@ -247,22 +327,21 @@ $(function() {
 		              	<td>가입됨</td>
 		              </c:if>
 		              <c:if test="${ user.userPosition == '0' }">
-		              	<td><button type="button" class="btn btn-success btn-lg">리더임명</button></td>
+		              	<td><button type="button" id="${ user.userName }" class="btn btn-success btn-lg" onclick="addLeader('${ user.userName }')">리더임명</button></td>
 		              </c:if>
 		              <c:if test="${ user.userPosition == '1' }">
-		              	<td><button type="button" class="btn btn-warning btn-lg">임명취소</button></td>
+		              	<td><button type="button" id="${ user.userName }" class="btn btn-warning btn-lg" onclick="deleteLeader('${ user.userName }')">임명취소</button></td>
 		              </c:if>
-		              <c:if test="${ user.signupFlag == '0' }">
-		   				<td><button type="button" id="deleteButton" class="btn btn-danger btn-lg">삭제</button></td>
+		              <c:if test="${ user.signupFlag == '0' && user.userPosition == '0' }">
+		   				<td><button type="button" id="deleteButton" class="btn btn-danger btn-lg" onclick="deleteUserAdmin('${ user.userName }')">삭제</button></td>
 		              </c:if>
-		              <c:if test="${ user.signupFlag == '1' }">
+		              <c:if test="${ user.signupFlag == '1' || user.userPosition == '1' }">
 		              	<td>삭제불가</td>
 		              </c:if>
 		            </tr>
 	            </c:forEach>
             </tbody>
         </table>
-        </form>
-		<jsp:include page="/common/pageNavigator_new.jsp"></jsp:include>    
+		<jsp:include page="/common/pageNavigator_new.jsp"></jsp:include>  
 </body>
 </html>

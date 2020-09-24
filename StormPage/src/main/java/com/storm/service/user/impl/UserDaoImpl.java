@@ -134,11 +134,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getCombackUser(String userId) throws Exception {
+	public void comeBackUser(String comebackId) throws Exception {
 		// debugging
 		System.out.println("UserDaoImpl getCombackUser");
 		
-		return sqlSession.selectOne("UserMapper.combackUser", userId);
+		sqlSession.update("UserMapper.combackUser", comebackId);
 	}
 
 	@Override
@@ -188,6 +188,24 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("UserDaoImpl deleteNamePhone");
 		
 		sqlSession.delete("UserMapper.deletedNamePhone", userName);
+		
+	}
+
+	@Override
+	public List<User> getFenceList(Search search) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl getFenceList");
+		
+		return sqlSession.selectList("UserMapper.getFenceList", search);
+		
+	}
+
+	@Override
+	public void deleteAllLeaderName(String leaderName) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl deleteAllLeaderName");
+		
+		sqlSession.update("UserMapper.deleteAllLeaderName", leaderName);
 		
 	}
 	
