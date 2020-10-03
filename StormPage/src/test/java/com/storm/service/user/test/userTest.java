@@ -304,7 +304,7 @@ public class userTest {
 		
 		User user = service.getUser("sw4417");
 		
-		user = service.getUserConfirm(user);
+		user = service.getUserConfirm(user.getUserName());
 		
 		Assert.assertEquals(user.getUserId(), "sw4417");
 		Assert.assertEquals(user.getUserPwd(), "504944");

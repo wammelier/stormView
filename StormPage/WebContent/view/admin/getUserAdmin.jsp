@@ -45,7 +45,7 @@
 </script>
 <style>
     .content {padding: 50px 50px 50px; margin-top: 260px;} 
-    #input {height: 80px; font-size:30px;}
+    #input {height: 80px; font-size:40px;}
     b {font-size: 34px;}
 </style>
 <body>
@@ -71,7 +71,7 @@
 	        <br/>
 	        <label><b>성별</b></label>
 	        <div class="input-group mb-3">
-				<select class="custom-select" name="gender" id="inputGroupSelect02" style="height: 80px; font-size:30px;">
+				<select class="custom-select" name="gender" id="inputGroupSelect02" style="height: 80px; font-size:40px;">
 					<c:if test="${ user.gender == '0' }">
 				    	<option value="0" selected>자매</option>
 					    <option value="1">형제</option>
@@ -99,7 +99,7 @@
 	        <br/>
 	        <label><b>세례여부</b></label>
 	        <div class="input-group mb-3">
-			<select class="custom-select" name="baptismName" id="inputGroupSelect02" style="height: 80px; font-size:30px;">
+			<select class="custom-select" name="baptismName" id="inputGroupSelect02" style="height: 80px; font-size:40px;">
 				<c:if test="${ user.baptismName == '0' }">
 			    	<option value="0" selected>없음</option>
 				    <option value="1">세례</option>
@@ -127,9 +127,9 @@
 			</select>
 			</div>
 			<br/>
-	        <button class="submitButton" type="submit" style="float: left; width: 30%; height: 80px; font-size: 30px; margin: 5% 5% 5%;  background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">수정</button>
+	        <button class="submitButton" type="submit" style="float: left; width: 30%; height: 80px; font-size: 40px; margin: 5% 5% 5%;  background: linear-gradient( to top, #212121, #424242 ); color: #ffffff;">수정</button>
 	        <button class="cancleButton" style="float: left; width: 30%; height: 80px; 
-	        font-size: 30px; margin: 5% 5% 5%; background: linear-gradient( to top, #212121, #424242 ); 
+	        font-size: 40px; margin: 5% 5% 5%; background: linear-gradient( to top, #212121, #424242 ); 
 	        color: #ffffff;">취소</button>
 	    </div>
     </form>

@@ -37,7 +37,7 @@ public interface UserService {
 	
 	public void comeBackUser(String comebackId) throws Exception;
 	
-	public User getUserConfirm(User user) throws Exception;
+	public User getUserConfirm(String userName) throws Exception;
 	
 	public User getLoginUser(String userId) throws Exception;
 	
@@ -52,5 +52,9 @@ public interface UserService {
 	public void deleteNamePhone(String userName) throws Exception;
 	
 	public void deleteAllLeaderName(String leaderName) throws Exception;
+	
+	public User getNickNameCheck(String nickName) throws Exception;
+	
+	public void updateNickName(User user) throws Exception;
 	
 }

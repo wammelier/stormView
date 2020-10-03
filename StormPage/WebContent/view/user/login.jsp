@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%-- <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
 <!DOCTYPE html>
@@ -27,8 +27,10 @@
 		var pwd = $('#user_pwd');
 		$(".login_button").on("click", function() {
             loginAjax(userId, pwd);
-        });
-	});
+        });/* end of click event */
+	});/* end of function */
+	
+	/* 로그인시 이용되는 ajax */
 	function loginAjax(userId, userPwd) {
 		console.log('loginAjax??');
 		$.ajax({
@@ -59,8 +61,13 @@
 					
 			}// end of seccess
 		});//end of ajax
-			
 	}// end of function()
+	
+	$(function() {
+		$('.signup_text').on('click', function() {
+			$(self.location).attr('href','/user/signUp');
+		});/* end of click */
+	});/* end of function */
 </script>
 
 <style>
@@ -108,4 +115,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> --%>

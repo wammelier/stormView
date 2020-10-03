@@ -32,8 +32,8 @@
 
 <style>
     .content {margin: 10px 10px 30px; margin-top: 300px;}
-    th {font-size: 30px;}
-    td {font-size: 28px;}
+    th {font-size: 37px;}
+    td {font-size: 35px;}
     .form-group { width: 100%; height: 30px; margin-top: 30px;}
     a{font-size:33px;}
 </style>
@@ -65,8 +65,6 @@
 			/* 회원목록을 조회하기위한 데이터를 로드.. */
 			getFenceList(searchKeyword, searchCondition);
 		}); /* end of event */
-		
-		
 	}); /* end of function */
 	
 	/* 편성버튼을 누를경우 해당하는 청년의 리더네임이 변경된다. */
@@ -138,11 +136,13 @@
 							var appendGender = '형제';
 						/* 성별이 아무것도 기입되어있지 않은경우. */	
 						}else if(JSONData.list[i].gender == null) {
-							var appendGender = '없음.';
+							var appendGender = '없음';
 						}
 						/* 생일이 아무것도 기입되어있지 않은경우. */
 						if( JSONData.list[i].birth == null) {
-							var apendBirth = '정보없음.'; 
+							var apendBirth = '정보없음'; 
+						}else {
+							var apendBirth =  JSONData.list[i].birth;
 						}
 						/* 회원이름과 리더이름이 같으면 그사람은 리더이기 때문에 다른 울타리에 편성이 안되어야한다. */
 						/* 리더가 아닌경우.. */
@@ -152,7 +152,7 @@
 							"<c:forEach var='leader' items='${ leaderList }' varStatus='subStatus'>"+
                   			"<option class='from-option' value='${ leader.leaderName }' ${ subStatus.index == 0 && subStatus.index != null ? 'selected' : '' }>${ leader.leaderName }</option>"+
 							"</c:forEach>";
-							var appendButtonTag = "<button type='button' class='btn btn-success btn-lg' onclick='updateLeaderName(\""+i+"\")'>편성</button>";
+							var appendButtonTag = "<button type='button' class='btn btn-success btn-lg' style=' margin-left: 10px; font-size:35px;' onclick='updateLeaderName(\""+i+"\")'>편성</button>";
 						/* 리더인 경우.. 편성울타리랑 버튼까지 널스트링*/
 						}else if ( JSONData.list[i].userName == JSONData.list[i].leaderName ) {
 							var appendSelectTag = "";
@@ -174,7 +174,7 @@
 											"<td>"+appendGender+"</td>"+
 											"<td>"+appendLeaderName+"</td>"+
 											"<td>"+
-												"<select id='leaderNameSelect"+i+"' class='form-control form-control-lg' style='width:160px; height:60px; font-size:27px;'>"+
+												"<select id='leaderNameSelect"+i+"' class='form-control form-control-lg' style='width:160px; height:60px; font-size:35px;'>"+
 												appendSelectTag+
 												"</select>"+
 												appendButtonTag+"</td>"+
@@ -207,20 +207,20 @@
     
 		<ul class="nav nav-pills nav-fill">
   			<li class="nav-item">
-    			<a class="nav-link" href="/user/getUserList" style="color:#F5A9BC;">청년목록</a>
+    			<a class="nav-link" href="/user/getUserList" style="color:#F5A9BC; font-size:40px;">가입자</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link active" href="/user/getFenceList" style="background: #F5A9BC;">울타리편성</a>
+    			<a class="nav-link active" href="/user/getFenceList" style="background: #F5A9BC; font-size:40px;">울타리편성</a>
     		</li>
     		<li class="nav-item">
-    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC;">가입시킬 청년목록</a>
+    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC; font-size:40px;">청년목록</a>
     		</li>
 		</ul>
         
         <form class="form-inline" name="detailForm">
            
-            <div class="form-group" style="margin-bottom: 30px;">
-                <select id="mainSelect" class="form-control form-control-lg" style="width:230px; height:60px; font-size:27px;">
+            <div class="form-group" style="margin-bottom: 80px;">
+                <select id="mainSelect" class="form-control form-control-lg" style="margin-left: 20px; margin-top: 30px; width:280px; height:70px; font-size:40px;">
 	                <c:set var="i" value="0"/>
 	                <option class="from-option" value="0" selected="selected" >전체</option>
 	                <option class="from-option" value="none" >편성안됨</option>
@@ -270,7 +270,7 @@
 		              	<td>편성안됨</td>
 		              </c:if>
 		              <td>
-		              <select id="leaderNameSelect${ status.index }" class="form-control form-control-lg" style="width:160px; height:60px; font-size:27px;">
+		              <select id="leaderNameSelect${ status.index }" class="form-control form-control-lg" style=" width:160px; height:60px; font-size:35px;">
 		              		<c:if test="${ user.userName != user.leaderName }">
 		              			<option class="from-option" value="none">편성안됨</option>
 				                <c:forEach var="leader" items="${ leaderList }" varStatus="subStatus">
@@ -281,7 +281,7 @@
 							</c:if>
 						</select>
 						<c:if test="${ user.userName != user.leaderName }">
-							<button type="button" class="btn btn-success btn-lg" onclick="updateLeaderName('${ status.index }')">편성</button>
+							<button type="button" class="btn btn-success btn-lg" style="font-size:35px;" onclick="updateLeaderName('${ status.index }')">편성</button>
 						</c:if>
 						<c:if test="${ user.userName == user.leaderName }">
 						</c:if>

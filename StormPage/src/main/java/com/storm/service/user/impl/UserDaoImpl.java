@@ -142,11 +142,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUserConfirm(User user) throws Exception {
+	public User getUserConfirm(String userName) throws Exception {
 		// debugging
 		System.out.println("UserDaoImpl getUserconfirm");
 		
-		return sqlSession.selectOne("UserMapper.userConfirm", user);
+		return sqlSession.selectOne("UserMapper.userConfirm", userName);
 	}
 	
 	@Override
@@ -206,6 +206,23 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("UserDaoImpl deleteAllLeaderName");
 		
 		sqlSession.update("UserMapper.deleteAllLeaderName", leaderName);
+		
+	}
+
+	@Override
+	public User getNickNameCheck(String nickName) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl getNickNameCheck");
+		
+		return sqlSession.selectOne("UserMapper.nickNameCheck", nickName);
+	}
+
+	@Override
+	public void updateNickName(User user) throws Exception {
+		// debugging
+		System.out.println("UserDaoImpl updateNickName");
+		
+		sqlSession.update("UserMapper.updateNickName", user);
 		
 	}
 	

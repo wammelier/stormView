@@ -39,8 +39,8 @@
     .header{background: #f44336; height: 240px;}
     .form-group {margin: 10px 20px 30px;}
     .userList_box {margin-left: 10px; padding-top:300px; width: 100%; height: 60px;}
-    th {font-size: 30px;}
-    td {font-size: 27px;}
+    th {font-size: 40px;}
+    td {font-size: 35px;}
     .nav-item {height:80px;}
     a {font-size: 33px;}
     
@@ -67,6 +67,72 @@
     width: 200px;
     font-size: 40px;
     }
+    
+    /* toggle css */
+    input[type="checkbox"] { display: none; } 
+    .label__on-off { 
+    	overflow: hidden; 
+    	position: relative; 
+    	display: inline-block; 
+    	width: 130px; 
+    	height: 50px; 
+    	-webkit-border-radius: 13px; 
+    	-moz-border-radius: 13px; 
+    	border-radius: 20px; 
+    	background-color: #ed4956; 
+    	color: #fff; 
+    	font-weight: bold; 
+    	cursor: pointer; 
+    	-webkit-transition: all .3s; 
+    	-moz-transition: all .3s; 
+    	-ms-transition: all .3s; 
+    	-o-transition: all .3s; 
+    	transition: all .3s; 
+    } 
+    .label__on-off > * { 
+	    vertical-align: middle; 
+	    -webkit-transition: all .3s;
+	    -moz-transition: all .3s; 
+	    -ms-transition: all .3s; 
+	    -o-transition: all .3s; 
+	    transition: all .3s; 
+	    font-size: 30px; 
+    } 
+    .label__on-off .marble { 
+	    position: absolute; 
+	    top: 0px; 
+	    left: 1px; 
+	    display: block; 
+	    width: 50px; 
+	    height: 50px; 
+	    background-color: #fff; 
+	    -webkit-border-radius: 50%; 
+	    -moz-border-radius: 50%; 
+	    border-radius: 50%; 
+	    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3); 
+	    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .3); 
+	    box-shadow: 0 0 10px rgba(0, 0, 0, .3); 
+    } 
+    .label__on-off .on { 
+	    display: none; 
+	    padding-right: 50px;
+    } 
+    .label__on-off .off { 
+	    padding-left: 40px; 
+	    line-height: 40px; 
+    } 
+    .input__on-off:checked + .label__on-off { 
+    	background-color: #0bba82; 
+    } 
+    .input__on-off:checked + .label__on-off .on { 
+    	display: inline-block; 
+    } .input__on-off:checked + .label__on-off .off { 
+    	display: none; 
+    } 
+    .input__on-off:checked + .label__on-off .marble { 
+    	left: 78px; 
+    }
+
 }
 </style>
 
@@ -83,6 +149,31 @@
 		}); /* end of event */
 	}); /* end of function */
 
+	
+	/* checkbox 클릭시 check가 되어있는지 안되어있는지를 판단하여 function실행.. */
+	$(function() {
+		$('input[type="checkbox"]').on('click', function() {
+			if ( $('input[type="checkbox"]').is(':checked') == true ) {
+				console.log('체크된 상태..');
+				/* backend단에 search도메인에 바인딩될 데이터값을 세팅함 */
+				var searchCondition = $('.form-control option:selected').val();
+				var searchKeyword = $('#searchKeyword').val();
+				/* 버튼활성화시 input box readonly처리 */
+				$('#searchKeyword').attr("readonly",true); 
+				/* 재명 회원목록을 조회하는 function */
+				getDeletedUserList(searchCondition, searchKeyword);
+			}else if ( $('input[type="checkbox"]').is(':checked') == false ) {
+				console.log('체크안된 상태..');
+				/* backend단에 search도메인에 바인딩될 데이터값을 세팅함 */
+				var searchCondition = $('.form-control option:selected').val();
+				var searchKeyword = $('#searchKeyword').val();
+				/* 버튼활성화시 input box readonly 해제 */
+				$('#searchKeyword').attr("readonly",false); 
+				/* 회원목록을 조회하는 function */
+				getUserList(searchCondition, searchKeyword)
+			}/* end of else */
+		});/* end of click event */
+	});/* end of function */
 	
 	/* checkbox 클릭시 check가 되어있는지 안되어있는지를 판단하여 function실행.. */
 	$(function() {
@@ -208,7 +299,7 @@
 												"<td>"+JSONData.list[i].userId+"</td>"+
 												"<td></td>"+
 												"<td></td>"+
-												"<td><button type='button' class='btn btn-warning btn-lg'>재명취소</button>"+
+												"<td><button type='button' class='btn btn-warning btn-lg' style='font-size: 35px;'>재명취소</button>"+
 												"<input type='hidden' name='comebackId' value='"+JSONData.list[i].userId+"'/></td>"+
 											"</tr>";
 						/* tbody tag안에 어펜드 */
@@ -259,7 +350,7 @@
 												"<td>"+JSONData.list[i].userId+"</td>"+
 												"<td>"+JSONData.list[i].nickName+"</td>"+
 												"<td>"+appendName+"</td>"+
-												"<td><button type='button' class='btn btn-danger btn-lg'>재명</button>"+
+												"<td><button type='button' class='btn btn-danger btn-lg' style='font-size: 35px;'>재명</button>"+
 												"<input type='hidden' name='userId' value='"+JSONData.list[i].userId+"'/></td>"+
 											"</tr>";
 						/* tbody tag안에 어펜드 */
@@ -295,49 +386,52 @@
    	
     <div class="userList_box">
     
-	    <ul class="nav nav-pills nav-fill">
+	    <ul class="nav nav-pills nav-fill" style="margin-bottom: 40px;">
 		  	<li class="nav-item">
-		    	<a class="nav-link active" href="/user/getUserList" style="background: #F5A9BC;">청년목록 (${resultPage.totalCount}명)</a>
+		    	<a class="nav-link active" href="/user/getUserList" style="background: #F5A9BC; font-size:40px;">가입자 (${resultPage.totalCount}명)</a>
 		  	</li>
 		  	<li class="nav-item">
-		    	<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC;">울타리편성</a>
+		    	<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC; font-size:40px;">울타리편성</a>
 		  	</li>
 		  	<li class="nav-item">
-    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC;">가입시킬 청년목록</a>
+    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC; font-size:40px;">청년목록</a>
     		</li>
 		</ul>
 	    
        <form class="form-inline" name="detailForm">
 <!--            <input type="hidden" id="boardName" name="boardName" value="${param.boardName}"/>-->
             <div class="form-group">
-                <select class="form-control" name="searchCondition" style="height:60px; width:130px; font-size:26px;">
-                
+                <select class="form-control" name="searchCondition" style="height:80px; width:170px; font-size:40px;">
                     <c:if test="${empty search.searchCondition }">
 	                    <option class="from-option" value="0" selected="selected" >아이디</option>
 	                    <option class="from-option" value="1" >닉네임</option>
 	                    <option class="from-option" value="2" >이름</option>
                     </c:if>
-
                     <c:if test="${!empty search.searchCondition }">
 	                    <option class="from-option" value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>아이디</option>
 	                    <option class="from-option" value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>닉네임</option>
 	                    <option class="from-option" value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>이름</option>
                     </c:if>
-
                 </select>
             </div>
-            
             <div class="form-group ">
-                <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" style="height:60px; width:300px; font-size:26px;"/>
+                <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" style="height:80px; width:300px; font-size:40px;"/>
             </div>
-			
+            <div style="margin-left:50px;">
+	            <label style="font-size:25px; margin-left: 0px;">재명된 회원보기</label>
+				<input type="checkbox" id="switch1" name="switch1" class="input__on-off" style=""> 
+				<label for="switch1" class="label__on-off"> 
+					<span class="marble"></span> 
+					<span class="on">on</span> 
+					<span class="off">off</span> 
+				</label>
+			</div>
 			<div class="custom-control custom-switch" style="margin-left: 6%;">
-			  <input type="checkbox" class="custom-control-input" id="customSwitch1">
-			  <label class="custom-control-label" for="customSwitch1">재명된 회원보기</label>
+			  <input type="checkbox" class="custom-control-input" id="customSwitch1" style="width: 60px; height: 50px;">
+			  
 			</div>
      	</form>
-                
-        <table class="table" style="margin-top: 20px;">
+        <table class="table" style="margin-top: 40px;">
             <thead>
             <tr>
                 <th scope="col">이름</th>
@@ -361,7 +455,7 @@
 		              <c:if test="${ user.userPosition == '1' }">
 		              	<td>리더</td>
 		              </c:if>
-		              <td><button type="button" class="btn btn-danger btn-lg">재명</button>
+		              <td><button type="button" class="btn btn-danger btn-lg" style="font-size: 35px;">재명</button>
 		              <input type="hidden" name="userId" value="${ user.userId }"/></td>
 		            </tr>
 	            </c:forEach>

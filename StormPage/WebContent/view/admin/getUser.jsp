@@ -45,8 +45,8 @@
 	
 </script>
 <style>
-    .content {padding: 50px 50px 50px; margin-top: 290px;} 
-    #input {height: 80px; font-size:30px;}
+    .content {padding: 50px 50px 100px; height:1700px; margin-top: 290px;} 
+    #input {height: 100px; font-size:40px;}
     b {font-size: 34px;}
 </style>
 

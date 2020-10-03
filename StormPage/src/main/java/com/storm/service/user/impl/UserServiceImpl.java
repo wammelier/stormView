@@ -163,11 +163,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserConfirm(User user) throws Exception {
+	public User getUserConfirm(String userName) throws Exception {
 		// debugging
 		System.out.println("UserServiceImpl getUseronfirm");
 		
-		return userDao.getUserConfirm(user);
+		return userDao.getUserConfirm(userName);
 	}
 	
 	@Override
@@ -239,6 +239,23 @@ public class UserServiceImpl implements UserService {
 		System.out.println("UserServiceImpl deleteAllLeaderName");
 		
 		userDao.deleteAllLeaderName(leaderName);
+		
+	}
+
+	@Override
+	public User getNickNameCheck(String nickName) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl getNickNameCheck");
+		
+		return userDao.getNickNameCheck(nickName);
+	}
+
+	@Override
+	public void updateNickName(User user) throws Exception {
+		// debugging
+		System.out.println("UserServiceImpl updateNickName");
+		
+		userDao.updateNickName(user);
 		
 	}
 	

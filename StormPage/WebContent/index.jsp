@@ -22,13 +22,38 @@
 </head>
 <body>
 <script type="text/javascript">
+	/* 로그인 버튼 클릭.. */
 	$(function(){
 		var userId = $('#user_id');
 		var pwd = $('#user_pwd');
+		
 		$(".login_button").on("click", function() {
             loginAjax(userId, pwd);
         });
-	});
+	});/* end of function() */
+	
+	/* 회원가입 글씨 클릭씨.. */
+	$(function(){
+		$('.signup_text').bind('click', function(){
+			location.href= '/user/signUp';
+		});/* end of click */
+	});/* end of function */
+	
+	/* 아이디찾기 글씨 클릭씨.. */
+	$(function(){
+		$('.search_id').bind('click', function(){
+			location.href= '/user/searchUserId';
+		});/* end of click */
+	});/* end of function */
+	
+	/* 비밀번호찾기 글씨 클릭씨.. */
+	$(function(){
+		$('.search_pwd').bind('click', function(){
+			location.href= '/user/searchUserPwd';
+		});/* end of click */
+	});/* end of function */
+	
+	/* 로그인시 작동하는 ajax */
 	function loginAjax(userId, userPwd) {
 		console.log('loginAjax??');
 		$.ajax({
@@ -47,7 +72,7 @@
 				console.log(JSONData);
 				if(JSONData.result == 'ok') {
 					setTimeout(function(){
-						$(self.location).attr("href","/main.jsp");
+						$(self.location).attr("href","/user/mainPage");
 					}, 700);
 					
 				}else if (JSONData.result == 'NoSearchId'){
@@ -59,7 +84,6 @@
 					
 			}// end of seccess
 		});//end of ajax
-			
 	}// end of function()
 </script>
 
@@ -77,7 +101,8 @@
     .login_button { height: 100px; background: url("/resources/loginicon.png"); background-size: 100% 100%; background-repeat: no-repeat;}
     .user_info {margin: 10% 0px 0px 15%; float: left; width: 90%; height: 100px; font-size: 25px; color: #ffffff}
     .user_info .signup_text {float: left; margin-left: 10%; width: 30%;}
-    .user_info .search_text {float: left;}
+    .user_info .search_id {float: left;}
+    .user_info .search_pwd {float: left; margin-left: 50px;}
     
     
 </style>
@@ -101,7 +126,8 @@
                     </div>
                     <div class="user_info">
                         <div class="signup_text">회원가입</div>
-                        <div class="search_text">아이디/비밀번호 찾기</div>
+                        <div class="search_id">아이디 찾기</div>
+                        <div class="search_pwd">비밀번호 찾기</div>
                     </div>
               </div>
             </form>

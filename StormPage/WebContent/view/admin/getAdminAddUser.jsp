@@ -37,10 +37,11 @@
 
 <style>
     .content {margin: 10px 10px 20px; margin-top: 300px;}
-    th {font-size: 30px;}
-    td {font-size: 28px;}
+    th {font-size: 40px;}
+    td {font-size: 33px;}
     .form-group { width: 100%; height: 30px;}
     a{font-size:33px;}
+    table {margin-left: 20px; margin-top: 30px;}
     
     /* 스위트알럿 css 변경방법... */
     .swal-modal{
@@ -155,7 +156,7 @@ function deleteLeader(userName) {
 			/* restController 로 부터 오는 data값.. */
 			if(JSONData.message == "deleteOk"){
 				$('#'+userName+':nth').remove();
-				$('#'+userName+':nth').html('<td><button type="button" id="'+userName+'" class="btn btn-warning btn-lg" onclick="deleteLeader(\''+userName+'\')">임명취소</button></td>')
+				$('#'+userName+':nth').html('<td><button type="button" id="'+userName+'" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader(\''+userName+'\')">임명취소</button></td>')
 				getUserAdminList();
 			}/* end of if */
 		},/* end of success */
@@ -195,7 +196,7 @@ function getUserAdminList() {
 					/* 삭제버튼 종류(0=삭제,1=삭제불가) */
 					if( JSONData.list[i].signupFlag == 0 && JSONData.list[i].userPosition == 0) {
 						var deleteButton = 
-							'<button type="button" class="btn btn-danger btn-lg" onclick="deleteUserAdmin(\''+JSONData.list[i].userName+'\')">삭제</button>';
+							'<button type="button" class="btn btn-danger btn-lg" style="font-size:30px;" onclick="deleteUserAdmin(\''+JSONData.list[i].userName+'\')">삭제</button>';
 					}else if ( JSONData.list[i].signupFlag == 1 || JSONData.list[i].userPosition == 1) {
 						var deleteButton = '삭제불가';
 					}
@@ -207,9 +208,9 @@ function getUserAdminList() {
 					}
 					/* 리더를 임명하는 버튼 종류 (0=임명, 1=임명취소) */
 					if( JSONData.list[i].userPosition == 0) {
-						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-success btn-lg" onclick="addLeader(\''+JSONData.list[i].userName+'\')">리더임명</button></td>';
+						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-success btn-lg" style="font-size:30px;" onclick="addLeader(\''+JSONData.list[i].userName+'\')">리더임명</button></td>';
 					}else if( JSONData.list[i].userPosition == 1) {
-						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-warning btn-lg" onclick="deleteLeader(\''+JSONData.list[i].userName+'\')">임명취소</button></td>';
+						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader(\''+JSONData.list[i].userName+'\')">임명취소</button></td>';
 						
 					}/* end of else if */
 					/* 삭제후 테이블을 비동기방식으로 어펜드 하기위한 필드.. */
@@ -247,28 +248,28 @@ function addUserButton() {
 
 /* 가입시킬 유저 추가 버튼을 누르는 기능. */
 function successButton() {
-		var addName = $('#addName').val();
-		var addPhone = $('#addPhone').val();
-		 
-		$.ajax ({
-			url: "/user/json/addUserAdmin",
-			method: "POST",
-			dataType: "json",
-			headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
-			data: JSON.stringify ({
-				userName : addName,
-				phone : addPhone
-			}),
-			success: function(JSONData, status) {
-				if(JSONData.message == 'addFailName'){
-					swal("해당 이름이 이미 존재합니다.", "이미 추가하셨습니다.");	
-				}else if(JSONData.message == 'addOk') {
-					getUserAdminList();
-					swal("알림!", "등록되었습니다.");
-					$('#addName').val('');
-					$('#addPhone').val('');
-				}/* end of else if */
-			}/* end of success */
+	var addName = $('#addName').val();
+	var addPhone = $('#addPhone').val();
+	 
+	$.ajax ({
+		url: "/user/json/addUserAdmin",
+		method: "POST",
+		dataType: "json",
+		headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
+		data: JSON.stringify ({
+			userName : addName,
+			phone : addPhone
+		}),
+		success: function(JSONData, status) {
+			if(JSONData.message == 'addFailName'){
+				swal("해당 이름이 이미 존재합니다.", "이미 추가하셨습니다.");	
+			}else if(JSONData.message == 'addOk') {
+				getUserAdminList();
+				swal("", "등록되었습니다.", "success");
+				$('#addName').val('');
+				$('#addPhone').val('');
+			}/* end of else if */
+		}/* end of success */
 	});/* end of ajax */
 };/* end of function */
 
@@ -285,22 +286,22 @@ function successButton() {
     
 		<ul class="nav nav-pills nav-fill">
   			<li class="nav-item">
-    			<a class="nav-link" href="/user/getUserList" style="color:#F5A9BC;">청년목록</a>
+    			<a class="nav-link" href="/user/getUserList" style="color:#F5A9BC; font-size:40px;">가입자</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC;">울타리편성</a>
+    			<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC; font-size:40px;">울타리편성</a>
     		</li>
     		<li class="nav-item">
-    			<a class="nav-link active" href="/user/getAddUserAdminList" style="background: #F5A9BC;">가입시킬 청년목록</a>
+    			<a class="nav-link active" href="/user/getAddUserAdminList" style="background: #F5A9BC; font-size:40px;">청년목록</a>
     		</li>
 		</ul>
 		<div>
-       		<button type="button" id ="addButton" class="btn btn-primary btn-lg" style="margin-left:10px; margin-top: 10px; font-size: 35px; background: #F5A9BC;" onclick="addUserButton();">가입시킬 청년추가</button>
+       		<button type="button" id ="addButton" class="btn btn-primary btn-lg" style="margin-left:10px; margin-top: 50px; font-size: 40px; background: #F5A9BC;" onclick="addUserButton();">가입시킬 청년추가</button>
        	</div>
-       <div id="addUserAdmin" style="margin: 10px 10px 10px; width: 700px; height: 60px; display: none;" >
-       		<input id="addName" type="text" placeholder="이름" maxlength="4" style="font-size:30px; width:20%; height:100%;">
-       		<input id="addPhone" type="text" placeholder="휴대폰번호" maxlength="12" style="margin-left: 30px; font-size:30px; width:45%; height:100%;">
-       		<button type='button' id='successButton' class='btn btn-primary btn-lg' style="margin-bottom: 15px;" onclick="successButton()">등록</button>
+       <div id="addUserAdmin" style="margin: 20px 20px 20px; width: 900px; height: 80px; display: none;" >
+       		<input id="addName" class="form-control" type="text" placeholder="이름" maxlength="4" style="float: left; font-size:40px; width:20%; height:100%;">
+       		<input id="addPhone" class="form-control" type="text" placeholder="휴대폰번호" maxlength="12" style="float:left; margin-left: 30px; font-size:40px; width:35%; height:100%;">
+       		<button type='button' id='successButton' class='btn btn-primary btn-lg' style="float:left; margin-left: 20px; margin-top: 5px; height:90%; width:15%; font-size:35px;" onclick="successButton()">등록</button>
        </div>
      </div>
          <table class="table">
@@ -327,13 +328,13 @@ function successButton() {
 		              	<td>가입됨</td>
 		              </c:if>
 		              <c:if test="${ user.userPosition == '0' }">
-		              	<td><button type="button" id="${ user.userName }" class="btn btn-success btn-lg" onclick="addLeader('${ user.userName }')">리더임명</button></td>
+		              	<td><button type="button" id="${ user.userName }" class="btn btn-success btn-lg" style="font-size:30px;" onclick="addLeader('${ user.userName }')">리더임명</button></td>
 		              </c:if>
 		              <c:if test="${ user.userPosition == '1' }">
-		              	<td><button type="button" id="${ user.userName }" class="btn btn-warning btn-lg" onclick="deleteLeader('${ user.userName }')">임명취소</button></td>
+		              	<td><button type="button" id="${ user.userName }" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader('${ user.userName }')">임명취소</button></td>
 		              </c:if>
 		              <c:if test="${ user.signupFlag == '0' && user.userPosition == '0' }">
-		   				<td><button type="button" id="deleteButton" class="btn btn-danger btn-lg" onclick="deleteUserAdmin('${ user.userName }')">삭제</button></td>
+		   				<td><button type="button" id="deleteButton" class="btn btn-danger btn-lg" style="font-size:30px;" onclick="deleteUserAdmin('${ user.userName }')">삭제</button></td>
 		              </c:if>
 		              <c:if test="${ user.signupFlag == '1' || user.userPosition == '1' }">
 		              	<td>삭제불가</td>

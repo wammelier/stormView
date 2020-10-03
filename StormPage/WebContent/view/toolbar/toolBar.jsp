@@ -64,6 +64,8 @@
     .headersub_icon {float: left; margin: 0% 0% 0% 0%; width: 500px; height: 100%;}
     .pic {width: 100%; height: 100%;}
     
+    .headersub_icon:hover{background: #e0e0e0;}
+    
 </style>
     <body>
         <header class="header" data-role="header">
@@ -80,7 +82,6 @@
 	                </c:if>
                 </div>
             </div>
-
             <div class="header_under">
                 <div class="headersub_icon">
                     <img id="notice_post" class="pic" src="/resources/mainIconNotifyBlack.png">
