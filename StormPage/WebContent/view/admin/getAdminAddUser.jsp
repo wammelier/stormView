@@ -66,18 +66,52 @@
     width: 200px;
     font-size: 40px;
     }
-}
+
 </style>
 
 <script type="text/javascript">
 
-/* 관리자가 작성한 회원의 상세정보를 수정하거나 열람하기를 원할 경우 */
+/* 로딩화면 구현... */
 $(function() {
-	$(document).on('click', 'td:nth-child(1)', function() {
-		var userName = $(this).find($('input[name="userName"]')).val();
-		self.location = "/user/getUserAdmin?userName="+userName;
+    //화면의 높이와 너비를 구합니다.
+    var maskHeight = $(document).height();
+    var maskWidth  = window.document.body.clientWidth;
+     
+    //화면에 출력할 마스크를 설정해줍니다.
+    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+    var loadingImg = '';
+      
+    loadingImg += "<div id='loadingImg'>";
+    loadingImg += "<img src='/resources/heartImg.gif' style='position:relative; display: block; margin: -1500px auto;'/>";
+    loadingImg += "</div>"; 
+  
+    //화면에 레이어 추가
+    $('body')
+        .append(mask)
+        .append(loadingImg)
+        
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+    $('#mask').css({
+            'width' : maskWidth
+            , 'height': maskHeight
+            , 'opacity' : '0.3'
+    });
+  
+    //마스크 표시
+    $('#mask').fadeOut();  
+  
+    //로딩중 이미지 표시
+    $('#loadingImg').fadeOut();
+});/* end of ready */
+
+
+	/* 관리자가 작성한 회원의 상세정보를 수정하거나 열람하기를 원할 경우 */
+	$(function() {
+		$(document).on('click', 'td:nth-child(1)', function() {
+			var userName = $(this).find($('input[name="userName"]')).val();
+			self.location = "/user/getUserAdmin?userName="+userName;
+		});
 	});
-});
 	
 	/* 관리자가 추가한 유저를 삭제하는 경우 */
 	function deleteUserAdmin(userName) {
@@ -276,12 +310,11 @@ function successButton() {
 
 </script>
 <body>
-	
     <!-- toolbar include -->
     <header class="header">
    	    <jsp:include page="../toolbar/toolBar.jsp"/>
    	</header>
- 
+   	
     <div class="content">
     
 		<ul class="nav nav-pills nav-fill">
@@ -294,55 +327,56 @@ function successButton() {
     		<li class="nav-item">
     			<a class="nav-link active" href="/user/getAddUserAdminList" style="background: #F5A9BC; font-size:40px;">청년목록</a>
     		</li>
-		</ul>
+			</ul>
 		<div>
        		<button type="button" id ="addButton" class="btn btn-primary btn-lg" style="margin-left:10px; margin-top: 50px; font-size: 40px; background: #F5A9BC;" onclick="addUserButton();">가입시킬 청년추가</button>
        	</div>
-       <div id="addUserAdmin" style="margin: 20px 20px 20px; width: 900px; height: 80px; display: none;" >
-       		<input id="addName" class="form-control" type="text" placeholder="이름" maxlength="4" style="float: left; font-size:40px; width:20%; height:100%;">
-       		<input id="addPhone" class="form-control" type="text" placeholder="휴대폰번호" maxlength="12" style="float:left; margin-left: 30px; font-size:40px; width:35%; height:100%;">
-       		<button type='button' id='successButton' class='btn btn-primary btn-lg' style="float:left; margin-left: 20px; margin-top: 5px; height:90%; width:15%; font-size:35px;" onclick="successButton()">등록</button>
-       </div>
-     </div>
-         <table class="table">
-            <thead>
-	            <tr>
-	                <th scope="col">이름</th>
-	                <th scope="col">휴대폰번호</th>
-	                <th scope="col">가입여부</th>
-	                <th scope="col">리더임명</th>
-	                <th scope="col">삭제여부</th>
-	            </tr>
-            </thead>
-            <tbody>
-             	<c:set var="i" value="0"/>
-				<c:forEach var="user" items="${ list }">
-					<tr>		
-		              <td>${ user.userName }
-		              <input type="hidden" name="userName" value="${ user.userName }"/></td>
-		              <td>${ user.phone }</td>
-		              <c:if test="${ user.signupFlag == '0' }">
-		              	<td>가입안됨</td>
-		              </c:if>
-		              <c:if test="${ user.signupFlag == '1' }">
-		              	<td>가입됨</td>
-		              </c:if>
-		              <c:if test="${ user.userPosition == '0' }">
-		              	<td><button type="button" id="${ user.userName }" class="btn btn-success btn-lg" style="font-size:30px;" onclick="addLeader('${ user.userName }')">리더임명</button></td>
-		              </c:if>
-		              <c:if test="${ user.userPosition == '1' }">
-		              	<td><button type="button" id="${ user.userName }" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader('${ user.userName }')">임명취소</button></td>
-		              </c:if>
-		              <c:if test="${ user.signupFlag == '0' && user.userPosition == '0' }">
-		   				<td><button type="button" id="deleteButton" class="btn btn-danger btn-lg" style="font-size:30px;" onclick="deleteUserAdmin('${ user.userName }')">삭제</button></td>
-		              </c:if>
-		              <c:if test="${ user.signupFlag == '1' || user.userPosition == '1' }">
-		              	<td>삭제불가</td>
-		              </c:if>
+	       <div id="addUserAdmin" style="margin: 20px 20px 20px; width: 900px; height: 80px; display: none;" >
+	       		<input id="addName" class="form-control" type="text" placeholder="이름" maxlength="4" style="float: left; font-size:40px; width:20%; height:100%;">
+	       		<input id="addPhone" class="form-control" type="text" placeholder="휴대폰번호" maxlength="12" style="float:left; margin-left: 30px; font-size:40px; width:35%; height:100%;">
+	       		<button type='button' id='successButton' class='btn btn-primary btn-lg' style="float:left; margin-left: 20px; margin-top: 5px; height:90%; width:15%; font-size:35px;" onclick="successButton()">등록</button>
+	       </div>
+     
+	         <table class="table">
+	            <thead>
+		            <tr>
+		                <th scope="col">이름</th>
+		                <th scope="col">휴대폰번호</th>
+		                <th scope="col">가입여부</th>
+		                <th scope="col">리더임명</th>
+		                <th scope="col">삭제여부</th>
 		            </tr>
-	            </c:forEach>
-            </tbody>
-        </table>
-		<jsp:include page="/common/pageNavigator_new.jsp"></jsp:include>  
+	            </thead>
+	            <tbody>
+	             	<c:set var="i" value="0"/>
+					<c:forEach var="user" items="${ list }">
+						<tr>		
+			              <td>${ user.userName }
+			              <input type="hidden" name="userName" value="${ user.userName }"/></td>
+			              <td>${ user.phone }</td>
+			              <c:if test="${ user.signupFlag == '0' }">
+			              	<td>가입안됨</td>
+			              </c:if>
+			              <c:if test="${ user.signupFlag == '1' }">
+			              	<td>가입됨</td>
+			              </c:if>
+			              <c:if test="${ user.userPosition == '0' }">
+			              	<td><button type="button" id="${ user.userName }" class="btn btn-success btn-lg" style="font-size:30px;" onclick="addLeader('${ user.userName }')">리더임명</button></td>
+			              </c:if>
+			              <c:if test="${ user.userPosition == '1' }">
+			              	<td><button type="button" id="${ user.userName }" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader('${ user.userName }')">임명취소</button></td>
+			              </c:if>
+			              <c:if test="${ user.signupFlag == '0' && user.userPosition == '0' }">
+			   				<td><button type="button" id="deleteButton" class="btn btn-danger btn-lg" style="font-size:30px;" onclick="deleteUserAdmin('${ user.userName }')">삭제</button></td>
+			              </c:if>
+			              <c:if test="${ user.signupFlag == '1' || user.userPosition == '1' }">
+			              	<td>삭제불가</td>
+			              </c:if>
+			            </tr>
+		            </c:forEach>
+	            </tbody>
+	        </table>
+			<jsp:include page="/common/pageNavigator_new.jsp"></jsp:include>  
+		</div>
 </body>
 </html>

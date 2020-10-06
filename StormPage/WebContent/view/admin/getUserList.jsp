@@ -36,7 +36,6 @@
 </style>
 
 <style>
-    .header{background: #f44336; height: 240px;}
     .form-group {margin: 10px 20px 30px;}
     .userList_box {margin-left: 10px; padding-top:300px; width: 100%; height: 60px;}
     th {font-size: 40px;}
@@ -132,12 +131,48 @@
     .input__on-off:checked + .label__on-off .marble { 
     	left: 78px; 
     }
-
-}
+    
 </style>
 
 <script type="text/javascript">
 
+	
+	/* 로딩화면 구현... */
+	$(function() {
+	    //화면의 높이와 너비를 구합니다.
+	    var maskHeight = $(document).height();
+	    var maskWidth  = window.document.body.clientWidth;
+	     
+	    //화면에 출력할 마스크를 설정해줍니다.
+	    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+	    var loadingImg = '';
+	      
+	    loadingImg += "<div id='loadingImg'>";
+	    loadingImg += "<img src='/resources/heartImg.gif' style='position: relative; display: block; margin: 100px auto;'/>";
+	    loadingImg += "</div>"; 
+	  
+	    //화면에 레이어 추가
+	    $('body')
+	        .append(mask)
+	        .append(loadingImg)
+	        
+	    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+	    $('#mask').css({
+	            'width' : maskWidth
+	            , 'height': maskHeight
+	            , 'opacity' : '0.3'
+	    });
+	  
+	    //마스크 표시
+	    $('#mask').fadeOut();  
+	  
+	    //로딩중 이미지 표시
+	    $('#loadingImg').fadeOut();
+	});/* end of ready */
+
+
+
+	/* 회원을 검색할 경우.. */
 	$(function() {
 		/* 검색창에 커서를 올릴경우 */
 		$('.form-control').keyup(function() {
@@ -383,7 +418,7 @@
     <header class="header" style="z-index: 2;">
     	<jsp:include page="../toolbar/toolBar.jsp"/>
     </header>
-   	
+    
     <div class="userList_box">
     
 	    <ul class="nav nav-pills nav-fill" style="margin-bottom: 40px;">
@@ -430,7 +465,7 @@
 			  <input type="checkbox" class="custom-control-input" id="customSwitch1" style="width: 60px; height: 50px;">
 			  
 			</div>
-     	</form>
+     	
         <table class="table" style="margin-top: 40px;">
             <thead>
             <tr>
@@ -461,6 +496,7 @@
 	            </c:forEach>
          	</tbody>
         </table>
+        </form>
         <jsp:include page="/common/pageNavigator_new.jsp"></jsp:include>
     </div>
 </body>

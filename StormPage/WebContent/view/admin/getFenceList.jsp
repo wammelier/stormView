@@ -32,14 +32,49 @@
 
 <style>
     .content {margin: 10px 10px 30px; margin-top: 300px;}
-    th {font-size: 37px;}
+    th { font-size: 37px;}
     td {font-size: 35px;}
-    .form-group { width: 100%; height: 30px; margin-top: 30px;}
+    .form-group {position: width: 100%; height: 30px; margin-top: 30px;}
     a{font-size:33px;}
+    
 </style>
 
 <script type="text/javascript">
-	
+
+	/* 로딩화면 구현... */
+	$(function() {
+	    //화면의 높이와 너비를 구합니다.
+	    var maskHeight = $(document).height();
+	    var maskWidth  = window.document.body.clientWidth;
+	     
+	    //화면에 출력할 마스크를 설정해줍니다.
+	    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+	    var loadingImg = '';
+	      
+	    loadingImg += "<div id='loadingImg'>";
+	    loadingImg += "<img src='/resources/heartImg.gif' style='position:relative; display: block; margin: -1560px auto;'/>";
+	    loadingImg += "</div>"; 
+	  
+	    //화면에 레이어 추가
+	    $('body')
+	        .append(mask)
+	        .append(loadingImg)
+	        
+	    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+	    $('#mask').css({
+	            'width' : maskWidth
+	            , 'height': maskHeight
+	            , 'opacity' : '0.3'
+	    });
+	  
+	    //마스크 표시
+	    $('#mask').fadeOut();  
+	  
+	    //로딩중 이미지 표시
+	    $('#loadingImg').fadeOut();
+	});/* end of ready */
+
+
 	$(function() {
 		/* option 태그가 바뀔때 selected되는 값을 가져오기 위해.. */
 		$('#mainSelect').attr("option","selected").change(function() {
@@ -199,10 +234,10 @@
 
 <body>
     <!-- toolbar include -->
-    <header class="header">
+    <header class="header" style="z-index: 2;">
    	    <jsp:include page="../toolbar/toolBar.jsp"/>
    	</header>
- 
+   	
     <div class="content">
     
 		<ul class="nav nav-pills nav-fill">
@@ -289,12 +324,10 @@
 		            </tr>
 		             <!--  <td><button type="button" class="btn btn-warning btn-lg">취소</button></td> -->
 	            </c:forEach>
-	            
             </tbody>
         </table>
         </form>
         <jsp:include page="/common/pageNavigator_new.jsp"></jsp:include>
     </div>
-    
 </body>
 </html>
