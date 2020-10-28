@@ -41,8 +41,8 @@
 
 <script type="text/javascript">
 
-	/* 로딩화면 구현... */
-	$(function() {
+	//로딩화면을 출력하는 기능..
+	function loadingImg() {
 	    //화면의 높이와 너비를 구합니다.
 	    var maskHeight = $(document).height();
 	    var maskWidth  = window.document.body.clientWidth;
@@ -52,7 +52,7 @@
 	    var loadingImg = '';
 	      
 	    loadingImg += "<div id='loadingImg'>";
-	    loadingImg += "<img src='/resources/heartImg.gif' style='position:relative; display: block; margin: -1560px auto;'/>";
+	    loadingImg += "<img src='/resources/heartImgPink.gif' style='position:relative; display: block; margin: -1260px auto;'/>";
 	    loadingImg += "</div>"; 
 	  
 	    //화면에 레이어 추가
@@ -72,7 +72,7 @@
 	  
 	    //로딩중 이미지 표시
 	    $('#loadingImg').fadeOut();
-	});/* end of ready */
+	};/* end of loadingImg() */
 
 
 	$(function() {
@@ -228,7 +228,27 @@
 		}); /* end of ajax */
 	}/* end of getFenceList() */
 	
-	
+	/* 메뉴 클릭시 로딩화면 보이기.. */
+	$(function() {
+		loadingImg();
+		/* 가입자 메뉴 클릭시.. */
+		$('#selectUser').on('click', function() {
+			loadingImg();
+			self.location = "/user/getUserList"
+		});//end of click
+		
+		/* 울타리편성 메뉴 클릭시.. */
+		$('#selectFence').on('click', function() {
+			loadingImg();
+			self.location = "/user/getFenceList";
+		});//end of click
+		
+		/* 가입자 메뉴 클릭시.. */
+		$('#selectUserAdmin').on('click', function() {
+			loadingImg();
+			self.location = "/user/getAddUserAdminList";
+		});//end of click
+	});//end of function
 		
 </script>
 
@@ -239,16 +259,16 @@
    	</header>
    	
     <div class="content">
-    
+     
 		<ul class="nav nav-pills nav-fill">
   			<li class="nav-item">
-    			<a class="nav-link" href="/user/getUserList" style="color:#F5A9BC; font-size:40px;">가입자</a>
+    			<a class="nav-link" id="selectUser" href="#" style="color:#F5A9BC; font-size:40px;">가입자</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link active" href="/user/getFenceList" style="background: #F5A9BC; font-size:40px;">울타리편성</a>
+    			<a class="nav-link active" id="selectFence" href="#" style="background: #F5A9BC; font-size:40px;">울타리편성</a>
     		</li>
     		<li class="nav-item">
-    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC; font-size:40px;">청년목록</a>
+    			<a class="nav-link" href="#" id="selectUserAdmin" style="color:#F5A9BC; font-size:40px;">청년목록</a>
     		</li>
 		</ul>
         

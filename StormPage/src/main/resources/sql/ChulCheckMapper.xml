@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+		
+<mapper namespace="ChulCheckMapper">
+
+	<resultMap id="chulCheckSelectMap" 	type="chulcheck">
+		<result property="userId"			column="user_id"			jdbcType="VARCHAR"/>
+		<result property="chulCheckDate"	column="chulcheck_date"		jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- ###############관리자########################## -->
+	
+	<!-- 관리자가 가입시킬 유저이름 휴대폰번호를 추가하는 쿼리 -->
+	<insert  id="addChulCheckDate" parameterType="chulcheck">
+		INSERT INTO chulcheck (user_id, chulcheck_date) values (#{userId}, #{chulCheckDate})
+	</insert>
+	
+	<select id="getChulCheck" resultMap="chulCheckSelectMap">
+		select * from chulcheck
+	</select>
+
+</mapper>

@@ -36,14 +36,90 @@
 </style>
 
 <script type="text/javascript">
-
-
-	function buttonChange(){
-		$.ajax({
-			
-		})
+	
+	//로딩화면을 출력하는 기능..
+	function loading() {
+		//화면의 높이와 너비를 구합니다.
+	    var maskHeight = $(document).height();
+	    var maskWidth  = window.document.body.clientWidth;
+	     
+	    //화면에 출력할 마스크를 설정해줍니다.
+	    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+	    var loadingImg = '';
+	      
+	    loadingImg += "<div id='loadingImg'>";
+	    loadingImg += "<img src='/resources/heartImgPink.gif' style='position:relative; display: block; margin: -2100px auto;'/>";
+	    loadingImg += "</div>"; 
+	  
+	    //화면에 레이어 추가
+	    $('body')
+	        .append(mask)
+	        .append(loadingImg)
+	        
+	    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+	    $('#mask').css({
+	            'width' : maskWidth
+	            , 'height': maskHeight
+	            , 'opacity' : '0.3'
+	    });
+	  
+	    //마스크 표시
+	    $('#mask').fadeOut();  
+	  
+	    //로딩중 이미지 표시
+	    $('#loadingImg').fadeOut();
+	};// end of loding()
+	
+	/* qr코드 생성 */
+	$(function() {
 		
-	}
+		var userId = $(".userId").val();
+		var googleqr = "http://chart.apis.google.com/chart?cht=qr&chs=300&choe=UTF-8&chld=H10";
+		
+		var qrchl = googleqr+"&chl="+encodeURIComponent("회원의 아이디 : "+userId);
+		var imgtag = document.getElementById("qrImg");
+		
+		imgtag.setAttribute("src", qrchl);
+		
+		/* imgtag.setAttribute("id", "qrcodeimg");
+		imgtag.setAttribute("src", qrchl);
+		imgtag.setAttribute("style", "display:none;");
+		document.getElementById("qr_result").removeChild(document.getElementById("qrcodeimg"));
+		document.getElementById("qr_result").appendChild(imgtag); */
+		
+	});
+	
+	/* qr코드 모달띠우기 */
+	$(function() {
+		//Get the modal
+		var modal = document.getElementById('myModal');
+		
+		// Get the button that opens the modal
+		var btn = document.getElementById("qr");
+		
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];     
+		
+		// When the user clicks on the button, open the modal 
+		btn.onclick = function() {
+		    modal.style.display = "block";
+		}
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		}
+	})
+
+	$(function() {
+		//관리자 톱니바퀴 아이콘 클릭시..
+		$('.fa-cog').on('click', function() {
+			loading();
+			self.location = "/user/getUserList";
+		});//end of click
+	});//end of function
 </script>
  
 <style>
@@ -55,6 +131,9 @@
     .header_top {top:0px; left: 0px; right: 0px; position: fixed; display: flex; justify-content: space-between; width: 100%; height: 160px; background: #ffffff;}
     header .main_logo {margin-left: 10px; margin-top: 10px; float: left; width: 30%; height: 75%;}
     header .logo_img {width: 100%; height: 100%;}
+    .qrcodeImg {float:left; margin-right: 30px; margin-top: 57px; width: 60px; height: 60px;}
+    .searchIcon {float:left; margin-top: 20px;}
+    .cogIcon {float:left; margin-top:30px; margin-right:30px;}
     header .fa-search {float: ; margin-top: 20px; margin-right: 10px; border-radius: 180px; width: 100px; height: 60%; background: #9c27b0; font-size: 60px; background: #f5f5f5; color: #616161; text-align: center; line-height: 90px;}
     header .fa-cog{float: ; margin-top: 20px; margin-right: 0px; border-radius: 180px; width: 80px; height: 60%; font-size: 40px; color: #616161; text-align: center; line-height: 75px;}
     header .admin_menu {padding-top: 5%; font-size: 30px; font-weight: bold;}
@@ -66,6 +145,28 @@
     
     .headersub_icon:hover{background: #e0e0e0;}
     
+     /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        /* background-color: rgb(0,0,0); /* Fallback color */ 
+        /* background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 30% 30% 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        /* width: 100px; */ /* Could be more or less, depending on screen size */                          
+    }
 </style>
     <body>
         <header class="header" data-role="header">
@@ -76,10 +177,17 @@
 	                </a>
                 </div>
                 <div>
-	                <i class="fas fa-search"></i>
-	                <c:if test="${user.userRole == '1' }">
-	                	<a href="/user/getUserList"><i class="fas fa-cog"></i></a>
-	                </c:if>
+	                <div class="qrcodeImg" id="qr">
+	                	<img src="/resources/qrcodeImg.png" style="width: 100%; height: 100%;'">
+	                </div>
+	                <div class="searchIcon">
+		                <i class="fas fa-search"></i>
+		            </div>
+		            <div class="cogIcon">
+		                <c:if test="${user.userRole == '1' }">
+		                	<i class="fas fa-cog"></i>
+		                </c:if>
+		            </div>
                 </div>
             </div>
             <div class="header_under">
@@ -108,6 +216,15 @@
                     	<img id="main_logo_img" src="/resources/strompic2.jpeg" style="margin-top: 10%; margin-left: 30%; border-radius: 50%; width: 40%; height: 70%;">
                     </a>
                 </div>
+                <!-- The Modal -->
+	              <div id="myModal" class="modal">
+		              <!-- Modal content -->
+		              <div class="modal-content" style="width:40%;">
+		                  <!-- <span class="close">&times;</span>  -->                                                              
+		                 <img id="qrImg" style="margin-left:3%;" src="">
+		                 <input class="userId" type="hidden" value="${ user.userId }"/>
+	                	</div>
+            		</div>
             </div>
         </header> 
     </body>

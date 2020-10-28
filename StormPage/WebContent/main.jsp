@@ -107,6 +107,30 @@
 </style>
 
 <script type="text/javascript">
+/* 출첵 */
+$(function() {
+	$.ajax({
+		url: "/chulCheck/json/chulCheck",
+		method: "GET",
+		dataType: "json",
+		headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
+		data: JSON.stringify({
+			userId: userId,
+			chulCheckDate: chulCheckDate
+		}),
+		success: function(JSONData, status){
+			if( JSONData.message == "seelctFail") {
+				console.log("No Search ReturnData");
+			}else{
+				console.log("Yes Search ReturnData!! ==>"+JSONData);
+				getFenceList(searchKeyword, searchCondition);
+			}/* end of else */
+		},/* end of success */
+		error:function(request,status,error) {
+			console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		}/* end of error */
+	});
+})
 
 $(function(){
 	
@@ -187,6 +211,7 @@ $(function(){
             		</div>
               </div>
                 <div class="post_content">
+                	ㄴㅇㄹㅁㅇㅁㄴ
                     군포교회 모두가 한마음으로 로마서 8장 31-39절을 암송했습니다. 
                     매일의 묵상을 통해 말씀을 누리는 모두가 되기를 원합니다. 
                     군포교회 모두가 한마음으로 로마서 8장 31-39절을 암송했습니다. 

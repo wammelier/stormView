@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
 encoding//WebContent/view/user/getUser.jsp=UTF-8
-encoding/<project>=EUC-KR
+encoding//src/test/java/com/storm/service/user/test/chulCheckTest.java=UTF-8
+encoding//src/test/java/com/storm/service/user/test/userTest.java=UTF-8

@@ -71,38 +71,38 @@
 
 <script type="text/javascript">
 
-/* 로딩화면 구현... */
-$(function() {
-    //화면의 높이와 너비를 구합니다.
-    var maskHeight = $(document).height();
-    var maskWidth  = window.document.body.clientWidth;
-     
-    //화면에 출력할 마스크를 설정해줍니다.
-    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
-    var loadingImg = '';
-      
-    loadingImg += "<div id='loadingImg'>";
-    loadingImg += "<img src='/resources/heartImg.gif' style='position:relative; display: block; margin: -1500px auto;'/>";
-    loadingImg += "</div>"; 
-  
-    //화면에 레이어 추가
-    $('body')
-        .append(mask)
-        .append(loadingImg)
-        
-    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
-    $('#mask').css({
-            'width' : maskWidth
-            , 'height': maskHeight
-            , 'opacity' : '0.3'
-    });
-  
-    //마스크 표시
-    $('#mask').fadeOut();  
-  
-    //로딩중 이미지 표시
-    $('#loadingImg').fadeOut();
-});/* end of ready */
+	//로딩화면을 출력하는 기능..
+	function loadingImg() {
+	    //화면의 높이와 너비를 구합니다.
+	    var maskHeight = $(document).height();
+	    var maskWidth  = window.document.body.clientWidth;
+	     
+	    //화면에 출력할 마스크를 설정해줍니다.
+	    var mask       = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+	    var loadingImg = '';
+	      
+	    loadingImg += "<div id='loadingImg'>";
+	    loadingImg += "<img src='/resources/heartImgPink.gif' style='position:relative; display: block; margin: -1200px auto;'/>";
+	    loadingImg += "</div>"; 
+	  
+	    //화면에 레이어 추가
+	    $('body')
+	        .append(mask)
+	        .append(loadingImg)
+	        
+	    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+	    $('#mask').css({
+	            'width' : maskWidth
+	            , 'height': maskHeight
+	            , 'opacity' : '0.3'
+	    });
+	  
+	    //마스크 표시
+	    $('#mask').fadeOut();  
+	  
+	    //로딩중 이미지 표시
+	    $('#loadingImg').fadeOut();
+	};/* end of loadingImg() */
 
 
 	/* 관리자가 작성한 회원의 상세정보를 수정하거나 열람하기를 원할 경우 */
@@ -158,154 +158,176 @@ $(function() {
 
 
 
-/* 리더를 임명할때.. */
-function addLeader(userName) {
-	$.ajax({
-		url:"/user/json/updatePositionLeader/"+userName,
-		method: "GET",
-		dataType: "json",
-		headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
-		success: function(JSONData) {
-			/* restController 로 부터 오는 data값.. */
-			if(JSONData.message == "updateOk"){
-				getUserAdminList()
-			}/* end of if */
-		},/* end of success */
-		error: function(request, status, error) {
-			console.log('code = '+request.status + 'message ='+ request.responseText + 'error =' + error);	
-		},/* end of error */
-	});/* end of ajax */
-};/* end of function addLeader() */
-
-
-
-/* 리더임명을 취소할때.. */
-function deleteLeader(userName) {
-	$.ajax({
-		url:"/user/json/deleteLeaderPostion/"+userName,
-		method: "GET",
-		dataType: "json",
-		headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
-		success: function(JSONData) {
-			/* restController 로 부터 오는 data값.. */
-			if(JSONData.message == "deleteOk"){
-				$('#'+userName+':nth').remove();
-				$('#'+userName+':nth').html('<td><button type="button" id="'+userName+'" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader(\''+userName+'\')">임명취소</button></td>')
-				getUserAdminList();
-			}/* end of if */
-		},/* end of success */
-		error: function(request, status, error) {
-			console.log('code = '+request.status + 'message ='+ request.responseText + 'error =' + error);	
-		},/* end of error */
-	});/* end of ajax */
-};/* end of function DeleteLeader() */
-
-
-
-/* 각종 이벤트마다 테이블의 데이터를 리로드하기 위해 list Data 들을 ajax처리함. */
-function getUserAdminList() {
+	/* 리더를 임명할때.. */
+	function addLeader(userName) {
+		$.ajax({
+			url:"/user/json/updatePositionLeader/"+userName,
+			method: "GET",
+			dataType: "json",
+			headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
+			success: function(JSONData) {
+				/* restController 로 부터 오는 data값.. */
+				if(JSONData.message == "updateOk"){
+					getUserAdminList()
+				}/* end of if */
+			},/* end of success */
+			error: function(request, status, error) {
+				console.log('code = '+request.status + 'message ='+ request.responseText + 'error =' + error);	
+			},/* end of error */
+		});/* end of ajax */
+	};/* end of function addLeader() */
 	
-	var searchKeyword = '';
-	var searchCondition = '';
 	
-	$.ajax ({
-		url: "/user/json/getAddUserAdminList",
-		method: "POST",
-		dataType: "json",
-		headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
-		data: JSON.stringify ({
-			searchKeyword: searchKeyword,
-			searchCondition : searchCondition
-		}),
-		success: function(JSONData, status) {
-			if( JSONData == null || JSONData == "" ) {
-				console.log("No Search ReturnData");
-			}else{
-				console.log("Yes Search ReturnData!! ==>"+JSONData);
-				
-				$('tbody').children().remove();
-				
-				for(var i = 0; i<JSONData.list.length; i++) {
+	
+	/* 리더임명을 취소할때.. */
+	function deleteLeader(userName) {
+		$.ajax({
+			url:"/user/json/deleteLeaderPostion/"+userName,
+			method: "GET",
+			dataType: "json",
+			headers: { "Accept" : "application/json", "Content-Type" : "application/json; charset= UTF-8"},
+			success: function(JSONData) {
+				/* restController 로 부터 오는 data값.. */
+				if(JSONData.message == "deleteOk"){
+					$('#'+userName+':nth').remove();
+					$('#'+userName+':nth').html('<td><button type="button" id="'+userName+'" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader(\''+userName+'\')">임명취소</button></td>')
+					getUserAdminList();
+				}/* end of if */
+			},/* end of success */
+			error: function(request, status, error) {
+				console.log('code = '+request.status + 'message ='+ request.responseText + 'error =' + error);	
+			},/* end of error */
+		});/* end of ajax */
+	};/* end of function DeleteLeader() */
+
+
+
+	/* 각종 이벤트마다 테이블의 데이터를 리로드하기 위해 list Data 들을 ajax처리함. */
+	function getUserAdminList() {
+		
+		var searchKeyword = '';
+		var searchCondition = '';
+		
+		$.ajax ({
+			url: "/user/json/getAddUserAdminList",
+			method: "POST",
+			dataType: "json",
+			headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
+			data: JSON.stringify ({
+				searchKeyword: searchKeyword,
+				searchCondition : searchCondition
+			}),
+			success: function(JSONData, status) {
+				if( JSONData == null || JSONData == "" ) {
+					console.log("No Search ReturnData");
+				}else{
+					console.log("Yes Search ReturnData!! ==>"+JSONData);
 					
-					/* 삭제버튼 종류(0=삭제,1=삭제불가) */
-					if( JSONData.list[i].signupFlag == 0 && JSONData.list[i].userPosition == 0) {
-						var deleteButton = 
-							'<button type="button" class="btn btn-danger btn-lg" style="font-size:30px;" onclick="deleteUserAdmin(\''+JSONData.list[i].userName+'\')">삭제</button>';
-					}else if ( JSONData.list[i].signupFlag == 1 || JSONData.list[i].userPosition == 1) {
-						var deleteButton = '삭제불가';
-					}
-					/* 유저의 가입여부에 따른 버튼종류(0=가입안됨, 1=가입됨) */
-					if( JSONData.list[i].signupFlag == 0 ) {
-						var signupFlag = '가입안됨';
-					}else if ( JSONData.list[i].signupFlag == 1 ) {
-						var signupFlag = '가입됨';
-					}
-					/* 리더를 임명하는 버튼 종류 (0=임명, 1=임명취소) */
-					if( JSONData.list[i].userPosition == 0) {
-						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-success btn-lg" style="font-size:30px;" onclick="addLeader(\''+JSONData.list[i].userName+'\')">리더임명</button></td>';
-					}else if( JSONData.list[i].userPosition == 1) {
-						var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader(\''+JSONData.list[i].userName+'\')">임명취소</button></td>';
+					$('tbody').children().remove();
+					
+					for(var i = 0; i<JSONData.list.length; i++) {
 						
-					}/* end of else if */
-					/* 삭제후 테이블을 비동기방식으로 어펜드 하기위한 필드.. */
-					var appendTag = '<tr>'+
-										'<td>'+JSONData.list[i].userName+
-										'<input type="hidden" name="userName" value=\"'+JSONData.list[i].userName+'\"/>'+
-										'</td>'+
-										'<td>'+JSONData.list[i].phone+'</td>'+
-										'<td>'+signupFlag+'</td>'+
-										'<td>'+leaderButton+'</td>'+
-										'<td>'+deleteButton+'</td>';
-					/* 태그 어펜드 .. */
-					$('tbody').append(appendTag);
-				}/* end of for */
-			}/* end of else */
-		},/* end fo success */
-		error: function(request, status, error) {
-			console.log('code = ' + request.status + 'message = ' + request.responseText + 'error = ' +error);
-		}/* end of error */
-	});/* end of Ajax */
-};/* end of getUseAdminList */
+						/* 삭제버튼 종류(0=삭제,1=삭제불가) */
+						if( JSONData.list[i].signupFlag == 0 && JSONData.list[i].userPosition == 0) {
+							var deleteButton = 
+								'<button type="button" class="btn btn-danger btn-lg" style="font-size:30px;" onclick="deleteUserAdmin(\''+JSONData.list[i].userName+'\')">삭제</button>';
+						}else if ( JSONData.list[i].signupFlag == 1 || JSONData.list[i].userPosition == 1) {
+							var deleteButton = '삭제불가';
+						}
+						/* 유저의 가입여부에 따른 버튼종류(0=가입안됨, 1=가입됨) */
+						if( JSONData.list[i].signupFlag == 0 ) {
+							var signupFlag = '가입안됨';
+						}else if ( JSONData.list[i].signupFlag == 1 ) {
+							var signupFlag = '가입됨';
+						}
+						/* 리더를 임명하는 버튼 종류 (0=임명, 1=임명취소) */
+						if( JSONData.list[i].userPosition == 0) {
+							var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-success btn-lg" style="font-size:30px;" onclick="addLeader(\''+JSONData.list[i].userName+'\')">리더임명</button></td>';
+						}else if( JSONData.list[i].userPosition == 1) {
+							var leaderButton = '<button type="button" id="'+JSONData.list[i].userName+'" class="btn btn-warning btn-lg" style="font-size:30px;" onclick="deleteLeader(\''+JSONData.list[i].userName+'\')">임명취소</button></td>';
+							
+						}/* end of else if */
+						/* 삭제후 테이블을 비동기방식으로 어펜드 하기위한 필드.. */
+						var appendTag = '<tr>'+
+											'<td>'+JSONData.list[i].userName+
+											'<input type="hidden" name="userName" value=\"'+JSONData.list[i].userName+'\"/>'+
+											'</td>'+
+											'<td>'+JSONData.list[i].phone+'</td>'+
+											'<td>'+signupFlag+'</td>'+
+											'<td>'+leaderButton+'</td>'+
+											'<td>'+deleteButton+'</td>';
+						/* 태그 어펜드 .. */
+						$('tbody').append(appendTag);
+					}/* end of for */
+				}/* end of else */
+			},/* end fo success */
+			error: function(request, status, error) {
+				console.log('code = ' + request.status + 'message = ' + request.responseText + 'error = ' +error);
+			}/* end of error */
+		});/* end of Ajax */
+	};/* end of getUseAdminList */
 
 
 
-/* 가입시킬 청년추가 버튼 누를때 보이고 숨기는 기능. */
-function addUserButton() {
-	if($('#addUserAdmin').css('display') == 'none') { 
-		document.getElementById('addUserAdmin').style.display="block";
-	}else {
-		document.getElementById('addUserAdmin').style.display="none";
-	}/* end of else */
-};/* end of addUserButton() */
+	/* 가입시킬 청년추가 버튼 누를때 보이고 숨기는 기능. */
+	function addUserButton() {
+		if($('#addUserAdmin').css('display') == 'none') { 
+			document.getElementById('addUserAdmin').style.display="block";
+		}else {
+			document.getElementById('addUserAdmin').style.display="none";
+		}/* end of else */
+	};/* end of addUserButton() */
 
 
 
-/* 가입시킬 유저 추가 버튼을 누르는 기능. */
-function successButton() {
-	var addName = $('#addName').val();
-	var addPhone = $('#addPhone').val();
-	 
-	$.ajax ({
-		url: "/user/json/addUserAdmin",
-		method: "POST",
-		dataType: "json",
-		headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
-		data: JSON.stringify ({
-			userName : addName,
-			phone : addPhone
-		}),
-		success: function(JSONData, status) {
-			if(JSONData.message == 'addFailName'){
-				swal("해당 이름이 이미 존재합니다.", "이미 추가하셨습니다.");	
-			}else if(JSONData.message == 'addOk') {
-				getUserAdminList();
-				swal("", "등록되었습니다.", "success");
-				$('#addName').val('');
-				$('#addPhone').val('');
-			}/* end of else if */
-		}/* end of success */
-	});/* end of ajax */
-};/* end of function */
+	/* 가입시킬 유저 추가 버튼을 누르는 기능. */
+	function successButton() {
+		var addName = $('#addName').val();
+		var addPhone = $('#addPhone').val();
+		 
+		$.ajax ({
+			url: "/user/json/addUserAdmin",
+			method: "POST",
+			dataType: "json",
+			headers: { "Accept" : "application/json", "Content-Type" : "application/json" },
+			data: JSON.stringify ({
+				userName : addName,
+				phone : addPhone
+			}),
+			success: function(JSONData, status) {
+				if(JSONData.message == 'addFailName'){
+					swal("해당 이름이 이미 존재합니다.", "이미 추가하셨습니다.");	
+				}else if(JSONData.message == 'addOk') {
+					getUserAdminList();
+					swal("", "등록되었습니다.", "success");
+					$('#addName').val('');
+					$('#addPhone').val('');
+				}/* end of else if */
+			}/* end of success */
+		});/* end of ajax */
+	};/* end of function */
+	
+	/* 메뉴 클릭시 로딩화면 보이기.. */
+	$(function() {
+		loadingImg();
+		/* 가입자 메뉴 클릭시.. */
+		$('#selectUser').on('click', function() {
+			loadingImg();
+			self.location = "/user/getUserList"
+		});//end of click
+		
+		/* 울타리편성 메뉴 클릭시.. */
+		$('#selectFence').on('click', function() {
+			loadingImg();
+			self.location = "/user/getFenceList";
+		});//end of click
+		
+		/* 가입자 메뉴 클릭시.. */
+		$('#selectUserAdmin').on('click', function() {
+			loadingImg();
+			self.location = "/user/getAddUserAdminList";
+		});//end of click
+	});//end of function
 
 
 </script>
@@ -319,13 +341,13 @@ function successButton() {
     
 		<ul class="nav nav-pills nav-fill">
   			<li class="nav-item">
-    			<a class="nav-link" href="/user/getUserList" style="color:#F5A9BC; font-size:40px;">가입자</a>
+    			<a class="nav-link" id="selectUser" href="#" style="color:#F5A9BC; font-size:40px;">가입자</a>
   			</li>
   			<li class="nav-item">
-    			<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC; font-size:40px;">울타리편성</a>
+    			<a class="nav-link" id="selectFence" href="#" style="color:#F5A9BC; font-size:40px;">울타리편성</a>
     		</li>
     		<li class="nav-item">
-    			<a class="nav-link active" href="/user/getAddUserAdminList" style="background: #F5A9BC; font-size:40px;">청년목록</a>
+    			<a class="nav-link active" id="selectUserAdmin" href="#" style="background: #F5A9BC; font-size:40px;">청년목록</a>
     		</li>
 			</ul>
 		<div>

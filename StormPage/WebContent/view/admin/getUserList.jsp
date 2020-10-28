@@ -132,14 +132,30 @@
     	left: 78px; 
     }
     
+    /* .loading {
+    width:100%;
+    height:100%;
+    position:fixed;
+    left:0px;
+    top:0px;
+    background:#fff;
+    z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다.
+	} */
+    
 </style>
 
 <script type="text/javascript">
 
-	
-	/* 로딩화면 구현... */
-	$(function() {
-	    //화면의 높이와 너비를 구합니다.
+	/********************* 로딩화면 구현시 주석해제..  ****************************/
+	/* 로딩화면 구현시 css html javascript 주석풀기.. */
+	/* $(window).ready(function(){
+	    $(".loading").fadeOut();
+	}); */
+	/********************* END  ****************************/
+
+	//로딩화면을 출력하는 기능..
+	function loadingImg() {
+		//화면의 높이와 너비를 구합니다.
 	    var maskHeight = $(document).height();
 	    var maskWidth  = window.document.body.clientWidth;
 	     
@@ -148,7 +164,7 @@
 	    var loadingImg = '';
 	      
 	    loadingImg += "<div id='loadingImg'>";
-	    loadingImg += "<img src='/resources/heartImg.gif' style='position: relative; display: block; margin: 100px auto;'/>";
+	    loadingImg += "<img src='/resources/heartImgPink.gif' style='position:relative; display: block; margin: 400px auto;'/>";
 	    loadingImg += "</div>"; 
 	  
 	    //화면에 레이어 추가
@@ -168,10 +184,8 @@
 	  
 	    //로딩중 이미지 표시
 	    $('#loadingImg').fadeOut();
-	});/* end of ready */
-
-
-
+	};// end of loding()
+	
 	/* 회원을 검색할 경우.. */
 	$(function() {
 		/* 검색창에 커서를 올릴경우 */
@@ -410,6 +424,35 @@
 			self.location = "/user/getAdminUser?userId="+userId;
 		});
 	});/* end of function */
+	
+	/* 가입자 메뉴 클릭시 로딩화면 보이기.. */
+	$(function() {
+		$('#selectUser').on('click', function() {
+			loading();
+		});//end of click
+	});//end of function
+	
+	/* 메뉴 클릭시 로딩화면 보이기.. */
+	$(function() {
+		loadingImg();
+		/* 가입자 메뉴 클릭시.. */
+		$('#selectUser').on('click', function() {
+			loadingImg();
+			self.location = "/user/getUserList"
+		});//end of click
+		
+		/* 울타리편성 메뉴 클릭시.. */
+		$('#selectFence').on('click', function() {
+			loadingImg();
+			self.location = "/user/getFenceList";
+		});//end of click
+		
+		/* 가입자 메뉴 클릭시.. */
+		$('#selectUserAdmin').on('click', function() {
+			loadingImg();
+			self.location = "/user/getAddUserAdminList";
+		});//end of click
+	});//end of function
 </script>
 
 
@@ -418,18 +461,20 @@
     <header class="header" style="z-index: 2;">
     	<jsp:include page="../toolbar/toolBar.jsp"/>
     </header>
+    <!-- 로딩화면 구현시.. -->
+    <!-- <div class="loading"></div> -->
     
     <div class="userList_box">
     
 	    <ul class="nav nav-pills nav-fill" style="margin-bottom: 40px;">
 		  	<li class="nav-item">
-		    	<a class="nav-link active" href="/user/getUserList" style="background: #F5A9BC; font-size:40px;">가입자 (${resultPage.totalCount}명)</a>
+		    	<a class="nav-link active" id="selectUser" href="#" style="background: #F5A9BC; font-size:40px;">가입자 (${resultPage.totalCount}명)</a>
 		  	</li>
 		  	<li class="nav-item">
-		    	<a class="nav-link" href="/user/getFenceList" style="color:#F5A9BC; font-size:40px;">울타리편성</a>
+		    	<a class="nav-link" id="selectFence" href="#" style="color:#F5A9BC; font-size:40px;">울타리편성</a>
 		  	</li>
 		  	<li class="nav-item">
-    			<a class="nav-link" href="/user/getAddUserAdminList" style="color:#F5A9BC; font-size:40px;">청년목록</a>
+    			<a class="nav-link" id="selectUserAdmin" href="#" style="color:#F5A9BC; font-size:40px;">청년목록</a>
     		</li>
 		</ul>
 	    

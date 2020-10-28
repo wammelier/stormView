@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -35,9 +36,10 @@ public class userTest {
 	
 
 	@Test
+	@Rollback(true)
 	public void testGetUserList() throws Exception {
 
-		System.out.println("getUserList Test start! 시작!!");
+		System.out.println("getUserList Test start! !");
 		
 		Search search = new Search();
 		search.setCurrentPage(1);
@@ -61,12 +63,12 @@ public class userTest {
 		User user = service.getUser("sw4417");
 		
 		Assert.assertEquals(user.getUserId(), "sw4417");
-		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getUserName(), "�댁�뱁��");
 		Assert.assertEquals(user.getNickName(), "wammelier");
 		Assert.assertEquals(user.getPhone(), "01043304417");
 		Assert.assertEquals(user.getGender(), "1");
 		Assert.assertEquals(user.getBirth(), "19930124");
-		Assert.assertEquals(user.getAddress(), "경기도 군포시 당");
+		Assert.assertEquals(user.getAddress(), "寃쎄린�� 援고�ъ�� ��");
 		
 	}
 	
@@ -94,11 +96,11 @@ public class userTest {
 		
 		System.out.println("getUserAdmin");
 		
-		User user = service.getUserAdmin("이승환");
+		User user = service.getUserAdmin("�댁�뱁��");
 		
-		Assert.assertEquals(user.getUserName(), "이승환");
+		Assert.assertEquals(user.getUserName(), "�댁�뱁��");
 		Assert.assertEquals(user.getPhone(), "01043304417");
-		Assert.assertEquals(user.getLeaderName(), "이승환");
+		Assert.assertEquals(user.getLeaderName(), "�댁�뱁��");
 	}
 	
 	@Test
@@ -107,14 +109,14 @@ public class userTest {
 		System.out.println("Test AddUserAdmin");
 		
 		User user = new User();
-		user.setUserName("양승미");
+		user.setUserName("���밸��");
 		user.setPhone("5739207492");
 		
 		service.addUserAdmin(user);
 		
-		user = service.getUserAdmin("양승미");
+		user = service.getUserAdmin("���밸��");
 		
-		Assert.assertEquals(user.getUserName(), "양승미");
+		Assert.assertEquals(user.getUserName(), "���밸��");
 		Assert.assertEquals(user.getPhone(), "5739207492");
 
 	}
@@ -143,12 +145,12 @@ public class userTest {
 		
 		System.out.println("TEST updatePositionLeader");
 		
-		service.updatePositionLeader("박혁거");
+		service.updatePositionLeader("諛���嫄�");
 		
-		User user = service.getUserAdmin("박혁거");
-		Assert.assertEquals(user.getUserName(), "박혁거");
+		User user = service.getUserAdmin("諛���嫄�");
+		Assert.assertEquals(user.getUserName(), "諛���嫄�");
 		Assert.assertEquals(user.getUserPosition(), "1");
-		Assert.assertEquals(user.getLeaderName(), "박혁거");
+		Assert.assertEquals(user.getLeaderName(), "諛���嫄�");
 	
 	}
 	
@@ -157,28 +159,28 @@ public class userTest {
 		
 		System.out.println("TEST updateUserAdmin");
 
-		User user = service.getUserAdmin("이승환");
-		Assert.assertEquals(user.getUserName(), "이승환");
+		User user = service.getUserAdmin("�댁�뱁��");
+		Assert.assertEquals(user.getUserName(), "�댁�뱁��");
 		Assert.assertEquals(user.getPhone(), "01043304417");
 		Assert.assertEquals(user.getAddress(), null);
 		Assert.assertEquals(user.getBirth(), null);
 		Assert.assertEquals(user.getBaptismName(), "0");
 		
-		user.setAddress("경기도 군포시 당동");
+		user.setAddress("寃쎄린�� 援고�ъ�� �밸��");
 		user.setBirth("19930124");
 		user.setBaptismName("1");
 		
 		service.updateUserAdmin(user);
-		user = service.getUserAdmin("이승환");
-		Assert.assertEquals(user.getUserName(), "이승환");
+		user = service.getUserAdmin("�댁�뱁��");
+		Assert.assertEquals(user.getUserName(), "�댁�뱁��");
 		Assert.assertEquals(user.getPhone(), "01043304417");
-		Assert.assertEquals(user.getAddress(), "경기도 군포시 당동");
+		Assert.assertEquals(user.getAddress(), "寃쎄린�� 援고�ъ�� �밸��");
 		Assert.assertEquals(user.getBirth(), "19930124");
 		Assert.assertEquals(user.getBaptismName(), "1");
 		
 	}
 	
-	// deletedUser + getDeletedUserList 같이테스트
+	// deletedUser + getDeletedUserList 媛��댄���ㅽ��
 	@Test
 	public void getDeletedUserList() throws Exception{
 		
@@ -205,12 +207,12 @@ public class userTest {
 		
 		System.out.println("TEST updateLeaderName");
 		
-		User user = service.getUserAdmin("이승환");
-		user.setLeaderName("아무개");
+		User user = service.getUserAdmin("�댁�뱁��");
+		user.setLeaderName("��臾닿�");
 		
 		service.updateLeaderName(user);
-		Assert.assertEquals(user.getUserName(), "이승환");
-		Assert.assertEquals(user.getLeaderName(), "아무개");
+		Assert.assertEquals(user.getUserName(), "�댁�뱁��");
+		Assert.assertEquals(user.getLeaderName(), "��臾닿�");
 		
 	}
 	
@@ -222,24 +224,24 @@ public class userTest {
 		User user = new User();
 		user.setUserId("abcd123");
 		user.setUserPwd("12345678");
-		user.setUserName("나폴레옹");
-		user.setNickName("레옹");
+		user.setUserName("���대����");
+		user.setNickName("����");
 		user.setEmail("abc@naver.com");
 		user.setGender("1");
 		user.setBirth("19930101");
-		user.setAddress("영국 어쩌구 저쩌");
+		user.setAddress("��援� �댁�援� ��姨�");
 		
 		service.addUser(user);
 		user = service.getUser("abcd123");
 		
 		Assert.assertEquals(user.getUserId(), "abcd123");
 		Assert.assertEquals(user.getUserPwd(), "12345678");
-		Assert.assertEquals(user.getUserName(), "나폴레옹");
-		Assert.assertEquals(user.getNickName(), "레옹");
+		Assert.assertEquals(user.getUserName(), "���대����");
+		Assert.assertEquals(user.getNickName(), "����");
 		Assert.assertEquals(user.getEmail(), "abc@naver.com");
 		Assert.assertEquals(user.getGender(), "1");
 		Assert.assertEquals(user.getBirth(), "19930101");
-		Assert.assertEquals(user.getAddress(), "영국 어쩌구 저쩌");
+		Assert.assertEquals(user.getAddress(), "��援� �댁�援� ��姨�");
 		Assert.assertEquals(user.getPhone(), "01009876543");
 		Assert.assertEquals(user.getUserImg(), null);
 	}
@@ -252,7 +254,7 @@ public class userTest {
 		User user = service.getUser("sw4417");
 		user.setNickName("wammelier");
 		user.setEmail("sw4417@daum.net");
-		user.setAddress("미국 동부 로스엔젤레스");
+		user.setAddress("誘멸뎅 ��遺� 濡��ㅼ���ㅻ����");
 		user.setBirth("19920101");
 		
 		service.updateUser(user);
@@ -261,7 +263,7 @@ public class userTest {
 		Assert.assertEquals(user.getUserId(), "sw4417");
 		Assert.assertEquals(user.getNickName(), "wammelier");
 		Assert.assertEquals(user.getEmail(), "sw4417@daum.net");
-		Assert.assertEquals(user.getAddress(), "미국 동부 로스엔젤레스");
+		Assert.assertEquals(user.getAddress(), "誘멸뎅 ��遺� 濡��ㅼ���ㅻ����");
 		Assert.assertEquals(user.getBirth(), "19920101");
 	}
 	
@@ -340,7 +342,7 @@ public class userTest {
 		
 		System.out.println("TEST deleteLeaderPosition");
 		
-		User user = service.getUserAdmin("이승환");
+		User user = service.getUserAdmin("�댁�뱁��");
 		System.out.println("user ==>"+user);
 		
 		service.deleteLeaderPostion(user.getUserName());
@@ -379,8 +381,8 @@ public class userTest {
 		
 		System.out.println("TEST deleteNamePhone");
 		
-		service.deleteNamePhone("김폴레옹");
-		User user = service.getUserAdmin("김폴레옹");
+		service.deleteNamePhone("源��대����");
+		User user = service.getUserAdmin("源��대����");
 		
 		Assert.assertEquals(null, user.getUserName());
 	}
@@ -404,7 +406,7 @@ public class userTest {
 		User user = (User)list.get(0);
 		System.out.println("list.get==? "+user);
 		
-		Assert.assertEquals("아아", user.getUserName());
+		Assert.assertEquals("����", user.getUserName());
 	}
 	
 	@Test
