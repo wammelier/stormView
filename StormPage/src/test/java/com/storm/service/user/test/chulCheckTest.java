@@ -43,10 +43,15 @@ public class chulCheckTest {
 		ChulCheck chulCheck = new ChulCheck();
 		chulCheck.setUserId("sw4417");
 		chulCheck.setChulCheckDate("2020-09-09");
-		service.insertChulCheck(null);
+		chulCheck.setUserName("이승환");
+		chulCheck.setTime("11:08");
+		
+		service.insertChulCheck(chulCheck);
 		
 		Assert.assertEquals(chulCheck.getUserId(), "sw4417");
 		Assert.assertEquals(chulCheck.getChulCheckDate(), "2020-09-09");
+		Assert.assertEquals(chulCheck.getUserName(), "이승환");
+		Assert.assertEquals(chulCheck.getTime(), "11:08");
 		
 		
 		

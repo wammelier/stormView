@@ -74,9 +74,10 @@
 	$(function() {
 		
 		var userId = $(".userId").val();
-		var googleqr = "http://chart.apis.google.com/chart?cht=qr&chs=300&choe=UTF-8&chld=H10";
+		var userName = $(".userName").val();
+		var googleqr = "http://chart.apis.google.com/chart?cht=qr&chs=400&choe=UTF-8&chld=H30";
 		
-		var qrchl = googleqr+"&chl="+encodeURIComponent("회원의 아이디 : "+userId);
+		var qrchl = googleqr+"&chl="+encodeURIComponent("회원의 아이디 : "+userId)+encodeURIComponent("회원의 이름 : "+userName);
 		var imgtag = document.getElementById("qrImg");
 		
 		imgtag.setAttribute("src", qrchl);
@@ -163,7 +164,7 @@
     .modal-content {
         background-color: #fefefe;
         margin: 30% 30% 15% auto; /* 15% from the top and centered */
-        padding: 20px;
+        padding: 0px;
         border: 1px solid #888;
         /* width: 100px; */ /* Could be more or less, depending on screen size */                          
     }
@@ -223,6 +224,7 @@
 		                  <!-- <span class="close">&times;</span>  -->                                                              
 		                 <img id="qrImg" style="margin-left:3%;" src="">
 		                 <input class="userId" type="hidden" value="${ user.userId }"/>
+		                 <input class="userName" type="hidden" value="${ user.userName }"/>
 	                	</div>
             		</div>
             </div>

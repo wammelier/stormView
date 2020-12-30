@@ -39,10 +39,6 @@
 </style>
 
 <body>
-	<% request.setCharacterEncoding("UTF-8");
-		String userId = request.getParameter("userId");
-		System.out.println("이름은.." + userId);
-	%>
  	<header style="z-index: 5;">
     	<jsp:include page="../toolbar/toolBar.jsp"/>
     </header>

@@ -36,19 +36,18 @@ public class ChulCheckRestController {
 	@Value("#{commonProperties['postPageSize']}")
 	int pageSize;
 
-//	@RequestMapping(value="json/chulCheck", method=RequestMethod.GET)
-//	public Map<String, Object> updateNickName(@PathVariable String userId) throws Exception {
-//		//debugging
-//		System.out.println("chulCheck ==>" + userId);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		chulCheckService.insertChulCheck(chulCheck);
-//		ChulCheck confirmChulCheck = chulCheckService.getChulCheck();
-//		if( confirmChulCheck.getUserId().equals(confirmChulCheck.getUserId()) ) {
-//			map.put("ChulCheck",);
-//			map.put("message", "selectOk");
-//		}else {
-//			map.put("message", "seelctFail");
+	@RequestMapping(value="json/chulCheck", method=RequestMethod.GET)
+	public void addChulCheck(@RequestBody ChulCheck chulCheck) throws Exception {
+		//debugging
+		System.out.println("chulCheck ==>" + chulCheck);
+		//가져온 날짜의 시간을 제거하기위한 parsing
+		String parseDate = chulCheck.getChulCheckDate().substring(0,10);
+		//해당날짜가 주일인지 아닌지를 판별하기위해..
+		String dayOfWeek = chulCheck.getSunday(parseDate);
+		chulCheckService.insertChulCheck(chulCheck);
+		//해당요일이 주일이 아니면 DB에 값을 넣지않음..
+//		if(dayOfWeek != "Sun") {
+//			chulCheckService.insertChulCheck(chulCheck);
 //		}
-//		return map;
-//	}	
+	}	
 }// end of class

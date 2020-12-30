@@ -34,6 +34,7 @@
     td {font-size: 40px;}
     .form-control {font-size: 30px; height: 100%;}
     .select_room {margin: 20px; margin-top: 320px; width: 200px; height: 50px;}
+    .select_room2 {margin: 20px; margin-top: 0px; width: 200px; height: 50px;}
     table {margin-top: 20px; margin-left: 15px;}
 </style>
 
@@ -55,20 +56,31 @@
         </header> 
     	
         <div class="content" data-role="content">
+        <div>
           <div class="select_room">
+           <select class="form-control" name="searchCondition" style="height: 50px; font-size: 30px;">
+              <option class="from-option" value="0" selected="selected" >2020년</option>
+              <option class="from-option" value="1" >2021년</option>
+              <option class="from-option" value="2" >2022년</option>
+              <option class="from-option" value="3" >2023년</option>
+           </select>
+          </div>
+          <div class="select_room2">
            <select class="form-control" name="searchCondition" style="height: 50px; font-size: 30px;">
               <option class="from-option" value="0" selected="selected" >1월</option>
               <option class="from-option" value="1" >2월</option>
               <option class="from-option" value="2" >3월</option>
               <option class="from-option" value="3" >4월</option>
-<!--
-              <c:if test="${!empty search.searchCondition }">
-              <option class="from-option" value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>아이디</option>
-              <option class="from-option" value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>닉네임</option>
-              <option class="from-option" value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>이름</option>
-              </c:if>
--->
+              <option class="from-option" value="4" >5월</option>
+              <option class="from-option" value="5" >6월</option>
+              <option class="from-option" value="6" >7월</option>
+              <option class="from-option" value="7" >8월</option>
+              <option class="from-option" value="8" >9월</option>
+              <option class="from-option" value="9" >10월</option>
+              <option class="from-option" value="10" >11월</option>
+              <option class="from-option" value="11" >12월</option>
            </select>
+          </div>
           </div>
             <table class="table table-striped">
               <thead>
