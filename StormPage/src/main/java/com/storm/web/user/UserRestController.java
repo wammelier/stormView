@@ -70,23 +70,20 @@ public class UserRestController {
 		//debugging
 		System.out.println("restController login");
 		
-		//client濡� 遺��� ���깅�� id 瑜� �듯�� db���� ������蹂�GET
 		User dbUser = userService.getLoginUser(user.getUserId());
 		
 		Map<String, String> returnMap = new HashMap<String, String>();
 		
-		//db���� GET�� ��蹂닿� ����寃쎌�� �대�뱁���� ���대���� 議댁�ы��吏� ���� ���щ��몄�瑜� 留듭�� �대����.
+		
 		if ( dbUser == null ) { 
 			returnMap.put("result", "NoSearchId");
 		}else {
-			//GET�� �����λ낫�� ��吏�留� �⑥�ㅼ����媛� �ㅻ�쇨꼍�� ���щ��몄�瑜� 留듭�� �대����.
-			//view���� json����濡� �대�뱁���� 硫��몄�瑜� �듯�� ����洹� 泥�由щ�쇳��.
+		
 			if(!dbUser.getUserPwd().equals(user.getUserPwd())) {
 				returnMap.put("result", "NoSearchPwd");
 			}else {
-				//ID ��蹂대�� ��怨� PWD��蹂대�� ����寃쎌�� �대�� ��硫��몄�� 媛��� Session�� ���ν����.
+
 				session.setAttribute("user", dbUser);
-				//view���� ����洹몄�由ъ�� �ъ�⑸�� 硫��몄�瑜� 留듭���댁�� view�� ����
 				returnMap.put("result", "ok");
 			}// end of else
 		}// end of else
@@ -153,11 +150,9 @@ public class UserRestController {
 		System.out.println("userName ==> "+userName);
 		
 		userService.deleteNamePhone(userName);
-		// �대�뱁���� ������ ��蹂닿� ����������吏� ���명��湲� ���� 寃� �댁��
 		User user = userService.getUserAdmin(userName);
 		System.out.println("user媛� ���몄� ����==>"+user);
 		Map<String, Object> map = new HashMap<String, Object>();
-		// �대�뱁���� ���� ��蹂닿� ����寃쎌�� 硫��몄�瑜� view濡� 蹂대��..
 		if(user == null) {
 			map.put("message", "deleteOk");
 		}else {
@@ -200,10 +195,8 @@ public class UserRestController {
 		System.out.println("userRestController updateLeaderPostion");
 		
 		userService.updatePositionLeader(userName);
-		//�대�뱁���� ������ ��蹂댁���� userPositoin�� 1濡� 諛�������吏� ���명��湲� ���� ��蹂대�� 遺��ъ��.
 		User user = userService.getUserAdmin(userName);
 		System.out.println("updatePositionLeader ==>" +user);
-		//map�� ��蹂대�� �닿린���� �몄�ㅽ�댁��
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(user.getUserPosition().equals("1")) {
@@ -221,12 +214,9 @@ public class UserRestController {
 		System.out.println("userRestController updateLeaderPostion");
 		
 		userService.deleteLeaderPostion(userName);
-		//������ 由щ���대��� �ｌ�댁�� ��吏�留� �������ㅻ�� �����대��� �명��由щ�� 吏��곕�� �����닿린��臾몄�� ��愿�����.
 		userService.deleteAllLeaderName(userName);
-		//�대�뱁���� ������ ��蹂댁���� userPositoin�� 0�쇰� 諛�������吏� ���명��湲� ���� ��蹂대�� 遺��ъ��.
 		User user = userService.getUserAdmin(userName);
 		System.out.println("deletePositionLeader ==>" +user);
-		//map�� ��蹂대�� �닿린���� �몄�ㅽ�댁��
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(user.getUserPosition().equals("0")) {
@@ -243,18 +233,13 @@ public class UserRestController {
 		System.out.println("UserRestController addUserAdmin");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view���� ���щ�� ������蹂대�� ���명��湲� ���� ��鍮��� ��蹂대�� 遺��ъ��.
 		User confirmUser = userService.getUserAdmin(user.getUserName());
-		//��鍮��� 遺��ъ�� ��蹂닿� ����寃쎌��(�����대� : pk).
 		if(confirmUser == null){
-			//view���� ���щ�� �곗�댄�곌� ��洹��깅��� 寃쎌�� db�� 異�媛�..
 			userService.addUserAdmin(user);
 			user = userService.getUserAdmin(user.getUserName());
 			System.out.println("addUserAdmin �� User ��踰�源� =>"+user);
-			//ok硫��몄�瑜� view濡� ����.
 			map.put("message", "addOk");
 		}else {
-			//view���� ���щ��� �������ㅼ���� ��鍮��� 議댁�ы����寃쎌�� �대�� �ㅻ�硫��몄�瑜� 蹂대��.
 			map.put("message", "addFailName");
 		}
 		return map;
@@ -307,11 +292,9 @@ public class UserRestController {
 		System.out.println("UserRestController deleteUser");
 		//view�� 由щ��蹂대�� map ����..
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view濡�遺��� ���댁�� �곗�댄�곌��� ����寃쎌�� �대�뱁���� ���대�� �щ�..
 		if( userId != null ) {
 			userService.deleteUser(userId);
 			map.put("message", "deleteOk");
-		//data媛� ����寃쎌�� �ㅽ�⑤���吏� 蹂대��..
 		}else {
 			map.put("messgae", "deleteFail");
 		}
@@ -324,15 +307,12 @@ public class UserRestController {
 		
 		//debugging
 		System.out.println("UserRestController comeBackUser");
-		//view�� 由щ��蹂대�� map ����..
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view濡�遺��� ���댁�� �곗�댄�곌��� ����寃쎌�� �대�뱁���� ���대�� �щ�..
 		if( comebackId != null ) {
 			userService.comeBackUser(comebackId);
 			User user = userService.getUser(comebackId);
 			System.out.println("user ==>"+user);
 			map.put("message", "comeBackOk");
-		//data媛� ����寃쎌�� �ㅽ�⑤���吏� 蹂대��..
 		}else {
 			map.put("messgae", "comeBackFail");
 		}
@@ -346,33 +326,24 @@ public class UserRestController {
 		System.out.println("UserRestContoller authentic");
 		//debugging
 		System.out.println("user ==>" + user);
-		//view�� 由ы�대낫�� 留듭����
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view���� ���댁�� ������ �대�怨� �대���곕��멸� ��鍮��� �깅����� ���댁�쇰� 媛����� 媛��ν��.
-		//��鍮��� ��蹂대�� ���명��湲� ���� 留��� ��硫��몄��.
 		User confirmUser = userService.getUserAdmin(user.getUserName());
-		//�대�뱁���� ������ �대��� ��鍮��� ����寃쎌�� �대�밸��硫��몄�� 媛��� 議댁�ы����.
 		if( confirmUser != null ) {
-			//���щ��� �곗�댄�곗� �ㅼ���� 議댁�ы��吏�留� �몃���곗�� 遺��쇱� ���� 寃쎌��. 
 			if( !user.getPhone().equals( confirmUser.getPhone() ) ) {
 				map.put("message", "confirmPhoneFail");
-			//���щ��� �곗�댄�곌� 紐⑤�� �쇱�����寃쎌��.
 			}else if( user.getPhone().equals( confirmUser.getPhone() ) ) {
-				//�대�� 媛����� ������ 寃쎌��..
 				if( confirmUser.getSignupFlag().equals("1") ) {
 					map.put("message", "alreadysignUp");
 				}else {
 					map.put("message", "confirmOk");
 				}//end of else
 			}//end of else if
-		//�대�뱁���� ������ �대��� ��鍮��� 議댁�ы��吏� ����寃쎌��.
 		}else {
 			map.put("message", "confirmFail");
 		}//end of else
 		return map;
 	}
 	
-	//�몄�踰��� 諛��≫���� RestController
 	@RequestMapping(value="json/sendSms", method=RequestMethod.POST) 
 	public Map<String, Object> sendSms(@RequestBody User user) throws Exception { 
 		
@@ -380,19 +351,15 @@ public class UserRestController {
 		System.out.println("UserRestController sendSms");
 		//debugging
 		System.out.println("phone ==>" +user.getPhone());
-		//view�� 硫��몄�瑜� ���ы��湲� ���� map ����..
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		// 6��由� �몄� 肄��� ���� 
 		int rand = (int) (Math.random() * 899999) + 100000; 
-		// 臾몄�� 蹂대�닿린 
 		String hostname = "api.bluehouselab.com"; 
 		String url = "https://" + hostname + "/smscenter/v1.0/sendsms"; 
 		
 		//debugging
 		System.out.println("�몄�踰��� ���� ==>" + rand);
 		
-		//泥�湲곗���⑹�� �ъ�⑷����� �ㅼ����湲곗���� �명������嫄곌��� .. ���명���� �� 紐⑤Ⅴ寃���..
 		CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(
             new AuthScope(hostname, 443, AuthScope.ANY_REALM),
@@ -414,17 +381,11 @@ public class UserRestController {
             httpPost.setHeader("Content-type", "application/json; charset=utf-8");
             
 //            String json = "{\"sender\":\""+Config.sender+"\",\"receivers\":[\""+Config.receiver+"\"],\"content\":\""+Config.content+rand+"\"}";
-            //蹂대�대�� �щ�� 諛����щ�� 臾몄���댁�⑹�� json����濡� 留��ㅺ린 ���� Map����
             Map<String, Object> smsMap = new HashMap<String, Object>();
-            //common�� config��硫��� 硫�����以� 蹂대�대���щ���� json�� ���ㅺ린 ���� 留듭�� �댁��..
             smsMap.put("sender", Config.sender);
-            //common�� config��硫��� 硫�����以� 硫��몄��댁�⑹�� json�� ���ㅺ린 ���� 留듭�� �댁��..
             smsMap.put("content", Config.content+rand);
-            //諛����щ���� �대���곕��몃�� listArray�����대��濡� list�� 援ы��..
             List<String> receivers = new ArrayList<String>();
-            //諛����щ���� �대���� 踰��몃�� list �� �닿린..
             receivers.add(user.getPhone());
-            //list 瑜� �ㅼ�� 留듭�� �댁���� json�� ���ㅺ린..
             smsMap.put("receivers", receivers);
             
             //Json�� string�쇰� �쎄린����? ���깊��嫄곌���..
@@ -432,16 +393,11 @@ public class UserRestController {
             String jsonbefore = objectMapper.writeValueAsString(smsMap);
             //debugging
             System.out.println("-----------jsonbefore ==> " + jsonbefore);
-            //��踰�濡� string�� 蹂대�쇨꼍�� ��湲�源⑥��� 臾몄��媛� 諛������� ���댁�� �몄���..
             StringEntity se = new StringEntity(jsonbefore, "UTF-8");
-            //post body�� 臾몄��瑜� �명��..
             httpPost.setEntity(se);
-            //�대�쇱�댁�명�� �ㅽ��..
             HttpResponse httpResponse = client.execute(httpPost, context);
             System.out.println(httpResponse.getStatusLine().getStatusCode());
-            //��踰�濡�遺��� 諛��� reponse�� �댁�⑹�� inputStream�� �닿린..
             InputStream inputStream = httpResponse.getEntity().getContent();
-            //諛��� �곗�댄�곌� ���� ����寃쎌��..
             if(inputStream != null) {
                 BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
                 String line = "";
@@ -469,11 +425,8 @@ public class UserRestController {
 		
 		//debugging
 		System.out.println("UserRestController idCheck");
-		//view濡� 由ы�대낫�닿린 ���� 留듭����..
 		Map<String, Object> map = new HashMap<String, Object>();
-		//����媛����� ����以��� ������ ���깊�� ���대��濡� db�� 寃����대낯��. 以�蹂듭껜�щ�쇱���댁��..
 		User userConfirm = userService.getUser(user.getUserId());
-		//������ ���깊�� id媛� db�� ����寃쎌�� �깃났 硫��몄�瑜� view濡� ���ы����.
 		if( userConfirm == null ) {
 			map.put("message", "checkOk");
 		}else {
@@ -489,11 +442,9 @@ public class UserRestController {
 		System.out.println("UserRestController nickNameCehck");
 		//view濡� 由ы�대낫�닿린 ���� 留듭����..
 		Map<String, Object> map = new HashMap<String, Object>();
-		//����媛����� ����以��� ������ ���깊�� ���대��濡� db�� 寃����대낯��. 以�蹂듭껜�щ�쇱���댁��..
 		User userConfirm = userService.getNickNameCheck(user.getNickName());
 		//debugging
 		System.out.println("userconfirm ==>" + userConfirm);
-		//������ ���깊�� id媛� db�� ����寃쎌�� �깃났 硫��몄�瑜� view濡� ���ы����.
 		if( userConfirm == null ) {
 			map.put("message", "checkOk");
 		}else {
@@ -513,14 +464,10 @@ public class UserRestController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		//view���� 媛��몄�� �곗�댄�곕�� db�� insert
 		userService.addUser(user);
-		//������ signUpFalg 肄�猷몄�� 媛����⑥�쇰� 諛�轅�..
 		userService.updateSignUpFlag(user.getUserName());
-		//����濡� ��蹂닿� insert������吏� ���명��湲� ���� ����..
 		User userConfirm = userService.getUser(user.getUserId());
-		//������ ��硫��� ��蹂닿� ���� ����寃쎌�� ����濡� insert�����ㅻ�� 硫��몄� ����..
 		if( userConfirm != null ) {
 			map.put("message", "insertOk");
-		//insert �ㅽ�⑥��..
 		}else {
 			map.put("message", "insertFail");
 		}
@@ -536,9 +483,7 @@ public class UserRestController {
 		System.out.println("user ==>" + user);
 		//view�� 由ы�대낫�� 留듭����
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view���� 媛��몄�� �곗�댄�곕�� db���� 寃����대낫湲�..
 		User confirmUser = userService.getUserConfirm(user.getUserName());
-		//������ ��硫��� ��蹂닿� ���� ����寃쎌��
 		if( confirmUser != null ) {
 			if ( !confirmUser.getPhone().equals( user.getPhone() ) ) {
 				map.put("message", "phoneConfirmfail");
@@ -559,12 +504,11 @@ public class UserRestController {
 		System.out.println("UserRestContoller userConfirm");
 		//debugging
 		System.out.println("user ==>" + user);
-		//view�� 由ы�대낫�� 留듭����
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view���� 媛��몄�� �곗�댄�곕�� db���� 寃����대낫湲�..
 		User confirmUser = userService.getUserConfirm(user.getUserName());
 		System.out.println("confirmUserId ==>");
-		//������ ��硫��� ��蹂닿� ���� ����寃쎌��
+		
 		if( confirmUser != null ) {
 			if( !confirmUser.getUserId().equals( user.getUserId() ) ) {
 				map.put("message", "idConfirmfail");
@@ -587,13 +531,9 @@ public class UserRestController {
 		System.out.println("UserRestController updatePwd");
 		//debugging
 		System.out.println("user==>"+user);
-		//view���� ���щ��� ��蹂대� user�� 鍮�諛�踰��몃�� update ����. userId, userPwd ������.
 		userService.updatePwd(user);
-		//view濡� 由ы�대낫�� Map ����
 		Map<String, Object> map = new HashMap<String, Object>();
-		//������ ��蹂닿� ������寃� 諛�������吏� 蹂닿린���� ��硫��� ����..
 		User userConfirm = userService.getUser(user.getUserId());
-		//view濡�遺��� ���댁�� 鍮�諛�踰��몄�� db濡� 遺��� ���щ��� 鍮�諛�踰��멸� 媛���寃쎌�� ok 硫��몄� ����..
 		if( userConfirm.getUserPwd().equals(user.getUserPwd() ) ) {
 			map.put("message", "updateOk");
 		}else {
@@ -609,13 +549,9 @@ public class UserRestController {
 		System.out.println("UserRestController updatePhone");
 		//debugging
 		System.out.println("user ==>" + user);
-		//view濡� 由ы�대낫�� Map ����
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view���� ���щ��� �곗�댄�곕� phone��蹂대�� ���곗�댄�명��..
 		userService.updatePhone(user);
-		//������ ��蹂닿� ������寃� 諛�������吏� 蹂닿린���� ��硫��� ����..
 		User confirmUser = userService.getUserAdmin(user.getUserName());
-		//view濡�遺��� ���댁�� �곕��몄�� db濡� 遺��� ���щ��� �곕��멸� 媛���寃쎌�� ok 硫��몄� ����..
 		if( confirmUser.getPhone().equals(user.getPhone() ) ) {
 			map.put("message", "updateOk");
 		}else {
@@ -629,13 +565,9 @@ public class UserRestController {
 		//debugging
 		//debugging
 		System.out.println("user ==>" + user);
-		//view濡� 由ы�대낫�� Map ����
 		Map<String, Object> map = new HashMap<String, Object>();
-		//view���� ���щ��� �곗�댄�곕� phone��蹂대�� ���곗�댄�명��..
 		userService.updateNickName(user);
-		//������ ��蹂닿� ������寃� 諛�������吏� 蹂닿린���� ��硫��� ����..
 		User confirmUser = userService.getUser(user.getUserId());
-		//view濡�遺��� ���댁�� �곕��몄�� db濡� 遺��� ���щ��� �곕��멸� 媛���寃쎌�� ok 硫��몄� ����..
 		if( confirmUser.getNickName().equals(user.getNickName()) ) {
 			map.put("message", "updateOk");
 		}else {
